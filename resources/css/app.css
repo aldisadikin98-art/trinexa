@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --tx-primary: #4A90D9;
+        --tx-primary-light: #EBF4FF;
+        --tx-primary-mid: #7BB3E8;
+
+        --tx-secondary: #F472B6;
+        --tx-secondary-light: #FDF0F7;
+        --tx-secondary-mid: #F8A4CF;
+
+        --tx-tertiary: #9B8EC4;
+        --tx-tertiary-light: #F3F0FB;
+        --tx-tertiary-mid: #C4B5E8;
+
+        --tx-quaternary: #6BAE9B;
+        --tx-quaternary-light: #EDF7F4;
+        --tx-quaternary-mid: #9ECFC3;
+
+        --tx-text-dark: #1E293B;
+        --tx-text-muted: #64748B;
+    }
+}
+
+@layer utilities {
+    .bg-mesh {
+        background-color: #F3F6F9;
+        background-image: 
+            radial-gradient(circle at 15% 10%, rgba(74, 144, 217, 0.45) 0%, transparent 60%),
+            radial-gradient(circle at 85% 20%, rgba(244, 114, 182, 0.35) 0%, transparent 65%),
+            radial-gradient(circle at 85% 85%, rgba(155, 142, 196, 0.45) 0%, transparent 60%),
+            radial-gradient(circle at 15% 85%, rgba(107, 174, 155, 0.35) 0%, transparent 65%);
+        background-size: 200% 200%;
+        animation: meshMovement 15s ease-in-out infinite alternate;
+    }
+
+    @keyframes meshMovement {
+        0% { background-position: 0% 0%; }
+        25% { background-position: 100% 0%; }
+        50% { background-position: 100% 100%; }
+        75% { background-position: 0% 100%; }
+        100% { background-position: 0% 0%; }
+    }
+
+    .text-gradient {
+        @apply bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] bg-clip-text text-transparent;
+    }
+}
+
+@layer components {
+    /* Glassmorphism Card */
+    .glass-card {
+        @apply bg-white/70 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden;
+    }
+
+    /* Gradient Button */
+    .btn-gradient {
+        @apply bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-pink-400/30 hover:-translate-y-0.5;
+    }
+
+    /* Solid Blue Button */
+    .btn-blue {
+        @apply bg-[var(--tx-primary)] text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-blue-400/30 hover:-translate-y-0.5;
+    }
+
+    /* Solid Pink Button */
+    .btn-pink {
+        @apply bg-[var(--tx-secondary)] text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-pink-400/30 hover:-translate-y-0.5;
+    }
+
+    /* Outline Button */
+    .btn-outline-white {
+        @apply border-2 border-white/80 bg-white/20 backdrop-blur-sm text-[var(--tx-text-dark)] rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-300 hover:bg-white/40;
+    }
+
+    /* Global Playful Card Style */
+    .card {
+        @apply bg-white border-2 border-tx-primary-light rounded-[20px] shadow-sm overflow-hidden;
+    }
+    
+    /* Tombol Utama (Primary) - Playful Press Effect */
+    .btn-primary {
+        @apply bg-tx-primary text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-100;
+        box-shadow: 0 4px 0 theme('colors.blue.600');
+    }
+    .btn-primary:active {
+        @apply translate-y-1;
+        box-shadow: 0 0 0 theme('colors.blue.600');
+    }
+    
+    /* Tombol Sekunder (Secondary) */
+    .btn-secondary {
+        @apply bg-tx-primary-light text-tx-primary rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-100;
+        box-shadow: 0 4px 0 theme('colors.blue.300');
+    }
+    .btn-secondary:active {
+        @apply translate-y-1;
+        box-shadow: 0 0 0 theme('colors.blue.300');
+    }
+
+    /* Varian Button Pillar */
+    .btn-naturea {
+        @apply bg-tx-secondary text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-100;
+        box-shadow: 0 4px 0 theme('colors.pink.600');
+    }
+    .btn-naturea:active {
+        @apply translate-y-1;
+        box-shadow: 0 0 0 theme('colors.pink.600');
+    }
+
+    .btn-school {
+        @apply bg-tx-tertiary text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-100;
+        box-shadow: 0 4px 0 theme('colors.purple.600');
+    }
+    .btn-school:active {
+        @apply translate-y-1;
+        box-shadow: 0 0 0 theme('colors.purple.600');
+    }
+
+    .btn-karebla {
+        @apply bg-tx-quaternary text-white rounded-full px-6 py-3 font-extrabold tracking-wide inline-flex items-center justify-center transition-all duration-100;
+        box-shadow: 0 4px 0 theme('colors.teal.600');
+    }
+    .btn-karebla:active {
+        @apply translate-y-1;
+        box-shadow: 0 0 0 theme('colors.teal.600');
+    }
+}
+/* trigger reload */
+
+/* ── Aura Mascot Animations ───────────────────────────────── */
+@keyframes aura-float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+}
+@keyframes aura-wave {
+    0%, 100% { transform: rotate(0deg); transform-origin: bottom center; }
+    25%       { transform: rotate(25deg); transform-origin: bottom center; }
+    75%       { transform: rotate(-10deg); transform-origin: bottom center; }
+}
+@keyframes aura-think {
+    0%, 100% { transform: rotate(0deg); }
+    50%       { transform: rotate(4deg); }
+}
+@keyframes scan-line {
+    0%   { top: 0%; opacity: 1; }
+    100% { top: 100%; opacity: 0.3; }
+}
+@keyframes aura-blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95%           { transform: scaleY(0.1); }
+}
+.aura-float  { animation: aura-float 3s ease-in-out infinite; }
+.aura-wave   { animation: aura-wave 1s ease-in-out 3; }
+.aura-think  { animation: aura-think 1.2s ease-in-out infinite; }
+.aura-blink  { animation: aura-blink 4s ease-in-out infinite; }
+.scan-active { animation: scan-line 1.5s linear infinite; }
