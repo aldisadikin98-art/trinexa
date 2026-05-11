@@ -27,7 +27,5 @@ php artisan view:clear 2>/dev/null || true
 # Run migrations
 php artisan migrate --force --no-interaction 2>/dev/null || true
 
-echo "Starting Apache on port $PORT..."
-
-# Start Apache
-exec apache2-foreground
+echo "Starting Laravel on port $PORT..."
+exec php artisan serve --host=0.0.0.0 --port=$(( PORT + 0 ))
