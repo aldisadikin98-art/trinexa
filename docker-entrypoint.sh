@@ -20,6 +20,8 @@ php artisan config:clear 2>/dev/null || true
 php artisan route:clear 2>/dev/null || true
 php artisan view:clear 2>/dev/null || true
 php artisan migrate --force --no-interaction 2>/dev/null || true
+php artisan storage:link --force 2>/dev/null || true
+php artisan optimize 2>/dev/null || true
 
 echo "Starting Laravel on port $APP_PORT..."
 exec php -S 0.0.0.0:$APP_PORT -t public
