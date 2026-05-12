@@ -27,22 +27,23 @@
                         @endif
 
                         @php $images = $product->images ?? []; @endphp
-                        @if(!empty($images))
-                            <div class="w-full max-w-md relative z-10">
-                                <div class="aspect-square rounded-[2rem] overflow-hidden bg-white shadow-lg border border-white/80 mb-6 group">
-                                    <img src="{{ $images[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
-                                </div>
-                                @if(count($images) > 1)
-                                    <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar px-1">
-                                        @foreach($images as $img)
-                                            <div class="w-20 h-20 rounded-[1.25rem] overflow-hidden cursor-pointer border-[3px] hover:border-[var(--tx-primary)] transition-all border-white shadow-sm flex-shrink-0 hover:scale-105 opacity-80 hover:opacity-100 bg-white">
-                                                <img src="{{ $img }}" alt="" class="w-full h-full object-cover">
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
+                        <div class="w-full max-w-md relative z-10">
+                            <div class="aspect-square rounded-[2rem] overflow-hidden bg-white shadow-lg border border-white/80 mb-6 group">
+                                <img src="{{ $product->primary_image }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
                             </div>
-                        @endif
+                            @if(count($images) > 1)
+                                <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar px-1">
+                                    @foreach($images as $img)
+                                        @php 
+                                            $url = filter_var($img, FILTER_VALIDATE_URL) ? $img : Storage::url($img);
+                                        @endphp
+                                        <div class="w-20 h-20 rounded-[1.25rem] overflow-hidden cursor-pointer border-[3px] hover:border-[var(--tx-primary)] transition-all border-white shadow-sm flex-shrink-0 hover:scale-105 opacity-80 hover:opacity-100 bg-white">
+                                            <img src="{{ $url }}" alt="" class="w-full h-full object-cover">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
 
                     {{-- Kanan: Detail --}}
@@ -168,7 +169,7 @@
                     <h3 class="text-2xl font-black text-[var(--tx-text-dark)] text-center mb-6">Konfirmasi Penukaran</h3>
 
                     <div class="flex items-center gap-4 bg-white/60 p-4 rounded-[1.5rem] mb-6 border border-white shadow-sm backdrop-blur-md">
-                        <img src="{{ $images[0] ?? '' }}" alt="" class="w-20 h-20 rounded-xl object-cover bg-white shadow-sm border border-gray-100">
+                        <img src="{{ $product->primary_image }}" alt="" class="w-20 h-20 rounded-xl object-cover bg-white shadow-sm border border-gray-100">
                         <div class="flex-1">
                             <h4 class="font-black text-[var(--tx-text-dark)] text-sm line-clamp-2 mb-2 leading-snug">{{ $product->name }}</h4>
                             <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)]">{{ number_format($product->coin_price, 0, ',', '.') }} <span class="text-[10px] text-[var(--tx-text-muted)] font-bold uppercase tracking-widest">Koin</span></span>

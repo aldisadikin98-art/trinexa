@@ -200,13 +200,7 @@
 
                         {{-- Product Image --}}
                         <a href="{{ route('karebla.show', $product->slug) }}" class="block relative aspect-square overflow-hidden bg-gradient-to-b from-white/60 to-transparent">
-                            @if(!empty($product->images) && isset($product->images[0]))
-                                <img src="{{ $product->images[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out {{ $imgClass }}">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-300/50 text-6xl">
-                                    🎁
-                                </div>
-                            @endif
+                            <img src="{{ $product->primary_image }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out {{ $imgClass }}">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </a>
 

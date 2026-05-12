@@ -32,13 +32,18 @@
                 <div x-data="{ activeImg: 0 }" class="w-full md:w-5/12 lg:w-4/12 shrink-0">
                     {{-- Main image --}}
                     <div class="relative bg-white/40 border border-white/80 rounded-[24px] overflow-hidden aspect-square mb-4 shadow-inner">
-                        @php $imgs = !empty($product->images) ? $product->images : [$product->image_url ?? 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&q=80']; @endphp
+                        @php 
+                            $imgs = !empty($product->images) ? $product->images : [$product->image_url ?? 'images/logo trinexa.jpeg']; 
+                        @endphp
 
                         @foreach($imgs as $i => $img)
-                            <img src="{{ $img }}" alt="{{ $product->name }}"
+                            @php 
+                                $url = filter_var($img, FILTER_VALIDATE_URL) ? $img : Storage::url($img);
+                            @endphp
+                            <img src="{{ $url }}" alt="{{ $product->name }}"
                                  x-show="activeImg === {{ $i }}"
                                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                 onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&q=80'">
+                                 onerror="this.src='{{ asset('images/logo trinexa.jpeg') }}'">
                         @endforeach
 
                         @if($product->stock <= 0)
@@ -52,10 +57,13 @@
                     @if(count($imgs) > 1)
                         <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
                             @foreach($imgs as $i => $img)
+                                @php 
+                                    $url = filter_var($img, FILTER_VALIDATE_URL) ? $img : Storage::url($img);
+                                @endphp
                                 <button @click="activeImg = {{ $i }}"
                                     :class="activeImg === {{ $i }} ? 'border-[var(--tx-secondary)] shadow-md scale-105' : 'border-white/60 hover:border-[var(--tx-secondary-light)] opacity-70 hover:opacity-100'"
                                     class="w-16 h-16 bg-white/40 rounded-[12px] border-2 overflow-hidden shrink-0 transition-all">
-                                    <img src="{{ $img }}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=200&q=80'">
+                                    <img src="{{ $url }}" class="w-full h-full object-cover" onerror="this.src='{{ asset('images/logo trinexa.jpeg') }}'">
                                 </button>
                             @endforeach
                         </div>

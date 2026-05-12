@@ -14,6 +14,11 @@ class Product extends Model
         'usage_instructions', 'benefits', 'bpom_number', 'is_active', 'coin_price',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     protected $casts = [
         'price'           => 'decimal:2',
         'bundle_discount' => 'decimal:2',
@@ -107,14 +112,25 @@ class Product extends Model
     }
 
     /**
-     * URL gambar utama (prioritas: images[0], lalu image_url)
+     * URL gambar utama
      */
     public function getPrimaryImageAttribute(): string
     {
-        if (!empty($this->images) && count($this->images) > 0) {
-            return $this->images[0];
+        $image = null;
+        if (is_array($this->images) && count($this->images) > 0) {
+            $image = $this->images[0];
+        } elseif ($this->image_url) {
+            $image = $this->image_url;
         }
-        return $this->image_url ?? 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80';
+
+        if ($image) {
+            if (filter_var($image, FILTER_VALIDATE_URL)) {
+                return $image;
+            }
+            return \Illuminate\Support\Facades\Storage::url($image);
+        }
+
+        return asset('images/logo trinexa.jpeg'); 
     }
 
     /**

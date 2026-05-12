@@ -40,7 +40,7 @@
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ $product->primary_image }}" class="w-10 h-10 rounded-lg object-cover bg-gray-100" onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&q=80'">
+                                    <img src="{{ $product->primary_image }}" class="w-10 h-10 rounded-lg object-cover bg-gray-100" onerror="this.src='{{ asset('images/logo trinexa.jpeg') }}'">
                                     <div>
                                         <p class="font-bold text-[#0F2942] line-clamp-1 max-w-[200px]">{{ $product->name }}</p>
                                         <p class="text-[10px] text-gray-400 mt-0.5">⭐ {{ $product->average_rating }} ({{ $product->approved_reviews_count ?? 0 }} ulasan)</p>

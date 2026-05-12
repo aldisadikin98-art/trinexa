@@ -34,4 +34,20 @@ class KareblaProduct extends Model
     {
         return $this->hasMany(KareblaRedemption::class);
     }
+
+    /**
+     * URL gambar utama
+     */
+    public function getPrimaryImageAttribute(): string
+    {
+        if (is_array($this->images) && count($this->images) > 0) {
+            $image = $this->images[0];
+            if (filter_var($image, FILTER_VALIDATE_URL)) {
+                return $image;
+            }
+            return \Illuminate\Support\Facades\Storage::url($image);
+        }
+        
+        return asset('images/logo karebla.jpeg');
+    }
 }

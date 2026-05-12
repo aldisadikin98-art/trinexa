@@ -41,13 +41,7 @@
                                     <svg class="w-5 h-5 hover:fill-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                                 </button>
 
-                                @if($product->image_url)
-                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-500">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-500">
-                                        {{ $product->brand == 'Naturea' ? '🧴' : '🌿' }}
-                                    </div>
-                                @endif
+                                <img src="{{ $product->primary_image }}" alt="{{ $product->name }}" class="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-500">
                             </div>
                             
                             <!-- Bagian Bawah Kartu (Info) -->

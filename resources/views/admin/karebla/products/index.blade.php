@@ -39,8 +39,7 @@
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
-                                            @php $images = $product->images ?? []; @endphp
-                                            <img src="{{ $images[0] ?? '' }}" alt="" class="w-12 h-12 rounded-lg object-cover bg-gray-100">
+                                            <img src="{{ $product->primary_image }}" alt="" class="w-12 h-12 rounded-lg object-cover bg-gray-100" onerror="this.src='{{ asset('images/logo karebla.jpeg') }}'">
                                             <div>
                                                 <p class="font-bold text-gray-800">{{ $product->name }}</p>
                                                 <p class="text-[10px] text-gray-500">{{ $product->collection }}</p>

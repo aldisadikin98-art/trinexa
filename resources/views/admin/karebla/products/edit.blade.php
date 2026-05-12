@@ -25,7 +25,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.karebla.produk.update', $produk->slug) }}" method="POST" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <form action="{{ route('admin.karebla.produk.update', $produk->slug) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 @csrf
                 @method('PUT')
                 <div class="p-6 md:p-8 space-y-6">
@@ -83,6 +83,21 @@
                             </template>
                         </div>
                         <button type="button" @click="addSpec" class="mt-3 text-sm font-bold text-[#D4AF37] hover:underline">+ Tambah Spesifikasi</button>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Foto Produk</label>
+                        @if(!empty($produk->images))
+                            <div class="flex gap-2 mb-3">
+                                @foreach($produk->images as $img)
+                                    <div class="relative w-20 h-20 group">
+                                        <img src="{{ filter_var($img, FILTER_VALIDATE_URL) ? $img : Storage::url($img) }}" class="w-full h-full object-cover rounded-lg border border-gray-100">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <input type="file" name="images[]" multiple class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#F5E6C8] file:text-[#9a7c1f] hover:file:bg-[#e9d9b0] transition-all">
+                        <p class="text-[10px] text-gray-400 mt-2 italic">*Bisa pilih lebih dari satu gambar baru untuk mengganti yang lama. Rekomendasi rasio 1:1.</p>
                     </div>
 
                     <div>

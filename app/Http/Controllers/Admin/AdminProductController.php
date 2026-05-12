@@ -37,7 +37,7 @@ class AdminProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'                  => 'required|string|max:255',
+            'name'                  => 'required|string|max:255|unique:products,name',
             'description'           => 'nullable|string',
             'price'                 => 'required|numeric|min:0',
             'stock'                 => 'required|integer|min:0',
@@ -56,7 +56,7 @@ class AdminProductController extends Controller
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
-                $images[] = asset('storage/' . $img->store('products', 'public'));
+                $images[] = $img->store('products', 'public');
             }
         } elseif ($request->filled('image_url')) {
             $images[] = $request->image_url;
@@ -103,7 +103,7 @@ class AdminProductController extends Controller
     {
         $product = $produk;
         $request->validate([
-            'name'                  => 'required|string|max:255',
+            'name'                  => 'required|string|max:255|unique:products,name,' . $product->id,
             'price'                 => 'required|numeric|min:0',
             'stock'                 => 'required|integer|min:0',
             'category'              => 'required|string',
@@ -115,7 +115,7 @@ class AdminProductController extends Controller
         if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $img) {
-                $images[] = asset('storage/' . $img->store('products', 'public'));
+                $images[] = $img->store('products', 'public');
             }
         }
 
