@@ -90,6 +90,7 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $items->sum(fn($item) => $item->quantity * $item->product->price);
+        $shipping_fee = floor($subtotal * 0.05); // 5% ongkir
         $wallet   = $user->wallet()->firstOrCreate(['user_id' => $user->id], ['balance' => 0]);
         
         // Ambil voucher yang aktif dan tersedia
@@ -106,7 +107,7 @@ class CheckoutController extends Controller
 
         $userLoyaltyPoints = $user->loyalty_points;
 
-        return view('checkout.index', compact('items', 'subtotal', 'wallet', 'userVouchers', 'user', 'mode', 'userLoyaltyPoints'));
+        return view('checkout.index', compact('items', 'subtotal', 'shipping_fee', 'wallet', 'userVouchers', 'user', 'mode', 'userLoyaltyPoints'));
     }
 
     // POST /checkout/voucher (AJAX)
@@ -236,7 +237,8 @@ class CheckoutController extends Controller
                     ]);
                 }
 
-                $totalBayar = $subtotal - $discount;
+                $shipping_fee = floor($subtotal * 0.05);
+                $totalBayar = $subtotal + $shipping_fee - $discount;
 
                 // 2.5 Loyalty Points
                 $coinsUsed = 0;
@@ -269,6 +271,7 @@ class CheckoutController extends Controller
                     'status'           => 'pending',
                     'payment_method'   => 'wallet',
                     'shipping_address' => $user->address,
+                    'shipping_cost'    => $shipping_fee,
                     'shop_voucher_id'  => $voucherId,
                     'discount_amount'  => $discount,
                     'coins_used'       => $coinsUsed,

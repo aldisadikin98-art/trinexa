@@ -7,11 +7,15 @@
         <!-- Welcome Banner Keren -->
         <div class="glass-card w-full p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 relative overflow-hidden border border-white/50">
             <!-- Dekorasi Orb -->
-            <div class="absolute right-0 top-0 w-64 h-64 bg-gradient-to-bl from-[var(--tx-primary-light)] to-[var(--tx-secondary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-60"></div>
+            <div class="absolute right-0 top-0 w-64 h-64 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-primary-light)] via-[var(--tx-secondary-light)] to-transparent rounded-full -translate-y-1/2 translate-x-1/3 opacity-40"></div>
             
             <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-                <div class="w-20 h-20 rounded-[20px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-4xl font-extrabold shadow-lg border-2 border-white/50 rotate-3 hover:rotate-0 transition-transform shrink-0">
-                    {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
+                <div class="w-20 h-20 rounded-[20px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-4xl font-extrabold shadow-lg border-2 border-white/50 transition-transform shrink-0 overflow-hidden">
+                    @if(Auth::user()->avatar)
+                        <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover">
+                    @else
+                        {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
+                    @endif
                 </div>
                 <div>
                     <h2 class="text-2xl md:text-3xl font-black text-[var(--tx-text-dark)] mb-1">{{ Auth::user()->name ?? 'User' }}</h2>
@@ -23,7 +27,7 @@
             <div class="relative z-10 flex gap-3">
                 <div class="flex items-center gap-2 bg-white/40 backdrop-blur-md text-[var(--tx-text-dark)] px-4 py-2.5 rounded-full border border-white/50 font-black shadow-sm">
                     <span class="text-lg text-[var(--tx-primary)]">⭐</span> 
-                    <span>Member Level: <span class="text-[var(--tx-primary)]">Gold</span></span>
+                    <span>Member Level: <span class="text-[var(--tx-primary)]">{{ Auth::user()->loyalty_level }}</span></span>
                 </div>
             </div>
         </div>
@@ -39,7 +43,7 @@
                     
                     <!-- Saldo Harvestly -->
                     <div class="rounded-3xl p-6 relative overflow-hidden text-white shadow-xl shadow-[var(--tx-primary)]/20 transition-transform hover:-translate-y-1 bg-gradient-to-br from-[var(--tx-primary)] to-[#7BB3E8]">
-                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/20 rounded-full blur-xl pointer-events-none"></div>
+                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/20 rounded-full pointer-events-none"></div>
                         <div class="relative z-10 h-full flex flex-col">
                             <p class="font-bold text-sm text-white/90 mb-1">Saldo Harvestly</p>
                             <h3 class="text-3xl font-black mb-6">Rp 1.250.000</h3>
@@ -112,34 +116,22 @@
                     </div>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Dummy Product 1 -->
-                        <div class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-3 flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group">
-                            <div class="w-full aspect-square bg-[var(--tx-secondary-light)] rounded-xl mb-3 flex items-center justify-center text-3xl group-hover:scale-95 transition-transform">🧴</div>
+                        @foreach($featuredProducts as $product)
+                        <a href="{{ route('shop.show', $product->slug) }}" class="bg-white/60 border border-white/80 rounded-2xl p-3 flex flex-col hover:shadow-md transition-all cursor-pointer group">
+                            <div class="w-full aspect-square bg-[var(--tx-secondary-light)] rounded-xl mb-3 flex items-center justify-center overflow-hidden transition-transform">
+                                <img src="{{ $product->primary_image }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            </div>
                             <span class="text-[9px] font-black text-white bg-[var(--tx-secondary)] px-2 py-0.5 rounded-full w-fit mb-1 shadow-sm">NATUREA</span>
-                            <h4 class="font-bold text-[var(--tx-text-dark)] text-sm mb-1 line-clamp-1">Glow Toner 100ml</h4>
-                            <p class="font-black text-[var(--tx-primary)] text-sm mt-auto">Rp 89.000</p>
-                        </div>
-                        <!-- Dummy Product 2 -->
-                        <div class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-3 flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group">
-                            <div class="w-full aspect-square bg-[var(--tx-quaternary-light)] rounded-xl mb-3 flex items-center justify-center text-3xl group-hover:scale-95 transition-transform">🌿</div>
-                            <span class="text-[9px] font-black text-white bg-[var(--tx-quaternary)] px-2 py-0.5 rounded-full w-fit mb-1 shadow-sm">NATUREA</span>
-                            <h4 class="font-bold text-[var(--tx-text-dark)] text-sm mb-1 line-clamp-1">Centella Serum</h4>
-                            <p class="font-black text-[var(--tx-primary)] text-sm mt-auto">Rp 129.000</p>
-                        </div>
-                        <!-- Dummy Product 3 -->
-                        <div class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-3 flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group">
-                            <div class="w-full aspect-square bg-[var(--tx-tertiary-light)] rounded-xl mb-3 flex items-center justify-center text-3xl group-hover:scale-95 transition-transform">✨</div>
-                            <span class="text-[9px] font-black text-white bg-[var(--tx-secondary)] px-2 py-0.5 rounded-full w-fit mb-1 shadow-sm">NATUREA</span>
-                            <h4 class="font-bold text-[var(--tx-text-dark)] text-sm mb-1 line-clamp-1">Moisturizer Ceramide</h4>
-                            <p class="font-black text-[var(--tx-primary)] text-sm mt-auto">Rp 99.000</p>
-                        </div>
-                        <!-- Dummy Product 4 -->
-                        <div class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-3 flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group">
-                            <div class="w-full aspect-square bg-[var(--tx-primary-light)] rounded-xl mb-3 flex items-center justify-center text-3xl group-hover:scale-95 transition-transform">💧</div>
-                            <span class="text-[9px] font-black text-white bg-[var(--tx-secondary)] px-2 py-0.5 rounded-full w-fit mb-1 shadow-sm">NATUREA</span>
-                            <h4 class="font-bold text-[var(--tx-text-dark)] text-sm mb-1 line-clamp-1">Hydrating Wash</h4>
-                            <p class="font-black text-[var(--tx-primary)] text-sm mt-auto">Rp 75.000</p>
-                        </div>
+                            <h4 class="font-bold text-[var(--tx-text-dark)] text-sm mb-1 line-clamp-1">{{ $product->name }}</h4>
+                            <p class="font-black text-[var(--tx-primary)] text-sm mt-auto">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                        </a>
+                        @endforeach
+                        
+                        @if(count($featuredProducts) === 0)
+                            <div class="col-span-4 py-12 text-center text-[var(--tx-text-muted)] font-bold italic">
+                                Belum ada produk tersedia ✨
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

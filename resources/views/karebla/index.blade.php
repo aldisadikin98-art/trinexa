@@ -6,8 +6,9 @@
         
         <!-- Header & Banner -->
         <div class="mb-10 text-center md:text-left relative">
-            <h2 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] tracking-tight mb-3 flex flex-col md:flex-row items-center md:justify-start justify-center gap-3">
-                <span class="text-5xl drop-shadow-sm">💎</span> Karebla Rewards
+            <h2 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] tracking-tight mb-3 flex flex-col md:flex-row items-center md:justify-start justify-center gap-4">
+                <img src="{{ asset('images/logo karebla.jpeg') }}" alt="Karebla" class="w-16 h-16 rounded-2xl object-cover shadow-md border-2 border-white">
+                <span>Karebla Rewards</span>
             </h2>
             <p class="text-[var(--tx-text-muted)] font-bold text-lg max-w-2xl">
                 Tukar koin belanjamu dengan merchandise eksklusif dan produk unggulan.

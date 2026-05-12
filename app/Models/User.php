@@ -144,10 +144,10 @@ class User extends Authenticatable
     {
         $transactionCount = $this->transactions()->where('status', 'selesai')->count();
 
-        if ($transactionCount >= 25) return 'VIP';
-        if ($transactionCount >= 10) return 'Premium';
-        if ($transactionCount >= 3) return 'Loyal';
-        return 'Member';
+        if ($transactionCount >= 31) return 'Platinum';
+        if ($transactionCount >= 21) return 'Gold';
+        if ($transactionCount >= 11) return 'Silver';
+        return 'Bronze';
     }
 
     public function kareblaRedemptions()

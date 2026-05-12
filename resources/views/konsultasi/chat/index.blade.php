@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">Tanya Aura — Chat AI | Trinexa</x-slot>
+    <x-slot name="title">Tanya Truevera — Chat AI | Trinexa</x-slot>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col lg:flex-row gap-6">
@@ -40,7 +40,7 @@
             {{-- MAIN: Hero Start --}}
             <div class="flex-1">
                 <div class="glass-card border border-white/50 flex flex-col items-center justify-center py-24 px-8 text-center">
-                    <div class="aura-float mb-6">
+                    <div class="truevera-float mb-6">
                         <svg width="100" height="115" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6" opacity="0.9"/>
                             <circle cx="55" cy="20" r="4" fill="#9B8EC4"/>
@@ -66,8 +66,8 @@
                             </defs>
                         </svg>
                     </div>
-                    <h2 class="text-2xl font-black text-[var(--tx-text-dark)] mb-3">Ayo ngobrol sama Aura! 🌸</h2>
-                    <p class="text-[var(--tx-text-muted)] font-bold text-sm mb-8 max-w-md">Tanya soal rutinitas perawatan kulit, bahan aktif, atau masalah kulit kamu. Aura siap bantu!</p>
+                    <h2 class="text-2xl font-black text-[var(--tx-text-dark)] mb-3">Ayo ngobrol sama Truevera! 🌸</h2>
+                    <p class="text-[var(--tx-text-muted)] font-bold text-sm mb-8 max-w-md">Tanya soal rutinitas perawatan kulit, bahan aktif, atau masalah kulit kamu. Truevera siap bantu!</p>
 
                     <div class="flex flex-wrap justify-center gap-3 mb-8">
                         @foreach(['Kulit aku berminyak banget 😓', 'Rekomendasi serum untuk pemula ✨', 'Cara pakai retinol yang benar 🌙', 'Bedanya AHA, BHA, PHA apa?'] as $q)
@@ -92,7 +92,7 @@
     @push('scripts')
     <script>
         function startChatWithQuestion(q) {
-            sessionStorage.setItem('aura_first_message', q);
+            sessionStorage.setItem('truevera_first_message', q);
             document.getElementById('startChatForm').submit();
         }
     </script>

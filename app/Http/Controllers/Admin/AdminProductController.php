@@ -11,7 +11,9 @@ class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::naturea();
+        $query = Product::naturea()
+            ->withCount('approvedReviews')
+            ->withAvg('approvedReviews', 'rating');
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -52,13 +54,12 @@ class AdminProductController extends Controller
         ]);
 
         $images = [];
-        if ($request->filled('image_url')) {
-            $images[] = $request->image_url;
-        }
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
                 $images[] = asset('storage/' . $img->store('products', 'public'));
             }
+        } elseif ($request->filled('image_url')) {
+            $images[] = $request->image_url;
         }
 
         $ingredientsArr = [];
@@ -91,14 +92,16 @@ class AdminProductController extends Controller
             ->with('success', 'Produk "' . $product->name . '" berhasil ditambahkan.');
     }
 
-    public function edit(Product $product)
+    public function edit(Product $produk)
     {
+        $product = $produk;
         $categories = ['Serum', 'Toner', 'Moisturizer', 'Sunscreen', 'Cleanser', 'Treatment'];
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $produk)
     {
+        $product = $produk;
         $request->validate([
             'name'                  => 'required|string|max:255',
             'price'                 => 'required|numeric|min:0',
@@ -110,6 +113,7 @@ class AdminProductController extends Controller
 
         $images = $product->images ?? [];
         if ($request->hasFile('images')) {
+            $images = [];
             foreach ($request->file('images') as $img) {
                 $images[] = asset('storage/' . $img->store('products', 'public'));
             }
@@ -142,9 +146,9 @@ class AdminProductController extends Controller
             ->with('success', 'Produk berhasil diperbarui.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $produk)
     {
-        $product->delete();
+        $produk->delete();
         return redirect()->route('admin.produk.index')
             ->with('success', 'Produk berhasil dihapus.');
     }

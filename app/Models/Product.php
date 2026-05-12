@@ -122,6 +122,12 @@ class Product extends Model
      */
     public function getAverageRatingAttribute(): float
     {
+        if (array_key_exists('approved_reviews_avg_rating', $this->attributes)) {
+            return round($this->attributes['approved_reviews_avg_rating'] ?? 0, 1);
+        }
+        if ($this->relationLoaded('approvedReviews')) {
+            return round($this->approvedReviews->avg('rating') ?? 0, 1);
+        }
         return round($this->approvedReviews()->avg('rating') ?? 0, 1);
     }
 

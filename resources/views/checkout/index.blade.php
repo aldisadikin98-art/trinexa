@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <div class="flex flex-col lg:flex-row gap-8 relative z-10" x-data="checkoutApp({{ $subtotal }}, {{ $wallet->balance }}, '{{ $user->address }}', {{ $userLoyaltyPoints }})">
+        <div class="flex flex-col lg:flex-row gap-8 relative z-10" x-data="checkoutApp({{ $subtotal }}, {{ $shipping_fee }}, {{ $wallet->balance }}, '{{ $user->address }}', {{ $userLoyaltyPoints }})">
             
             {{-- KOLOM KIRI --}}
             <div class="flex-1 space-y-6">
@@ -142,10 +142,15 @@
                     <h3 class="font-black text-[var(--tx-text-dark)] text-sm uppercase tracking-widest mb-4">Rincian Pembayaran</h3>
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between items-center">
-                            <span class="text-[var(--tx-text-muted)] font-bold text-xs uppercase tracking-widest">Subtotal Produk</span>
+                            <span class="text-[var(--tx-text-muted)] font-bold text-[10px] uppercase tracking-widest">Subtotal Produk</span>
                             <span class="font-black text-[var(--tx-text-dark)] text-sm">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                         </div>
                         
+                        <div class="flex justify-between items-center">
+                            <span class="text-[var(--tx-text-muted)] font-bold text-[10px] uppercase tracking-widest">Ongkos Kirim (5%)</span>
+                            <span class="font-black text-[var(--tx-text-dark)] text-sm">Rp {{ number_format($shipping_fee, 0, ',', '.') }}</span>
+                        </div>
+
                         <div class="flex justify-between items-center bg-green-50/50 p-2 rounded-lg border border-green-100" x-show="discountAmount > 0" x-cloak>
                             <span class="text-green-600 font-black text-xs uppercase tracking-widest">Diskon Voucher</span>
                             <span class="font-black text-green-600">- <span x-text="formatRupiah(discountAmount)"></span></span>
@@ -214,8 +219,9 @@
     @push('scripts')
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('checkoutApp', (initSubtotal, initWallet, userAddress, userLoyaltyPoints) => ({
+            Alpine.data('checkoutApp', (initSubtotal, initShipping, initWallet, userAddress, userLoyaltyPoints) => ({
                 subtotal: initSubtotal,
+                shipping: initShipping,
                 walletBalance: initWallet,
                 hasAddress: !!userAddress,
                 userCoins: userLoyaltyPoints,
@@ -223,7 +229,7 @@
                 
                 discountAmount: 0,
                 coinsDiscount: 0,
-                totalAfter: initSubtotal,
+                totalAfter: initSubtotal + initShipping,
                 
                 voucherInput: '',
                 activeVoucher: '',
@@ -233,12 +239,12 @@
                 isSubmitting: false,
 
                 get maxCoinsDiscount() {
-                    const tempTotal = this.subtotal - this.discountAmount;
+                    const tempTotal = this.subtotal + this.shipping - this.discountAmount;
                     return Math.min(this.userCoins, tempTotal);
                 },
 
                 calculateTotal() {
-                    let temp = this.subtotal - this.discountAmount;
+                    let temp = this.subtotal + this.shipping - this.discountAmount;
                     if (temp < 0) temp = 0;
                     
                     if (this.useCoins) {

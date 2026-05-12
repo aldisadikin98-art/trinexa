@@ -151,7 +151,7 @@ class ChatAIController extends Controller
             ? 'Always respond in English.'
             : 'Selalu balas dalam Bahasa Indonesia yang ramah dan santai.';
 
-        return "Kamu adalah Aura, konsultan skincare personal yang ramah dan ahli dari Naturea — brand skincare alami milik Trinexa.
+        return "Kamu adalah Truevera, konsultan skincare personal yang ramah dan ahli dari Naturea — brand skincare alami milik Trinexa.
 
 Kepribadianmu:
 - Ramah, hangat, dan supportif seperti sahabat terbaik

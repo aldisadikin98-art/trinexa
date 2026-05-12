@@ -19,8 +19,8 @@
             <div class="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] bg-[var(--tx-secondary)] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
             
             <div class="relative z-10">
-                <a href="{{ url('/') }}" class="flex items-center gap-3 mb-16 inline-flex">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] rounded-full flex items-center justify-center text-white font-black text-2xl shadow-md">T</div>
+                <a href="{{ url('/') }}" class="flex items-center gap-3 mb-16 inline-flex group">
+                    <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Trinexa" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white group-hover:scale-105 transition-transform">
                     <h1 class="text-3xl font-black text-[var(--tx-text-dark)] tracking-wider">TRINEXA</h1>
                 </a>
 
@@ -34,21 +34,27 @@
 
                 <div class="space-y-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white/60 flex items-center justify-center text-xl shadow-sm border border-white shrink-0">💳</div>
+                        <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-white shrink-0">
+                            <img src="{{ asset('images/logo harves.jpeg') }}" alt="Harves" class="w-full h-full object-cover">
+                        </div>
                         <div>
                             <h4 class="font-bold text-sm">Harvestly Wallet</h4>
                             <p class="text-[11px] text-[var(--tx-text-muted)] font-medium">Cek saldo & bayar instan</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white/60 flex items-center justify-center text-xl shadow-sm border border-white shrink-0">🛍️</div>
+                        <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-white shrink-0">
+                            <img src="{{ asset('images/logo natur.jpeg') }}" alt="Natur" class="w-full h-full object-cover">
+                        </div>
                         <div>
                             <h4 class="font-bold text-sm">Naturea Shop</h4>
                             <p class="text-[11px] text-[var(--tx-text-muted)] font-medium">Belanja skincare organik favoritmu</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white/60 flex items-center justify-center text-xl shadow-sm border border-white shrink-0">🎁</div>
+                        <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-white shrink-0">
+                            <img src="{{ asset('images/logo karebla.jpeg') }}" alt="Karebla" class="w-full h-full object-cover">
+                        </div>
                         <div>
                             <h4 class="font-bold text-sm">Karebla Points</h4>
                             <p class="text-[11px] text-[var(--tx-text-muted)] font-medium">Tukar botol kosong menjadi diskon</p>
@@ -68,7 +74,7 @@
             <!-- Mobile Logo (Visible only on small screens) -->
             <div class="md:hidden flex justify-center mb-10">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] rounded-full flex items-center justify-center text-white font-black text-2xl shadow-md">T</div>
+                    <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Trinexa" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white">
                     <h1 class="text-3xl font-black text-[var(--tx-text-dark)] tracking-wider">TRINEXA</h1>
                 </a>
             </div>
@@ -138,6 +144,19 @@
                 <button type="submit" class="btn-gradient w-full mt-6 py-4 text-lg rounded-2xl">
                     Masuk
                 </button>
+
+                <!-- OR Separator -->
+                <div class="flex items-center gap-4 my-2">
+                    <div class="flex-1 h-[2px] bg-white"></div>
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Atau</span>
+                    <div class="flex-1 h-[2px] bg-white"></div>
+                </div>
+
+                <!-- Google Login Button -->
+                <a href="{{ route('auth.google') }}" class="w-full py-4 bg-white border-2 border-white rounded-2xl flex items-center justify-center gap-3 font-extrabold text-[var(--tx-text-dark)] hover:bg-gray-50 transition-all duration-300 shadow-sm">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5">
+                    Masuk dengan Google
+                </a>
 
                 <!-- Register Link -->
                 <p class="text-center text-sm text-[var(--tx-text-muted)] mt-6 font-medium">

@@ -25,6 +25,11 @@ class KareblaProduct extends Model
         'is_active' => 'boolean',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function redemptions()
     {
         return $this->hasMany(KareblaRedemption::class);

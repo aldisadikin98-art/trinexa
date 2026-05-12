@@ -1,5 +1,31 @@
+<!-- 📱 MOBILE TOP BAR (Hanya di HP) -->
+<div class="md:hidden bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/50 px-4 h-16 flex items-center justify-between shadow-sm">
+    <a href="{{ route('user.dashboard') }}" class="flex items-center gap-2">
+        <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Logo" class="w-8 h-8 rounded-full object-cover border border-white shadow-sm">
+        <span class="font-black text-lg tracking-tight text-[var(--tx-text-dark)] uppercase">Trinexa</span>
+    </a>
+    <div class="flex items-center gap-3">
+        <a href="{{ route('notifications.index') }}" class="relative p-2 text-gray-400">
+            @if(auth()->check() && \App\Models\SiteNotification::where('user_id', auth()->id())->whereNull('read_at')->count() > 0)
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+            @endif
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+        </a>
+        <a href="{{ route('profile.edit') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white shadow-sm">
+            @if(Auth::user()->avatar)
+                <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover">
+            @else
+                <div class="w-full h-full bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-tertiary)] text-white flex items-center justify-center font-bold text-[10px]">
+                    {{ substr(Auth::user()->name ?? 'U', 0, 1) }}
+                </div>
+            @endif
+        </a>
+    </div>
+</div>
+
 <!-- 🌐 TOP NAVBAR (Hanya di Laptop/Desktop) -->
-<header class="bg-white/70 backdrop-blur-md sticky top-0 z-50 border-b border-white/50 shadow-[0_4px_30px_rgb(0,0,0,0.03)]">
+<header class="hidden md:block bg-white/70 backdrop-blur-md sticky top-0 z-50 border-b border-white/50 shadow-[0_4px_30px_rgb(0,0,0,0.03)]">
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
         
         <!-- Logo -->
@@ -17,7 +43,7 @@
             <a href="{{ route('user.wallet.show') }}" class="{{ request()->routeIs('user.wallet.*') ? 'bg-[var(--tx-primary)] text-white px-4 py-2 rounded-full font-bold shadow-md shadow-[var(--tx-primary)]/30' : 'text-[var(--tx-text-muted)] hover:text-[var(--tx-primary)] font-semibold transition-colors px-3 py-2' }}">Dompet</a>
             <a href="{{ route('dermatology.index') }}" class="{{ request()->routeIs('dermatology.*') ? 'bg-[var(--tx-primary)] text-white px-4 py-2 rounded-full font-bold shadow-md shadow-[var(--tx-primary)]/30' : 'text-[var(--tx-text-muted)] hover:text-[var(--tx-primary)] font-semibold transition-colors px-3 py-2' }}">Dermatology</a>
             <a href="{{ route('user.loyalty.index') }}" class="{{ request()->routeIs('user.loyalty.*') ? 'bg-[var(--tx-primary)] text-white px-4 py-2 rounded-full font-bold shadow-md shadow-[var(--tx-primary)]/30' : 'text-[var(--tx-text-muted)] hover:text-[var(--tx-primary)] font-semibold transition-colors px-3 py-2' }}">Loyalty</a>
-            <a href="{{ route('konsultasi.index') }}" class="{{ request()->routeIs('konsultasi.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white px-4 py-2 rounded-full font-bold shadow-md shadow-[var(--tx-secondary)]/30 flex items-center gap-1.5' : 'text-[var(--tx-secondary)] hover:text-[var(--tx-primary)] font-black transition-colors px-3 py-2 flex items-center gap-1.5' }}">🤖 Aura AI</a>
+            <a href="{{ route('konsultasi.index') }}" class="{{ request()->routeIs('konsultasi.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white px-4 py-2 rounded-full font-bold shadow-md shadow-[var(--tx-secondary)]/30 flex items-center gap-1.5' : 'text-[var(--tx-secondary)] hover:text-[var(--tx-primary)] font-black transition-colors px-3 py-2 flex items-center gap-1.5' }}">🤖 Truevera AI</a>
         </nav>
 
         <!-- Kanan: Ikon & Profil -->
@@ -39,19 +65,28 @@
             </a>
 
             <!-- Notifikasi -->
-            <button class="relative p-2 text-gray-400 hover:text-[var(--tx-primary)] transition-colors rounded-full hover:bg-gray-50">
+            <a href="{{ route('notifications.index') }}" class="relative p-2 text-gray-400 hover:text-[var(--tx-primary)] transition-colors rounded-full hover:bg-gray-50">
+                @php 
+                    $unreadCount = auth()->check() ? \App\Models\SiteNotification::where('user_id', auth()->id())->whereNull('read_at')->count() : 0;
+                @endphp
+                @if($unreadCount > 0)
                 <span class="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
                 </span>
+                @endif
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-            </button>
+            </a>
             
             <!-- Profil -->
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open" @click.away="open = false" class="hidden md:flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white shadow-sm hover:border-[var(--tx-primary)] transition-all group">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-tertiary)] text-white flex items-center justify-center font-bold text-xs shadow-inner">
-                        {{ substr(Auth::user()->name ?? 'U', 0, 1) }}
+                    <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shadow-inner border border-white bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-tertiary)]">
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover">
+                        @else
+                            <span class="text-white font-bold text-xs">{{ substr(Auth::user()->name ?? 'U', 0, 1) }}</span>
+                        @endif
                     </div>
                     <span class="text-sm font-semibold text-[var(--tx-text-dark)] group-hover:text-[var(--tx-primary)]">{{ Auth::user()->name ?? 'User' }}</span>
                 </button>
@@ -134,6 +169,6 @@
         <div class="p-2 rounded-xl {{ request()->routeIs('konsultasi.*') ? 'bg-[var(--tx-secondary-light)] text-[var(--tx-secondary)] scale-110' : 'group-hover:bg-[var(--tx-secondary-light)] text-[var(--tx-secondary)] group-hover:scale-110 transition-all' }}">
             <span class="text-xl">🤖</span>
         </div>
-        <span class="text-[10px] font-bold">Aura AI</span>
+        <span class="text-[10px] font-bold">Truevera AI</span>
     </a>
 </nav>

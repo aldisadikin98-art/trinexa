@@ -3,8 +3,8 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8 relative">
         <!-- Dekorasi Orb -->
-        <div class="absolute right-0 top-0 w-96 h-96 bg-gradient-to-bl from-[var(--tx-primary-light)] to-[var(--tx-secondary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-50 z-[-1]"></div>
-        <div class="absolute left-0 bottom-0 w-96 h-96 bg-gradient-to-tr from-[var(--tx-tertiary-light)] to-[var(--tx-pink)] rounded-full translate-y-1/3 -translate-x-1/3 blur-3xl opacity-50 z-[-1]"></div>
+        <div class="absolute right-0 top-0 w-96 h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-primary-light)] via-[var(--tx-secondary-light)] to-transparent rounded-full -translate-y-1/2 translate-x-1/3 opacity-40 z-[-1]"></div>
+        <div class="absolute left-0 bottom-0 w-96 h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-tertiary-light)] via-[var(--tx-pink)] to-transparent rounded-full translate-y-1/3 -translate-x-1/3 opacity-40 z-[-1]"></div>
 
         <div class="flex flex-col lg:flex-row gap-8 relative z-10">
             
@@ -111,10 +111,11 @@
                 @else
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($products as $product)
-                            <div class="glass-card border border-white/60 p-4 rounded-[2rem] overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full bg-white/40">
+                            <div class="bg-white/60 border border-white/60 p-4 rounded-[2rem] overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full">
                                 {{-- Image Area --}}
-                                <div class="relative aspect-square w-full bg-white/60 rounded-2xl overflow-hidden mb-4 border border-white/50">
+                                <div class="relative aspect-square w-full bg-white/80 rounded-2xl overflow-hidden mb-4 border border-white/50">
                                     <img src="{{ $product->primary_image }}" alt="{{ $product->name }}" 
+                                         loading="lazy"
                                          class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-500"
                                          onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80'">
                                     

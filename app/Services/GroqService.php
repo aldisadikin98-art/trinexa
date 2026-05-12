@@ -40,7 +40,7 @@ class GroqService
         ])->timeout(30)->post($this->baseUrl . '/chat/completions', $payload);
 
         if ($response->failed()) {
-            return 'Maaf, Aura sedang tidak bisa menjawab saat ini. Coba lagi ya! 🌸';
+            return 'Maaf, Truevera sedang tidak bisa menjawab saat ini. Coba lagi ya! 🌸';
         }
 
         return $response->json('choices.0.message.content', 'Maaf, aku tidak bisa menjawab saat ini.');

@@ -29,8 +29,8 @@
                 <div class="relative p-8 md:p-10 flex flex-col h-full">
                     <div class="flex items-center justify-between mb-8">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-[12px] bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-inner">
-                                <span class="text-white text-lg">💳</span>
+                            <div class="w-10 h-10 rounded-[12px] bg-white flex items-center justify-center overflow-hidden shadow-inner border border-white/30">
+                                <img src="{{ asset('images/logo harves.jpeg') }}" alt="Harves" class="w-full h-full object-cover">
                             </div>
                             <span class="text-white/90 font-black text-sm tracking-widest uppercase drop-shadow-sm">Harvestly Wallet</span>
                         </div>

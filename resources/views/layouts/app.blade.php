@@ -43,8 +43,8 @@
     @stack('scripts')
 
     @auth
-    {{-- ── Floating Aura Button ─────────────────────────────── --}}
-    <div id="aura-float-container" class="fixed bottom-6 right-6 z-50" x-data="auraFloat()">
+    {{-- ── Floating Truevera Button ─────────────────────────────── --}}
+    <div id="truevera-float-container" class="fixed bottom-6 right-6 z-50" x-data="trueveraFloat()">
 
         {{-- Popup Chat --}}
         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 scale-95" class="mb-4 w-80 bg-white/80 backdrop-blur-xl rounded-[24px] shadow-2xl border border-white/60 overflow-hidden" style="display:none">
@@ -52,7 +52,7 @@
             {{-- Header --}}
             <div class="bg-gradient-to-r from-[var(--tx-secondary-light)] to-[var(--tx-tertiary-light)] px-4 py-3 flex items-center justify-between border-b border-white/50">
                 <div class="flex items-center gap-2">
-                    <div class="aura-float">
+                    <div class="truevera-float">
                         <svg width="32" height="36" viewBox="0 0 140 160" fill="none">
                             <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6"/>
                             <rect x="30" y="40" width="80" height="75" rx="28" fill="white" opacity="0.95"/>
@@ -70,7 +70,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="font-black text-[var(--tx-text-dark)] text-sm">Aura</p>
+                        <p class="font-black text-[var(--tx-text-dark)] text-sm">Truevera</p>
                         <div class="flex items-center gap-1">
                             <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                             <span class="text-[9px] font-black text-green-500 uppercase tracking-widest">Online</span>
@@ -88,7 +88,7 @@
                 <div class="flex gap-2">
                     <div class="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--tx-secondary-light)] to-[var(--tx-tertiary-light)] flex items-center justify-center text-sm border border-white">🤖</div>
                     <div class="bg-white/80 backdrop-blur-sm rounded-[16px] rounded-tl-[4px] px-3 py-2 text-xs font-bold text-[var(--tx-text-dark)] shadow-sm max-w-[85%] border border-white/60">
-                        Halo {{ auth()->user()->name }}! Aku Aura 🌸 Ada yang mau ditanyain soal kulitmu?
+                        Halo {{ auth()->user()->name }}! Aku Truevera 🌸 Ada yang mau ditanyain soal kulitmu?
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
 
             {{-- Input --}}
             <div class="p-3 border-t border-white/50 flex gap-2 bg-white/20">
-                <input id="quick-input" type="text" placeholder="Tanya Aura..." x-model="quickMsg"
+                <input id="quick-input" type="text" placeholder="Tanya Truevera..." x-model="quickMsg"
                     @keypress.enter="quickSend()"
                     class="flex-1 text-xs font-bold bg-white/60 border border-white/60 rounded-full px-4 py-2 focus:outline-none focus:border-[var(--tx-secondary)] backdrop-blur-sm placeholder:text-gray-400">
                 <button @click="quickSend()" class="w-9 h-9 bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] rounded-full flex items-center justify-center text-white shadow-md hover:-translate-y-0.5 transition-transform">
@@ -113,7 +113,7 @@
 
         {{-- Floating Button --}}
         <button @click="open = !open" class="group relative flex items-center gap-2.5 bg-gradient-to-r from-[var(--tx-secondary)] to-[var(--tx-tertiary)] text-white font-black px-5 py-3 rounded-full shadow-xl shadow-[var(--tx-secondary)]/30 hover:shadow-[var(--tx-secondary)]/50 transition-all duration-300 hover:-translate-y-1 border border-white/30">
-            <div class="aura-float">
+            <div class="truevera-float">
                 <svg width="28" height="32" viewBox="0 0 140 160" fill="none">
                     <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="rgba(255,255,255,0.8)"/>
                     <rect x="30" y="40" width="80" height="75" rx="28" fill="white" opacity="0.9"/>
@@ -129,13 +129,13 @@
                     <rect x="45" y="112" width="50" height="40" rx="18" fill="rgba(255,255,255,0.3)"/>
                 </svg>
             </div>
-            <span class="text-sm">Tanya Aura</span>
+            <span class="text-sm">Tanya Truevera</span>
             <span class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></span>
         </button>
     </div>
 
     <script>
-        function auraFloat() {
+        function trueveraFloat() {
             return {
                 open: false,
                 quickMsg: '',

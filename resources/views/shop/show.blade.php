@@ -3,8 +3,8 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8 md:py-12 relative">
         <!-- Dekorasi Orb -->
-        <div class="absolute right-0 top-0 w-96 h-96 bg-gradient-to-bl from-[var(--tx-primary-light)] to-[var(--tx-secondary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-50 z-[-1]"></div>
-        <div class="absolute left-0 bottom-0 w-96 h-96 bg-gradient-to-tr from-[var(--tx-tertiary-light)] to-[var(--tx-pink)] rounded-full translate-y-1/3 -translate-x-1/3 blur-3xl opacity-50 z-[-1]"></div>
+        <div class="absolute right-0 top-0 w-96 h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-primary-light)] via-[var(--tx-secondary-light)] to-transparent rounded-full -translate-y-1/2 translate-x-1/3 opacity-40 z-[-1]"></div>
+        <div class="absolute left-0 bottom-0 w-96 h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-tertiary-light)] via-[var(--tx-pink)] to-transparent rounded-full translate-y-1/3 -translate-x-1/3 opacity-40 z-[-1]"></div>
 
         {{-- Breadcrumb --}}
         <nav class="flex text-[10px] font-black uppercase tracking-widest text-gray-400 mb-8 glass-card w-fit px-5 py-2 rounded-full border border-white/60">

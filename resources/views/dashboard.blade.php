@@ -66,10 +66,10 @@
             </a>
             @endif
 
-            {{-- Aura AI + Face Scan --}}
+            {{-- Truevera AI + Face Scan --}}
             <div class="glass-card p-8 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all border border-white/50 shadow-lg relative overflow-hidden">
                 <div class="absolute inset-0 opacity-10 pointer-events-none" style="background: radial-gradient(circle at 50% 30%, var(--tx-secondary) 0%, transparent 70%);"></div>
-                <div class="relative z-10 aura-float mb-4">
+                <div class="relative z-10 truevera-float mb-4">
                     <svg width="56" height="64" viewBox="0 0 140 160" fill="none">
                         <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6"/>
                         <circle cx="55" cy="20" r="4" fill="#9B8EC4"/>
@@ -87,11 +87,11 @@
                         <ellipse cx="42" cy="88" rx="8" ry="5" fill="#F472B6" opacity="0.35"/>
                         <ellipse cx="98" cy="88" rx="8" ry="5" fill="#F472B6" opacity="0.35"/>
                         <path d="M57 97 Q70 108 83 97" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        <rect x="45" y="112" width="50" height="40" rx="18" fill="url(#dashAura)"/>
-                        <defs><linearGradient id="dashAura" x1="45" y1="112" x2="95" y2="152"><stop stop-color="#4A90D9"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
+                        <rect x="45" y="112" width="50" height="40" rx="18" fill="url(#dashTruevera)"/>
+                        <defs><linearGradient id="dashTruevera" x1="45" y1="112" x2="95" y2="152"><stop stop-color="#4A90D9"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
                     </svg>
                 </div>
-                <h4 class="relative z-10 text-base font-black text-[var(--tx-text-dark)] mb-1">Konsultasi AI Aura</h4>
+                <h4 class="relative z-10 text-base font-black text-[var(--tx-text-dark)] mb-1">Konsultasi AI Truevera</h4>
                 <p class="relative z-10 text-[10px] text-[var(--tx-text-muted)] font-bold mb-5 uppercase tracking-widest">Chat · Face Scan · Rekomendasi</p>
                 <div class="relative z-10 flex gap-2 w-full">
                     <a href="{{ route('konsultasi.chat.index') }}" class="flex-1 btn-gradient py-2.5 text-xs gap-1 justify-center">💬 Chat</a>

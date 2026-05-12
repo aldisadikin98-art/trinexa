@@ -4,34 +4,34 @@
     {{-- ═══ ROW 1: Stat Cards ═══ --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {{-- Total Pesanan --}}
-        <div class="glass-card p-8 rounded-[2.5rem] border border-white/60 hover:-translate-y-2 transition-transform duration-300 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/40 hover:bg-white/60 relative overflow-hidden group">
-            <div class="absolute -right-8 -top-8 w-32 h-32 bg-[var(--tx-primary-light)] rounded-full opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+        <a href="{{ route('admin.pesanan.index') }}" class="block glass-card p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] border border-white/60 hover:-translate-y-2 transition-transform duration-300 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/40 hover:bg-white/60 relative overflow-hidden group">
+            <div class="absolute -right-8 -top-8 w-24 h-24 md:w-32 md:h-32 bg-[var(--tx-primary-light)] rounded-full opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div class="relative z-10">
-                <div class="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-[var(--tx-primary)]/30 group-hover:scale-110 transition-transform">📦</div>
-                <p class="text-[10px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-2">Total Pesanan</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-[1rem] md:rounded-[1.5rem] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-xl md:text-3xl mb-4 md:mb-6 shadow-lg shadow-[var(--tx-primary)]/30 group-hover:scale-110 transition-transform">📦</div>
+                <p class="text-[9px] md:text-[10px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1 md:mb-2">Total Pesanan</p>
                 <p class="text-4xl font-black text-[var(--tx-text-dark)]">{{ number_format($totalOrders) }}</p>
                 <p class="text-xs text-[var(--tx-primary)] font-bold mt-3 bg-white/60 inline-flex px-3 py-1 rounded-full shadow-sm">↑ +{{ $todayOrders }} hari ini</p>
             </div>
-        </div>
+        </a>
 
         {{-- Pesanan Pending --}}
-        <div class="glass-card p-8 rounded-[2.5rem] border border-white/60 hover:-translate-y-2 transition-transform duration-300 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/40 hover:bg-white/60 relative overflow-hidden group">
-            <div class="absolute -right-8 -top-8 w-32 h-32 bg-amber-100 rounded-full opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+        <a href="{{ route('admin.pesanan.index', ['status' => 'pending']) }}" class="block glass-card p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] border border-white/60 hover:-translate-y-2 transition-transform duration-300 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/40 hover:bg-white/60 relative overflow-hidden group">
+            <div class="absolute -right-8 -top-8 w-24 h-24 md:w-32 md:h-32 bg-amber-100 rounded-full opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div class="relative z-10">
-                <div class="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-amber-300 to-amber-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">⏳</div>
-                <p class="text-[10px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-2">Pesanan Pending</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-[1rem] md:rounded-[1.5rem] bg-gradient-to-br from-amber-300 to-amber-500 text-white flex items-center justify-center text-xl md:text-3xl mb-4 md:mb-6 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">⏳</div>
+                <p class="text-[9px] md:text-[10px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1 md:mb-2">Pesanan Pending</p>
                 <p class="text-4xl font-black text-[var(--tx-text-dark)]">{{ number_format($pendingOrders) }}</p>
                 <p class="text-xs text-amber-600 font-bold mt-3 bg-white/60 inline-flex px-3 py-1 rounded-full shadow-sm">⚠ Perlu diproses</p>
             </div>
-        </div>
+        </a>
 
         {{-- Pendapatan (Solid Gradient) --}}
-        <div class="rounded-[2.5rem] p-8 shadow-xl shadow-[var(--tx-primary)]/30 bg-gradient-to-br from-[var(--tx-primary)] via-[var(--tx-secondary)] to-[#7BB3E8] text-white relative overflow-hidden hover:-translate-y-2 transition-transform duration-300 group border border-white/40">
-            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/30 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
+        <a href="{{ route('admin.financial.index') }}" class="block rounded-3xl md:rounded-[2.5rem] p-5 md:p-8 shadow-xl shadow-[var(--tx-primary)]/30 bg-gradient-to-br from-[var(--tx-primary)] via-[var(--tx-secondary)] to-[#7BB3E8] text-white relative overflow-hidden hover:-translate-y-2 transition-transform duration-300 group border border-white/40">
+            <div class="absolute -right-10 -bottom-10 w-24 h-24 md:w-40 md:h-40 bg-white/30 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
             <div class="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                    <div class="w-16 h-16 rounded-[1.5rem] bg-white/20 text-white flex items-center justify-center text-3xl mb-6 backdrop-blur-md shadow-inner border border-white/30 group-hover:scale-110 transition-transform">💰</div>
-                    <p class="text-[10px] font-black text-white/90 uppercase tracking-widest mb-2">Pendapatan</p>
+                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-[1rem] md:rounded-[1.5rem] bg-white/20 text-white flex items-center justify-center text-xl md:text-3xl mb-4 md:mb-6 backdrop-blur-md shadow-inner border border-white/30 group-hover:scale-110 transition-transform">💰</div>
+                    <p class="text-[9px] md:text-[10px] font-black text-white/90 uppercase tracking-widest mb-1 md:mb-2">Pendapatan</p>
                     <p class="text-4xl font-black mb-2 tracking-tight">
                         @if($revenue >= 1000000)
                             <span class="text-2xl">Rp</span>{{ number_format($revenue / 1000000, 1) }}<span class="text-2xl">jt</span>
@@ -50,41 +50,41 @@
                     minggu ini
                 </div>
             </div>
-        </div>
+        </a>
 
         {{-- Ulasan Pending --}}
-        <div class="glass-card p-8 rounded-[2.5rem] border border-white/60 hover:-translate-y-2 transition-transform duration-300 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/40 hover:bg-white/60 relative overflow-hidden group">
-            <div class="absolute -right-8 -top-8 w-32 h-32 bg-[var(--tx-tertiary-light)] rounded-full opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+        <a href="{{ route('admin.ulasan.index', ['status' => 'pending']) }}" class="block glass-card p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] border border-white/60 hover:-translate-y-2 transition-transform duration-300 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/40 hover:bg-white/60 relative overflow-hidden group">
+            <div class="absolute -right-8 -top-8 w-24 h-24 md:w-32 md:h-32 bg-[var(--tx-tertiary-light)] rounded-full opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div class="relative z-10">
-                <div class="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-[var(--tx-tertiary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-[var(--tx-tertiary)]/30 group-hover:scale-110 transition-transform">⭐</div>
-                <p class="text-[10px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-2">Ulasan Pending</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-[1rem] md:rounded-[1.5rem] bg-gradient-to-br from-[var(--tx-tertiary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-xl md:text-3xl mb-4 md:mb-6 shadow-lg shadow-[var(--tx-tertiary)]/30 group-hover:scale-110 transition-transform">⭐</div>
+                <p class="text-[9px] md:text-[10px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1 md:mb-2">Ulasan Pending</p>
                 <p class="text-4xl font-black text-[var(--tx-text-dark)]">{{ number_format($pendingReviews) }}</p>
                 <p class="text-xs text-[var(--tx-text-muted)] font-bold mt-3 bg-white/60 inline-flex px-3 py-1 rounded-full shadow-sm">
                     {{ $pendingReviews === 0 ? '✅ Semua termoderasi' : '⚠ Menunggu moderasi' }}
                 </p>
             </div>
-        </div>
+        </a>
     </div>
 
     {{-- ═══ ROW 2: Stat Cards (Rewards) ═══ --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {{-- Total User --}}
-        <div class="glass-card p-6 rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-4">
-            <div class="w-14 h-14 rounded-[1.25rem] bg-white border border-[var(--tx-primary)]/20 text-[var(--tx-primary)] flex items-center justify-center text-2xl shadow-sm shrink-0">👥</div>
+        <a href="{{ route('admin.users.index') }}" class="block glass-card p-4 md:p-6 rounded-2xl md:rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-3 md:gap-4 group">
+            <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-[1.25rem] bg-white border border-[var(--tx-primary)]/20 text-[var(--tx-primary)] flex items-center justify-center text-lg md:text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">👥</div>
             <div>
-                <p class="text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1">Total User</p>
+                <p class="text-[8px] md:text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-0.5 md:mb-1">Total User</p>
                 <div class="flex items-end gap-2">
                     <p class="text-2xl font-black text-[var(--tx-text-dark)] leading-none">{{ number_format($totalUsers) }}</p>
                     <p class="text-[10px] text-[var(--tx-primary)] font-bold mb-0.5">↑ +{{ $newUsersThisWeek }}</p>
                 </div>
             </div>
-        </div>
+        </a>
 
         {{-- Produk Aktif --}}
-        <div class="glass-card p-6 rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-4">
-            <div class="w-14 h-14 rounded-[1.25rem] bg-white border border-[var(--tx-quaternary)]/20 text-[var(--tx-quaternary)] flex items-center justify-center text-2xl shadow-sm shrink-0">🧴</div>
+        <a href="{{ route('admin.produk.index') }}" class="block glass-card p-4 md:p-6 rounded-2xl md:rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-3 md:gap-4">
+            <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-[1.25rem] bg-white border border-[var(--tx-quaternary)]/20 text-[var(--tx-quaternary)] flex items-center justify-center text-lg md:text-2xl shadow-sm shrink-0">🧴</div>
             <div>
-                <p class="text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1">Produk Aktif</p>
+                <p class="text-[8px] md:text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-0.5 md:mb-1">Produk Aktif</p>
                 <div class="flex items-end gap-2">
                     <p class="text-2xl font-black text-[var(--tx-text-dark)] leading-none">{{ number_format($activeProducts) }}</p>
                 </div>
@@ -92,13 +92,13 @@
                     <p class="text-[9px] text-red-500 font-bold mt-1">⚠ {{ $lowStockProducts }} stok tipis</p>
                 @endif
             </div>
-        </div>
+        </a>
 
         {{-- Koin Beredar --}}
-        <div class="glass-card p-6 rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-4">
-            <div class="w-14 h-14 rounded-[1.25rem] bg-white border border-[var(--tx-tertiary)]/20 text-[var(--tx-tertiary)] flex items-center justify-center text-2xl shadow-sm shrink-0">🪙</div>
+        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-3 md:gap-4">
+            <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-[1.25rem] bg-white border border-[var(--tx-tertiary)]/20 text-[var(--tx-tertiary)] flex items-center justify-center text-lg md:text-2xl shadow-sm shrink-0">🪙</div>
             <div>
-                <p class="text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1">Koin Beredar</p>
+                <p class="text-[8px] md:text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-0.5 md:mb-1">Koin Beredar</p>
                 <div class="flex items-end gap-2">
                     <p class="text-2xl font-black text-[var(--tx-text-dark)] leading-none">{{ number_format($totalCoins) }}</p>
                 </div>
@@ -106,10 +106,10 @@
         </div>
 
         {{-- Saldo Harvestly --}}
-        <div class="glass-card p-6 rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-4">
-            <div class="w-14 h-14 rounded-[1.25rem] bg-white border border-[var(--tx-secondary)]/20 text-[var(--tx-secondary)] flex items-center justify-center text-2xl shadow-sm shrink-0">💳</div>
+        <a href="{{ route('admin.wallets.index') }}" class="block glass-card p-4 md:p-6 rounded-2xl md:rounded-[2rem] border border-white/60 hover:-translate-y-1 transition-transform bg-white/40 shadow-sm flex items-center gap-3 md:gap-4 group">
+            <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-[1.25rem] bg-white border border-[var(--tx-secondary)]/20 text-[var(--tx-secondary)] flex items-center justify-center text-lg md:text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">💳</div>
             <div>
-                <p class="text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-1">Saldo User</p>
+                <p class="text-[8px] md:text-[9px] font-black text-[var(--tx-text-muted)] uppercase tracking-widest mb-0.5 md:mb-1">Saldo User</p>
                 <div class="flex items-end gap-2">
                     <p class="text-xl font-black text-[var(--tx-text-dark)] leading-none">
                         @if($totalHarvestly >= 1000000)
@@ -120,7 +120,7 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     {{-- ═══ ROW 3: Chart & Status ═══ --}}
@@ -134,12 +134,14 @@
                 @php $maxVal = max(array_merge($dailyRevenue, [1])); @endphp
                 @foreach($dailyRevenue as $i => $val)
                     @php $pct = max(5, round(($val / $maxVal) * 100)); @endphp
-                    <div class="flex-1 flex flex-col items-center gap-3 group">
-                        <span class="text-[11px] bg-white border border-gray-100 shadow-sm px-3 py-1 rounded-lg text-[var(--tx-text-dark)] font-black opacity-0 group-hover:opacity-100 transition-opacity -translate-y-4 group-hover:translate-y-0 duration-300">
-                            @if($val >= 1000000) {{ round($val/1000000, 1) }}jt @elseif($val >= 1000) {{ round($val/1000) }}k @else {{ $val }} @endif
-                        </span>
-                        <div class="w-full rounded-[14px] bg-gradient-to-t from-[var(--tx-primary)] via-[var(--tx-secondary)] to-[var(--tx-tertiary)] opacity-60 group-hover:opacity-100 transition-all duration-500 shadow-lg border border-white/60 relative overflow-hidden" style="height: {{ $pct }}%">
-                            <div class="absolute inset-0 bg-white/20 group-hover:animate-pulse"></div>
+                    <div class="flex-1 flex flex-col items-center group h-full">
+                        <div class="flex-1 w-full flex flex-col justify-end items-center gap-2 mb-3">
+                            <span class="text-[11px] bg-white border border-gray-100 shadow-sm px-3 py-1 rounded-lg text-[var(--tx-text-dark)] font-black opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:-translate-y-2 duration-300">
+                                @if($val >= 1000000) {{ round($val/1000000, 1) }}jt @elseif($val >= 1000) {{ round($val/1000) }}k @else {{ $val }} @endif
+                            </span>
+                            <div class="w-full rounded-[14px] bg-gradient-to-t from-[var(--tx-primary)] via-[var(--tx-secondary)] to-[var(--tx-tertiary)] opacity-60 group-hover:opacity-100 transition-all duration-500 shadow-lg border border-white/60 relative overflow-hidden" style="height: {{ $pct }}%">
+                                <div class="absolute inset-0 bg-white/20 group-hover:animate-pulse"></div>
+                            </div>
                         </div>
                         <span class="text-[10px] md:text-xs text-[var(--tx-text-dark)] font-black uppercase tracking-widest">{{ $dailyLabels[$i] }}</span>
                     </div>

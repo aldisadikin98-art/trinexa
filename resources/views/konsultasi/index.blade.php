@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">Konsultasi AI Aura | Trinexa</x-slot>
+    <x-slot name="title">Konsultasi AI Truevera | Trinexa</x-slot>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -7,8 +7,8 @@
         <div class="glass-card relative overflow-hidden border border-white/50 mb-10 shadow-xl">
             <div class="absolute inset-0 opacity-20 pointer-events-none" style="background: radial-gradient(circle at 20% 50%, var(--tx-secondary) 0%, transparent 60%), radial-gradient(circle at 80% 50%, var(--tx-primary) 0%, transparent 60%);"></div>
             <div class="relative p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
-                {{-- Aura Mascot --}}
-                <div class="shrink-0 aura-float">
+                {{-- Truevera Mascot --}}
+                <div class="shrink-0 truevera-float">
                     <svg width="140" height="160" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <!-- Crown -->
                         <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6" opacity="0.9"/>
@@ -32,8 +32,8 @@
                         <!-- Eyes -->
                         <ellipse cx="55" cy="72" rx="10" ry="11" fill="#4A90D9"/>
                         <ellipse cx="85" cy="72" rx="10" ry="11" fill="#4A90D9"/>
-                        <ellipse cx="55" cy="72" rx="6" ry="7" fill="#1E293B" class="aura-blink" style="transform-origin: 55px 72px;"/>
-                        <ellipse cx="85" cy="72" rx="6" ry="7" fill="#1E293B" class="aura-blink" style="transform-origin: 85px 72px;"/>
+                        <ellipse cx="55" cy="72" rx="6" ry="7" fill="#1E293B" class="truevera-blink" style="transform-origin: 55px 72px;"/>
+                        <ellipse cx="85" cy="72" rx="6" ry="7" fill="#1E293B" class="truevera-blink" style="transform-origin: 85px 72px;"/>
                         <circle cx="57" cy="70" r="2" fill="white"/>
                         <circle cx="87" cy="70" r="2" fill="white"/>
                         <!-- Blush -->
@@ -64,14 +64,14 @@
                         🤖 AI SKINCARE CONSULTANT
                     </div>
                     <h1 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] mb-3 leading-tight">
-                        Hai, aku <span class="text-gradient">Aura</span>! 🌸
+                        Hai, aku <span class="text-gradient">Truevera</span>! 🌸
                     </h1>
                     <p class="text-[var(--tx-text-muted)] font-bold text-base mb-6 max-w-lg leading-relaxed">
                         Konsultan skincare AI personal kamu. Tanyakan apapun tentang kulit, dan aku siap bantu dengan saran terbaik!
                     </p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-3">
                         <a href="{{ route('konsultasi.chat.index') }}" class="btn-gradient gap-2 shadow-xl">
-                            💬 Tanya Aura
+                            💬 Tanya Truevera
                         </a>
                         <a href="{{ route('konsultasi.face-scan.index') }}" class="btn-outline-white gap-2">
                             📸 Face Scan AI
@@ -103,7 +103,7 @@
                         💬
                     </div>
                     <div>
-                        <h2 class="text-xl font-black text-[var(--tx-text-dark)] mb-2">Tanya Aura</h2>
+                        <h2 class="text-xl font-black text-[var(--tx-text-dark)] mb-2">Tanya Truevera</h2>
                         <p class="text-sm font-bold text-[var(--tx-text-muted)] leading-relaxed mb-4">Chat langsung dengan AI skincare. Tanya soal rutinitas, bahan aktif, rekomendasi produk, dan masalah kulit spesifikmu.</p>
                         <div class="flex items-center gap-2 text-[var(--tx-secondary)] font-black text-xs uppercase tracking-widest">
                             Mulai Chat <span class="group-hover:translate-x-1 transition-transform">→</span>
@@ -153,7 +153,7 @@
         <div class="glass-card p-8 border border-white/50">
             <h3 class="font-black text-[var(--tx-text-dark)] text-lg mb-6 flex items-center gap-3">
                 <span class="w-10 h-10 rounded-[12px] bg-[var(--tx-quaternary-light)] flex items-center justify-center text-xl border border-white shadow-sm">✨</span>
-                Tips Singkat dari Aura
+                Tips Singkat dari Truevera
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 @foreach([

@@ -9,7 +9,9 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::active()->naturea()->with('approvedReviews');
+        $query = Product::active()->naturea()
+            ->withCount('approvedReviews')
+            ->withAvg('approvedReviews', 'rating');
 
         // Search
         if ($request->filled('search')) {

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">Hasil Face Scan | Aura Trinexa</x-slot>
+    <x-slot name="title">Hasil Face Scan | Truevera Trinexa</x-slot>
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -59,7 +59,7 @@
                 {{-- Actions --}}
                 <div class="shrink-0 flex flex-col gap-3">
                     <a href="{{ route('konsultasi.face-scan.index') }}" class="btn-gradient gap-2 text-sm">📸 Scan Ulang</a>
-                    <a href="{{ route('konsultasi.chat.index') }}" class="btn-outline-white gap-2 text-sm">💬 Tanya Aura</a>
+                    <a href="{{ route('konsultasi.chat.index') }}" class="btn-outline-white gap-2 text-sm">💬 Tanya Truevera</a>
                     <button onclick="deleteScan()" class="text-[10px] font-black uppercase tracking-widest text-red-400 hover:text-red-600 transition-colors py-2 border border-red-200 rounded-[12px] bg-red-50/50 hover:bg-red-50">🗑️ Hapus</button>
                 </div>
             </div>

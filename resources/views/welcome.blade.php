@@ -42,8 +42,8 @@
             animation: logoShine 3s linear infinite;
         }
         
-        /* Aura AI Core Animation */
-        .aura-core { animation: pulseCore 3s ease-in-out infinite; }
+        /* Truevera AI Core Animation */
+        .truevera-core { animation: pulseCore 3s ease-in-out infinite; }
         @keyframes pulseCore {
             0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(244, 114, 182, 0.4)); }
             50% { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(244, 114, 182, 0.6)); }
@@ -72,8 +72,8 @@
             <div class="hidden md:flex flex-1 justify-center items-center gap-8 font-black text-[11px] uppercase tracking-[0.2em] text-[var(--tx-text-muted)]">
                 <a href="#beranda" class="hover:text-[var(--tx-primary)] transition-colors">Beranda</a>
                 <a href="#fitur" class="hover:text-[var(--tx-primary)] transition-colors">Ekosistem</a>
-                <a href="#aura-ai" class="hover:text-[var(--tx-primary)] transition-colors flex items-center gap-1.5 text-[var(--tx-text-dark)] bg-gray-100/50 px-3 py-1.5 rounded-full border border-gray-200/50">
-                    <span class="text-sm">🤖</span> Aura AI
+                <a href="#truevera-ai" class="hover:text-[var(--tx-primary)] transition-colors flex items-center gap-1.5 text-[var(--tx-text-dark)] bg-gray-100/50 px-3 py-1.5 rounded-full border border-gray-200/50">
+                    <span class="text-sm">🤖</span> Truevera AI
                 </a>
             </div>
 
@@ -161,9 +161,14 @@
                             </div>
 
                             <div class="flex items-center gap-3 z-10 relative">
-                                @foreach(['💳', '🧴', '🤖', '🩺'] as $icon)
-                                <div class="w-9 h-9 rounded-xl bg-white/80 border border-white shadow-sm flex items-center justify-center text-base hover:scale-110 transition-transform cursor-default">{{ $icon }}</div>
-                                @endforeach
+                                <div class="w-9 h-9 rounded-xl bg-white/80 border border-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 transition-transform cursor-default">
+                                    <img src="{{ asset('images/logo harves.jpeg') }}" alt="Harves" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-9 h-9 rounded-xl bg-white/80 border border-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 transition-transform cursor-default">
+                                    <img src="{{ asset('images/logo natur.jpeg') }}" alt="Natur" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-9 h-9 rounded-xl bg-white/80 border border-white shadow-sm flex items-center justify-center text-base hover:scale-110 transition-transform cursor-default">🤖</div>
+                                <div class="w-9 h-9 rounded-xl bg-white/80 border border-white shadow-sm flex items-center justify-center text-base hover:scale-110 transition-transform cursor-default">🩺</div>
                             </div>
                         </div>
 
@@ -171,7 +176,9 @@
                         <div class="col-span-7 row-span-6 glass-card bg-white/70 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] float-slow flex flex-col justify-between overflow-hidden group">
                             <div class="absolute -right-10 -top-10 w-32 h-32 bg-gradient-to-br from-[var(--tx-secondary-light)] to-[var(--tx-secondary)] rounded-full opacity-20 blur-xl group-hover:scale-150 transition-transform duration-700"></div>
                             <div>
-                                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-gray-100 mb-4">💳</div>
+                                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center overflow-hidden shadow-sm border border-gray-100 mb-4">
+                                    <img src="{{ asset('images/logo harves.jpeg') }}" alt="Harvestly" class="w-full h-full object-cover">
+                                </div>
                                 <h3 class="text-lg font-black text-[var(--tx-text-dark)]">Harvestly</h3>
                                 <p class="text-[10px] font-bold text-[var(--tx-text-muted)] uppercase tracking-widest mt-1">Dompet Pintar</p>
                             </div>
@@ -184,7 +191,9 @@
                         <!-- Naturea Shop (Top Right) -->
                         <div class="col-span-5 row-span-7 glass-card bg-gradient-to-b from-white/90 to-white/40 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] float-fast flex flex-col items-center text-center overflow-hidden relative">
                             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=400&auto=format&fit=crop')] bg-cover bg-center opacity-[0.03]"></div>
-                            <div class="w-14 h-14 bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] rounded-[1.25rem] flex items-center justify-center text-white text-2xl shadow-lg shadow-[var(--tx-primary)]/30 mb-4 z-10">🧴</div>
+                            <div class="w-14 h-14 bg-white rounded-[1.25rem] flex items-center justify-center overflow-hidden shadow-lg shadow-[var(--tx-primary)]/30 mb-4 z-10 border-2 border-white">
+                                <img src="{{ asset('images/logo natur.jpeg') }}" alt="Naturea" class="w-full h-full object-cover">
+                            </div>
                             <h3 class="text-lg font-black text-[var(--tx-text-dark)] z-10">Naturea</h3>
                             <p class="text-[10px] font-bold text-[var(--tx-text-muted)] uppercase tracking-widest mt-1 mb-4 z-10">Premium Skincare</p>
                             
@@ -197,14 +206,14 @@
                             </div>
                         </div>
 
-                        <!-- Aura AI (Bottom Spanning) -->
+                        <!-- Truevera AI (Bottom Spanning) -->
                         <div class="col-span-12 row-span-6 lg:col-span-7 lg:row-span-6 glass-card bg-[#0F2942] backdrop-blur-xl border border-white/20 rounded-[2.5rem] p-6 shadow-[0_30px_60px_-15px_rgba(15,41,66,0.3)] float-medium flex items-center gap-5 overflow-hidden relative">
                             <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[var(--tx-primary)] to-purple-500 rounded-full opacity-30 blur-2xl"></div>
                             
-                            <div class="w-16 h-16 bg-white/10 border border-white/20 rounded-[1.5rem] flex items-center justify-center text-3xl shadow-inner backdrop-blur-md aura-core shrink-0">🤖</div>
+                            <div class="w-16 h-16 bg-white/10 border border-white/20 rounded-[1.5rem] flex items-center justify-center text-3xl shadow-inner backdrop-blur-md truevera-core shrink-0">🤖</div>
                             
                             <div class="flex-1 relative z-10">
-                                <div class="inline-block px-2 py-1 rounded bg-white/10 text-[8px] font-black text-white uppercase tracking-widest mb-1">Aura AI Tech</div>
+                                <div class="inline-block px-2 py-1 rounded bg-white/10 text-[8px] font-black text-white uppercase tracking-widest mb-1">Truevera AI Tech</div>
                                 <h3 class="text-xl font-black text-white leading-tight mb-2">Analisis Kulit Instan</h3>
                                 <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                                     <div class="h-full bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] w-[85%] rounded-full relative">
@@ -230,8 +239,8 @@
         </div>
     </section>
 
-    <!-- 🚀 SECTION 2: AURA AI SHOWCASE -->
-    <section id="aura-ai" class="py-24 relative z-20">
+    <!-- 🚀 SECTION 2: TRUEVERA AI SHOWCASE -->
+    <section id="truevera-ai" class="py-24 relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="glass-card rounded-[3rem] p-8 md:p-16 border border-white shadow-[0_20px_60px_-15px_rgba(244,114,182,0.15)] bg-white/60 relative overflow-hidden flex flex-col lg:flex-row items-center gap-12">
                 
@@ -243,10 +252,10 @@
                     </div>
                     <h2 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] leading-tight mb-6">
                         Kenali Kulitmu dengan <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-purple-600 drop-shadow-sm">Aura AI Scan</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-purple-600 drop-shadow-sm">Truevera AI Scan</span>
                     </h2>
                     <p class="text-lg font-bold text-[var(--tx-text-muted)] mb-8 leading-relaxed">
-                        Tidak perlu bingung memilih skincare. Aura AI akan menganalisis kondisi wajahmu, mendeteksi masalah kulit, dan memberikan rekomendasi produk yang 100% cocok secara instan.
+                        Tidak perlu bingung memilih skincare. Truevera AI akan menganalisis kondisi wajahmu, mendeteksi masalah kulit, dan memberikan rekomendasi produk yang 100% cocok secara instan.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a href="{{ route('register') }}" class="btn-gradient font-black text-xs uppercase tracking-widest px-8 py-4 rounded-2xl shadow-[0_10px_20px_rgba(244,114,182,0.3)] hover:scale-105 transition-transform flex items-center justify-center gap-2">
@@ -256,10 +265,10 @@
                 </div>
 
                 <div class="lg:w-1/2 relative z-10 flex justify-center w-full">
-                    <!-- Aura AI Card Replica -->
+                    <!-- Truevera AI Card Replica -->
                     <div class="glass-card w-full max-w-sm p-8 rounded-[3rem] flex flex-col items-center justify-center text-center border border-white shadow-2xl relative overflow-hidden bg-white/90 backdrop-blur-2xl group hover:-translate-y-2 transition-all duration-500">
                         <div class="absolute inset-0 opacity-20 pointer-events-none transition-opacity group-hover:opacity-30" style="background: radial-gradient(circle at 50% 30%, var(--tx-secondary) 0%, transparent 70%);"></div>
-                        <div class="relative z-10 aura-core mb-6">
+                        <div class="relative z-10 truevera-core mb-6">
                             <svg width="80" height="92" viewBox="0 0 140 160" fill="none">
                                 <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6"/>
                                 <circle cx="55" cy="20" r="4" fill="#9B8EC4"/>
@@ -277,11 +286,11 @@
                                 <ellipse cx="42" cy="88" rx="8" ry="5" fill="#F472B6" opacity="0.35"/>
                                 <ellipse cx="98" cy="88" rx="8" ry="5" fill="#F472B6" opacity="0.35"/>
                                 <path d="M57 97 Q70 108 83 97" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                                <rect x="45" y="112" width="50" height="40" rx="18" fill="url(#dashAura)"/>
-                                <defs><linearGradient id="dashAura" x1="45" y1="112" x2="95" y2="152"><stop stop-color="#4A90D9"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
+                                <rect x="45" y="112" width="50" height="40" rx="18" fill="url(#dashTruevera)"/>
+                                <defs><linearGradient id="dashTruevera" x1="45" y1="112" x2="95" y2="152"><stop stop-color="#4A90D9"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
                             </svg>
                         </div>
-                        <h4 class="relative z-10 text-2xl font-black text-[var(--tx-text-dark)] mb-2">Konsultasi AI Aura</h4>
+                        <h4 class="relative z-10 text-2xl font-black text-[var(--tx-text-dark)] mb-2">Konsultasi AI Truevera</h4>
                         <p class="relative z-10 text-[9px] text-[var(--tx-primary)] bg-[var(--tx-primary-light)] px-3 py-1.5 rounded-full font-black mb-8 uppercase tracking-widest border border-[var(--tx-primary)]/20 shadow-inner">Chat · Face Scan · Rekomendasi</p>
                         
                         <div class="relative z-10 w-full bg-white/60 border border-gray-100 rounded-[1.5rem] p-5 text-left shadow-sm mb-8">
@@ -309,15 +318,15 @@
     <section id="fitur" class="py-24 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] mb-6">Pilar Ekosistem Kami</h2>
+                <h2 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] mb-6">Filosofi Trinexa</h2>
                 <p class="text-lg font-bold text-[var(--tx-text-muted)] max-w-2xl mx-auto">Kami mengintegrasikan kebutuhan kecantikan dan keuangan dalam satu platform yang terpusat.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 <!-- Harvestly -->
                 <div class="glass-card p-10 rounded-[3rem] border border-white/80 group hover:-translate-y-3 transition-transform duration-500 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/60 hover:bg-white/90">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white rounded-[1.5rem] flex items-center justify-center text-4xl mb-8 shadow-lg shadow-[var(--tx-primary)]/30 group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                        💳
+                    <div class="w-20 h-20 bg-white rounded-[1.5rem] flex items-center justify-center overflow-hidden mb-8 shadow-lg shadow-[var(--tx-primary)]/20 group-hover:scale-110 group-hover:rotate-3 transition-transform border-2 border-white">
+                        <img src="{{ asset('images/logo harves.jpeg') }}" alt="Harvestly" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl font-black text-[var(--tx-text-dark)] mb-4">Harvestly</h3>
                     <p class="text-[var(--tx-text-muted)] font-bold text-sm leading-relaxed">
@@ -327,8 +336,8 @@
 
                 <!-- Naturea -->
                 <div class="glass-card p-10 rounded-[3rem] border border-white/80 group hover:-translate-y-3 transition-transform duration-500 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/60 hover:bg-white/90">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[var(--tx-secondary)] to-amber-400 text-white rounded-[1.5rem] flex items-center justify-center text-4xl mb-8 shadow-lg shadow-[var(--tx-secondary)]/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform">
-                        🧴
+                    <div class="w-20 h-20 bg-white rounded-[1.5rem] flex items-center justify-center overflow-hidden mb-8 shadow-lg shadow-[var(--tx-secondary)]/20 group-hover:scale-110 group-hover:-rotate-3 transition-transform border-2 border-white">
+                        <img src="{{ asset('images/logo natur.jpeg') }}" alt="Naturea" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl font-black text-[var(--tx-text-dark)] mb-4">Naturea</h3>
                     <p class="text-[var(--tx-text-muted)] font-bold text-sm leading-relaxed">
@@ -338,8 +347,8 @@
 
                 <!-- Karebla -->
                 <div class="glass-card p-10 rounded-[3rem] border border-white/80 group hover:-translate-y-3 transition-transform duration-500 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] bg-white/60 hover:bg-white/90">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[var(--tx-quaternary)] to-green-400 text-white rounded-[1.5rem] flex items-center justify-center text-4xl mb-8 shadow-lg shadow-[var(--tx-quaternary)]/30 group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                        🌱
+                    <div class="w-20 h-20 bg-white rounded-[1.5rem] flex items-center justify-center overflow-hidden mb-8 shadow-lg shadow-[var(--tx-quaternary)]/20 group-hover:scale-110 group-hover:rotate-3 transition-transform border-2 border-white">
+                        <img src="{{ asset('images/logo karebla.jpeg') }}" alt="Karebla" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl font-black text-[var(--tx-text-dark)] mb-4">Karebla</h3>
                     <p class="text-[var(--tx-text-muted)] font-bold text-sm leading-relaxed">
@@ -369,7 +378,7 @@
                     <ul class="space-y-4 font-bold text-sm text-[var(--tx-text-muted)]">
                         <li><a href="#" class="hover:text-[var(--tx-primary)] transition-colors">Harvestly Wallet</a></li>
                         <li><a href="#" class="hover:text-[var(--tx-primary)] transition-colors">Naturea Shop</a></li>
-                        <li><a href="#" class="hover:text-[var(--tx-primary)] transition-colors">Aura AI Scan</a></li>
+                        <li><a href="#" class="hover:text-[var(--tx-primary)] transition-colors">Truevera AI Scan</a></li>
                         <li><a href="#" class="hover:text-[var(--tx-primary)] transition-colors">Skin School</a></li>
                     </ul>
                 </div>

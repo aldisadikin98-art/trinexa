@@ -18,6 +18,8 @@
                 {{-- Avatar Upload --}}
                 <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
                     @csrf @method('PATCH')
+                    <input type="hidden" name="name" value="{{ $user->name }}">
+                    <input type="hidden" name="email" value="{{ $user->email }}">
                     <div class="relative group shrink-0">
                         <div class="w-28 h-28 rounded-[24px] overflow-hidden border-4 border-white/80 shadow-xl bg-white/50 backdrop-blur-sm">
                             @if($user->avatar)

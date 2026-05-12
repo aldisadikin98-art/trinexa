@@ -53,8 +53,16 @@ class AdminKareblaProductController extends Controller
         }
         $data['specs'] = $specs;
 
-        // Image upload handling (simplified for now, using dummy images if empty)
-        $data['images'] = ['https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&q=80&w=800'];
+        // Image upload handling
+        $images = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $img) {
+                $images[] = asset('storage/' . $img->store('karebla', 'public'));
+            }
+        } else {
+            $images = ['https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&q=80&w=800'];
+        }
+        $data['images'] = $images;
 
         KareblaProduct::create($data);
 
@@ -93,6 +101,14 @@ class AdminKareblaProductController extends Controller
             }
         }
         $data['specs'] = $specs;
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $img) {
+                $images[] = asset('storage/' . $img->store('karebla', 'public'));
+            }
+            $data['images'] = $images;
+        }
 
         $produk->update($data);
 

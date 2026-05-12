@@ -16,6 +16,9 @@ Route::get('/', function () {
 // ════════════════════════════════════════════════════════
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('notifications', \App\Http\Controllers\Admin\NotificationController::class)->only(['index', 'store', 'destroy']);
+    Route::get('users', [\App\Http\Controllers\Admin\AdminUserController::class, 'index'])->name('users.index');
+    Route::get('wallets', [\App\Http\Controllers\Admin\AdminWalletController::class, 'index'])->name('wallets.index');
 
     // Produk Naturea
     Route::resource('produk', \App\Http\Controllers\Admin\AdminProductController::class);
@@ -52,6 +55,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
         Route::resource('/', \App\Http\Controllers\AdminDermatologyController::class)->parameters(['' => 'content']);
         Route::patch('/{content}/toggle-featured', [\App\Http\Controllers\AdminDermatologyController::class, 'toggleFeatured'])->name('toggle-featured');
         Route::patch('/{content}/toggle-published', [\App\Http\Controllers\AdminDermatologyController::class, 'togglePublished'])->name('toggle-published');
+    });
+
+    // Laporan Keuangan
+    Route::prefix('keuangan')->name('financial.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'index'])->name('index');
+        Route::get('/pengeluaran', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'expenses'])->name('expenses');
+        Route::post('/pengeluaran', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'storeExpense'])->name('expenses.store');
+        Route::patch('/pengeluaran/{expense}', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'updateExpense'])->name('expenses.update');
+        Route::delete('/pengeluaran/{expense}', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'destroyExpense'])->name('expenses.destroy');
+        Route::get('/rekap', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'recap'])->name('recap');
+        Route::get('/export', [\App\Http\Controllers\Admin\AdminFinancialReportController::class, 'export'])->name('export');
     });
 });
 
@@ -143,6 +157,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat', [\App\Http\Controllers\KareblaController::class, 'history'])->name('history');
         Route::get('/riwayat/{redemption}', [\App\Http\Controllers\KareblaController::class, 'historyDetail'])->name('history.detail');
     });
+    Route::get('/notifikasi', [\App\Http\Controllers\User\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifikasi/{notification}/read', [\App\Http\Controllers\User\NotificationController::class, 'markAsRead'])->name('notifications.read');
 });
 
 // ════════════════════════════════════════════════════════
@@ -181,5 +197,9 @@ Route::middleware('auth')->prefix('konsultasi')->name('konsultasi.')->group(func
     Route::get('/face-scan/{result}', [\App\Http\Controllers\FaceScanAIController::class, 'show'])->name('face-scan.show');
     Route::delete('/face-scan/{result}', [\App\Http\Controllers\FaceScanAIController::class, 'destroy'])->name('face-scan.destroy');
 });
+
+// SOCIALITE ROUTES
+Route::get('auth/google', [\App\Http\Controllers\Auth\SocialiteController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [\App\Http\Controllers\Auth\SocialiteController::class, 'handleGoogleCallback']);
 
 require __DIR__.'/auth.php';

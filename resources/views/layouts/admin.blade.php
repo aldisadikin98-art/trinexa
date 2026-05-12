@@ -12,7 +12,7 @@
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased flex h-screen overflow-hidden selection:bg-[var(--tx-secondary)]/20 relative">
+<body x-data="{ sidebarOpen: false }" class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased flex h-screen overflow-hidden selection:bg-[var(--tx-secondary)]/20 relative">
 
     <!-- Dekorasi Ambient Halus -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -22,8 +22,8 @@
     </div>
 
     {{-- Sidebar (Premium Glassmorphism) --}}
-    <aside class="w-72 m-4 rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.04)] text-[var(--tx-text-dark)] flex flex-col hidden md:flex shrink-0 z-20 overflow-hidden relative">
-        <div class="h-24 flex items-center px-8 border-b border-white/80 shrink-0">
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="fixed md:relative w-72 h-[calc(100vh-2rem)] m-4 rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.04)] text-[var(--tx-text-dark)] flex flex-col shrink-0 z-50 transition-transform duration-300 overflow-hidden">
+        <div class="h-24 flex items-center justify-between px-8 border-b border-white/80 shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
                 <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Logo" class="w-10 h-10 object-cover rounded-[12px] shadow-sm">
                 <h1 class="text-xl font-black tracking-wider text-[var(--tx-text-dark)] flex flex-col">
@@ -31,6 +31,9 @@
                     <span class="bg-[var(--tx-primary)] text-white text-[9px] px-2 py-0.5 rounded-full shadow-sm uppercase tracking-widest inline-block w-max mt-0.5">Admin</span>
                 </h1>
             </a>
+            <button @click="sidebarOpen = false" class="md:hidden text-gray-400 p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
         </div>
         
         <nav class="flex-1 px-5 py-6 space-y-2.5 overflow-y-auto no-scrollbar">
@@ -48,6 +51,12 @@
             </a>
             <a href="{{ route('admin.voucher.index') }}" class="flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all {{ request()->routeIs('admin.voucher.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white shadow-lg shadow-[var(--tx-primary)]/20 font-black' : 'text-gray-500 hover:text-[var(--tx-primary)] hover:bg-white/80 font-bold' }}">
                 <span class="text-xl">🎟️</span> Voucher Shop
+            </a>
+            <a href="{{ route('admin.financial.index') }}" class="flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all {{ request()->routeIs('admin.financial.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white shadow-lg shadow-[var(--tx-primary)]/20 font-black' : 'text-gray-500 hover:text-[var(--tx-primary)] hover:bg-white/80 font-bold' }}">
+                <span class="text-xl">💰</span> Keuangan
+            </a>
+            <a href="{{ route('admin.notifications.index') }}" class="flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all {{ request()->routeIs('admin.notifications.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white shadow-lg shadow-[var(--tx-primary)]/20 font-black' : 'text-gray-500 hover:text-[var(--tx-primary)] hover:bg-white/80 font-bold' }}">
+                <span class="text-xl">🔔</span> Notifikasi
             </a>
 
             <!-- Menu Karebla -->
@@ -82,7 +91,12 @@
     <div class="flex-1 flex flex-col h-screen overflow-hidden relative z-10 p-4 pl-0">
         {{-- Header (Premium Floating) --}}
         <header class="h-20 bg-white/70 backdrop-blur-2xl border border-white rounded-3xl flex items-center justify-between px-8 shrink-0 z-10 shadow-[0_4px_30px_rgb(0,0,0,0.03)] mb-4">
-            <h2 class="text-2xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ $title ?? 'Dashboard' }}</h2>
+            <div class="flex items-center gap-4">
+                <button @click="sidebarOpen = true" class="md:hidden p-2 bg-white/50 rounded-xl border border-white shadow-sm text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h2 class="text-xl md:text-2xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ $title ?? 'Dashboard' }}</h2>
+            </div>
             <div class="flex items-center gap-4">
                 <div class="flex flex-col text-right">
                     <span class="text-sm font-black text-[var(--tx-text-dark)]">{{ auth()->user()->name }}</span>

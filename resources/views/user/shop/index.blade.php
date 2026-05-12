@@ -142,12 +142,14 @@
                 @else
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                         @foreach($products as $product)
-                            <div class="glass-card p-4 group hover:-translate-y-2 border border-white/50 flex flex-col h-full transition-all duration-300">
+                            <div class="bg-white/60 border border-white/50 rounded-[24px] p-4 group hover:-translate-y-2 flex flex-col h-full transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] hover:bg-white/80 will-change-transform">
+
                                 {{-- Foto --}}
                                 <div class="relative overflow-hidden bg-white/40 rounded-[16px] aspect-square mb-5 border border-white/60">
                                     <img src="{{ $product->primary_image }}"
                                          alt="{{ $product->name }}"
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                                         loading="lazy"
                                          onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80'">
 
                                     {{-- Badge kategori --}}

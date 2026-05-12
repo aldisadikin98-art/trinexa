@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">{{ $session->title }} | Aura Chat</x-slot>
+    <x-slot name="title">{{ $session->title }} | Truevera Chat</x-slot>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col lg:flex-row gap-6 h-[calc(100vh-180px)]">
@@ -32,7 +32,7 @@
                 {{-- Header --}}
                 <div class="px-6 py-4 border-b border-white/50 bg-white/20 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-3">
-                        <div class="aura-float">
+                        <div class="truevera-float">
                             <svg width="40" height="46" viewBox="0 0 140 160" fill="none">
                                 <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6"/>
                                 <rect x="22" y="55" width="12" height="20" rx="6" fill="#C4B5E8"/>
@@ -52,7 +52,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="font-black text-[var(--tx-text-dark)] text-sm">Aura</p>
+                            <p class="font-black text-[var(--tx-text-dark)] text-sm">Truevera</p>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                                 <span class="text-[10px] font-black text-green-500 uppercase tracking-widest">Online</span>
@@ -85,7 +85,7 @@
                     </div>
                     @else
                     <div class="flex gap-3">
-                        <div class="aura-float shrink-0">
+                        <div class="truevera-float shrink-0">
                             <svg width="36" height="40" viewBox="0 0 140 160" fill="none">
                                 <rect x="30" y="40" width="80" height="75" rx="28" fill="white" opacity="0.95"/>
                                 <ellipse cx="55" cy="72" rx="9" ry="10" fill="#4A90D9"/>
@@ -153,7 +153,7 @@
                     <div class="flex gap-3 items-end">
                         <div class="flex-1 bg-white/60 backdrop-blur-sm border border-white/80 rounded-[20px] px-5 py-3 shadow-inner">
                             <textarea id="messageInput" x-model="message" @keydown.enter.prevent="if(!$event.shiftKey) sendMessage()"
-                                placeholder="Tanya Aura tentang kulitmu... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+                                placeholder="Tanya Truevera tentang kulitmu... (Enter untuk kirim, Shift+Enter untuk baris baru)"
                                 rows="1" class="w-full bg-transparent focus:outline-none text-sm font-bold text-[var(--tx-text-dark)] placeholder:text-gray-400 resize-none"
                                 style="max-height: 120px; overflow-y: auto;"></textarea>
                         </div>
@@ -177,9 +177,9 @@
                 init() {
                     this.scrollToBottom();
                     // Check for pre-filled message from session storage
-                    const firstMsg = sessionStorage.getItem('aura_first_message');
+                    const firstMsg = sessionStorage.getItem('truevera_first_message');
                     if (firstMsg) {
-                        sessionStorage.removeItem('aura_first_message');
+                        sessionStorage.removeItem('truevera_first_message');
                         this.message = firstMsg;
                         this.$nextTick(() => this.sendMessage());
                     }
@@ -222,11 +222,11 @@
                         document.getElementById('typingIndicator').classList.add('hidden');
 
                         if (data.success) {
-                            this.appendAuraBubble(data.message, data.products || []);
+                            this.appendTrueveraBubble(data.message, data.products || []);
                         }
                     } catch (e) {
                         document.getElementById('typingIndicator').classList.add('hidden');
-                        this.appendAuraBubble('Maaf, koneksi bermasalah. Coba lagi ya! 🌸', []);
+                        this.appendTrueveraBubble('Maaf, koneksi bermasalah. Coba lagi ya! 🌸', []);
                     }
 
                     this.loading = false;
@@ -246,7 +246,7 @@
                         </div>
                     `);
                 },
-                appendAuraBubble(content, products) {
+                appendTrueveraBubble(content, products) {
                     const el = document.getElementById('chatMessages');
                     const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
                     let productsHtml = '';

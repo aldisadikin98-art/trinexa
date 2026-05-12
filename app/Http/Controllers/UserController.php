@@ -23,9 +23,9 @@ class UserController extends Controller
             ['balance' => 0]
         );
 
-        // Ambil 4 produk Naturea terbaru untuk slider dashboard
+        // Ambil 4 produk Naturea secara acak untuk slider dashboard
         $featuredProducts = Product::where('is_active', true)
-            ->latest()
+            ->inRandomOrder()
             ->take(4)
             ->get();
 

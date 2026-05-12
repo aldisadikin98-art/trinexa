@@ -30,7 +30,7 @@
                             ✨ Karebla Rewards
                         </a>
                         <a href="{{ route('konsultasi.index') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[var(--tx-secondary-light)] to-[var(--tx-tertiary-light)] border border-white/60 rounded-full font-bold text-sm text-[var(--tx-secondary)] hover:from-[var(--tx-secondary)] hover:to-[var(--tx-tertiary)] hover:text-white transition ease-in-out duration-150 shadow-sm {{ request()->routeIs('konsultasi.*') ? 'from-[var(--tx-secondary)] to-[var(--tx-tertiary)] text-white shadow-md' : '' }}">
-                            🤖 Aura AI
+                            🤖 Truevera AI
                         </a>
                     </div>
                     @endif
@@ -101,7 +101,7 @@
                 ✨ {{ __('Karebla Rewards') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('konsultasi.index')" :active="request()->routeIs('konsultasi.*')">
-                🤖 {{ __('Aura AI') }}
+                🤖 {{ __('Truevera AI') }}
             </x-responsive-nav-link>
             @endif
         </div>

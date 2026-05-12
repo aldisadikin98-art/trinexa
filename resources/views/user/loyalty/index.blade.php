@@ -114,12 +114,7 @@
                                     <input type="hidden" name="voucher_id" value="{{ $voucher->id }}">
                                     @php
                                         $voucherMinLevel = $voucher->min_level;
-                                        if ($voucherMinLevel === 'Bronze') $voucherMinLevel = 'Member';
-                                        if ($voucherMinLevel === 'Silver') $voucherMinLevel = 'Loyal';
-                                        if ($voucherMinLevel === 'Gold') $voucherMinLevel = 'Premium';
-                                        if ($voucherMinLevel === 'Platinum') $voucherMinLevel = 'VIP';
-
-                                        $levelMap = ['Member' => 0, 'Loyal' => 1, 'Premium' => 2, 'VIP' => 3];
+                                        $levelMap = ['Bronze' => 0, 'Silver' => 1, 'Gold' => 2, 'Platinum' => 3];
                                         $userLevelValue = $levelMap[$level] ?? 0;
                                         $minLevelValue = $levelMap[$voucherMinLevel] ?? 0;
                                         $isEligible = $userLevelValue >= $minLevelValue && $points >= $voucher->points_required;

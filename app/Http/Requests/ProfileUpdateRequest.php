@@ -21,6 +21,7 @@ class ProfileUpdateRequest extends FormRequest
             'address'  => ['nullable', 'string', 'max:1000'],
             'gender'   => ['nullable', 'in:male,female,other'],
             'birth_date' => ['nullable', 'date', 'before:today'],
+            'avatar'   => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">Face Scan AI | Aura Trinexa</x-slot>
+    <x-slot name="title">Face Scan AI | Truevera Trinexa</x-slot>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -55,7 +55,7 @@
                         {{-- Scanning overlay --}}
                         <div x-show="scanning" class="absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-10">
                             <div class="relative w-full h-0.5 bg-[var(--tx-secondary)] scan-active absolute top-0 left-0 shadow-lg shadow-[var(--tx-secondary)]"></div>
-                            <div class="aura-think mb-4">
+                            <div class="truevera-think mb-4">
                                 <svg width="60" height="68" viewBox="0 0 140 160" fill="none">
                                     <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6"/>
                                     <rect x="30" y="40" width="80" height="75" rx="28" fill="white" opacity="0.95"/>
@@ -144,7 +144,7 @@
 
                         {{-- Scanning overlay upload --}}
                         <div x-show="scanning" class="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center z-10 rounded-[20px]">
-                            <div class="aura-think mb-3">
+                            <div class="truevera-think mb-3">
                                 <svg width="50" height="56" viewBox="0 0 140 160" fill="none">
                                     <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="#F472B6"/>
                                     <rect x="30" y="40" width="80" height="75" rx="28" fill="white" opacity="0.95"/>

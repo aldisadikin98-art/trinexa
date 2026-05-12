@@ -69,9 +69,11 @@ class AdminOrderController extends Controller
                         $userLevel = $transaction->user->loyalty_level;
                         $coins = $transaction->coins_earned;
                         
-                        if ($userLevel === 'VIP') {
-                            $coins += floor($coins * 0.20);
-                        } elseif ($userLevel === 'Premium') {
+                        if ($userLevel === 'Platinum') {
+                            $coins += floor($coins * 0.25);
+                        } elseif ($userLevel === 'Gold') {
+                            $coins += floor($coins * 0.15);
+                        } elseif ($userLevel === 'Silver') {
                             $coins += floor($coins * 0.10);
                         }
 
