@@ -20,16 +20,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock ./
+# Copy all files first
+COPY . .
+
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY vite.config.js tailwind.config.js postcss.config.js ./
-COPY resources ./resources
-RUN npm run build
-
-COPY . .
+# Install JS dependencies and Build Assets
+RUN npm ci && npm run build
 
 RUN composer dump-autoload --optimize
 
