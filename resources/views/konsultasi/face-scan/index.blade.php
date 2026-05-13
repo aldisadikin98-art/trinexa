@@ -314,11 +314,11 @@
             },
 
             startFaceTracking(video) {
-                // Initialize Tracker
+                // Initialize Tracker with higher sensitivity
                 const tracker = new tracking.ObjectTracker('face');
-                tracker.setInitialScale(4);
-                tracker.setStepSize(2);
-                tracker.setEdgesDensity(0.1);
+                tracker.setInitialScale(2.5); // Lower scale = more sensitive to smaller/farther faces
+                tracker.setStepSize(1.5);    // Smaller step = more precise
+                tracker.setEdgesDensity(0.05); // Lower density = more lenient
 
                 this.trackerTask = tracking.track(video, tracker);
 
