@@ -98,7 +98,15 @@
                 <h2 class="text-xl md:text-2xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ $title ?? 'Dashboard' }}</h2>
             </div>
             <div class="flex items-center gap-4">
-                <div class="flex flex-col text-right">
+                {{-- Logout Button (Mobile Only) --}}
+                <form action="{{ route('logout') }}" method="POST" class="md:hidden">
+                    @csrf
+                    <button class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center border border-red-100 shadow-sm">
+                        <span class="text-xl">🚪</span>
+                    </button>
+                </form>
+                
+                <div class="hidden sm:flex flex-col text-right">
                     <span class="text-sm font-black text-[var(--tx-text-dark)]">{{ auth()->user()->name }}</span>
                     <span class="text-[10px] font-bold text-[var(--tx-text-muted)] uppercase tracking-widest">Administrator</span>
                 </div>

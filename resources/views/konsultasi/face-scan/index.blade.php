@@ -35,11 +35,13 @@
                         {{-- Live camera feed --}}
                         <video id="cameraFeed" autoplay playsinline muted
                             class="w-full h-full object-cover"
+                            style="transform: scaleX(1) !important;"
                             x-show="cameraActive && !capturedPhoto"></video>
 
                         {{-- Captured photo preview --}}
                         <img id="capturedImg" x-show="capturedPhoto" :src="capturedPhoto"
-                            class="w-full h-full object-cover">
+                            class="w-full h-full object-cover"
+                            style="transform: scaleX(1) !important;">
 
                         {{-- Camera off placeholder --}}
                         <div x-show="!cameraActive && !capturedPhoto"
@@ -71,7 +73,7 @@
                                 </svg>
                             </div>
                             <p class="text-white font-black text-sm uppercase tracking-widest">Menganalisis kulit wajah...</p>
-                            <p class="text-white/60 text-xs font-bold mt-1">Ini mungkin butuh 15–30 detik</p>
+                            <p class="text-white/60 text-[10px] font-bold mt-1 uppercase tracking-widest">Processing Image</p>
                         </div>
 
                         {{-- Face guide overlay --}}

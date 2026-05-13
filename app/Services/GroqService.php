@@ -51,32 +51,36 @@ class GroqService
      */
     public function analyzeImage(string $base64Image, string $mimeType = 'image/jpeg'): array
     {
-        $prompt = 'Kamu adalah ahli dermatologi dan skincare profesional. Analisis kulit wajah dari foto ini secara detail.
+        $prompt = 'Kamu adalah ahli dermatologi dan skincare profesional dengan keahlian tinggi dalam visi komputer.
+Analisis kulit wajah dari foto ini dengan sangat teliti.
+
+PENTING:
+1. Deteksi tanda-tanda jerawat (acne), komedo, peradangan, atau kemerahan secara akurat. Jika ada jerawat, laporkan di bagian "Hiperpigmentasi" atau tambahkan kategori baru jika perlu.
+2. Berikan skin_score yang jujur. Jika banyak masalah kulit (seperti jerawat), berikan skor di bawah 70.
+3. Analisis tekstur, pori-pori, dan tingkat kelembapan (hidrasi).
 
 Berikan response HANYA dalam format JSON berikut (tanpa teks lain, tanpa markdown):
 {
   "skin_type": "Normal|Kering|Berminyak|Kombinasi|Sensitif",
-  "skin_score": 85,
-  "score_label": "Kulitmu sangat sehat!",
+  "skin_score": 0-100,
+  "score_label": "Ringkasan sangat singkat kondisi (misal: Kulit Berjerawat & Berminyak)",
   "conditions": [
     {"name": "Hidrasi", "status": "baik|cukup|kurang", "detail": "..."},
     {"name": "Pori-pori", "status": "baik|cukup|kurang", "detail": "..."},
     {"name": "Produksi Minyak", "status": "baik|cukup|kurang", "detail": "..."},
-    {"name": "Elastisitas", "status": "baik|cukup|kurang", "detail": "..."},
+    {"name": "Jerawat & Tekstur", "status": "baik|cukup|kurang", "detail": "..."},
     {"name": "Hiperpigmentasi", "status": "baik|cukup|kurang", "detail": "..."}
   ],
   "good_ingredients": [
-    {"name": "Niacinamide", "benefit": "..."},
-    {"name": "Hyaluronic Acid", "benefit": "..."}
+    {"name": "Nama Bahan", "benefit": "Manfaat spesifik untuk kondisi user"}
   ],
   "bad_ingredients": [
-    {"name": "Alkohol", "reason": "..."},
-    {"name": "Fragrance", "reason": "..."}
+    {"name": "Nama Bahan", "reason": "Alasan kenapa harus dihindari user"}
   ],
-  "morning_routine": ["Gentle Cleanser", "Toner", "Serum", "Moisturizer", "Sunscreen SPF50"],
-  "night_routine": ["Double Cleansing", "Toner", "Treatment", "Moisturizer"],
-  "tips": ["Tip 1...", "Tip 2...", "Tip 3..."],
-  "summary": "Penjelasan singkat tentang kondisi kulit secara keseluruhan"
+  "morning_routine": ["Step 1", "Step 2", "..."],
+  "night_routine": ["Step 1", "Step 2", "..."],
+  "tips": ["Tip 1 spesifik jerawat/tipe kulit", "Tip 2", "Tip 3"],
+  "summary": "Analisis mendalam tentang apa yang terlihat di foto (sebutkan jerawat jika terlihat)"
 }';
 
         $payload = [
