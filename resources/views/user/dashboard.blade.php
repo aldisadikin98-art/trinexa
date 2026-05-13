@@ -46,7 +46,7 @@
                         <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/20 rounded-full pointer-events-none"></div>
                         <div class="relative z-10 h-full flex flex-col">
                             <p class="font-bold text-sm text-white/90 mb-1">Saldo Harvestly</p>
-                            <h3 class="text-3xl font-black mb-6">Rp 1.250.000</h3>
+                            <h3 class="text-3xl font-black mb-6">Rp {{ number_format($wallet->balance ?? 0, 0, ',', '.') }}</h3>
                             <div class="mt-auto">
                                 <a href="{{ route('user.wallet.show') }}" class="inline-block bg-white/20 backdrop-blur-sm border border-white/40 text-white font-bold py-2 px-5 rounded-full text-xs hover:bg-white/30 transition-colors">
                                     Top Up

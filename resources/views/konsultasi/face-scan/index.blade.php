@@ -35,13 +35,13 @@
                         {{-- Live camera feed --}}
                         <video id="cameraFeed" autoplay playsinline muted
                             class="w-full h-full object-cover"
-                            style="transform: scaleX(1) !important;"
+                            style="transform: scaleX(-1) !important;"
                             x-show="cameraActive && !capturedPhoto"></video>
 
                         {{-- Captured photo preview --}}
                         <img id="capturedImg" x-show="capturedPhoto" :src="capturedPhoto"
                             class="w-full h-full object-cover"
-                            style="transform: scaleX(1) !important;">
+                            style="transform: scaleX(-1) !important;">
 
                         {{-- Camera off placeholder --}}
                         <div x-show="!cameraActive && !capturedPhoto"
