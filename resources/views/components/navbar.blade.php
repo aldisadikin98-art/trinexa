@@ -130,45 +130,43 @@
 </header>
 
 <!-- 📱 BOTTOM NAVIGATION (Hanya di HP) -->
-<nav class="md:hidden fixed bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 flex justify-around items-center py-2 pb-5 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.04)]">
-    <a href="{{ route('user.dashboard') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('user.dashboard') ? 'text-[#D4AF37]' : 'text-gray-400 hover:text-[var(--tx-primary)]' }} group">
-        <div class="p-2 rounded-xl {{ request()->routeIs('user.dashboard') ? 'bg-[var(--tx-primary-light)] text-[var(--tx-primary)] scale-110' : 'group-hover:bg-[var(--tx-primary-light)] text-[var(--tx-primary)] group-hover:scale-110 transition-all' }}">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-2xl border-t border-white/40 flex justify-around items-center py-2 pb-6 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px]">
+    <a href="{{ route('user.dashboard') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('user.dashboard') ? 'text-[var(--tx-primary)]' : 'text-gray-400' }} transition-all duration-300">
+        <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('user.dashboard') ? 'bg-[var(--tx-primary)] text-white shadow-lg shadow-[var(--tx-primary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
         </div>
-        <span class="text-[10px] font-bold">Beranda</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">{{ __('Beranda') }}</span>
     </a>
-    <a href="{{ route('shop.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('shop.*') ? 'text-[#D4AF37]' : 'text-gray-400 hover:text-[#D4AF37]' }} group">
-        <div class="relative p-2 rounded-xl {{ request()->routeIs('shop.*') ? 'bg-[var(--tx-primary-light)] text-[var(--tx-primary)] scale-110' : 'group-hover:bg-[var(--tx-primary-light)] text-[var(--tx-primary)] group-hover:scale-110 transition-all' }}">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+    
+    <a href="{{ route('shop.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('shop.*') ? 'text-[var(--tx-secondary)]' : 'text-gray-400' }} transition-all duration-300">
+        <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('shop.*') ? 'bg-[var(--tx-secondary)] text-white shadow-lg shadow-[var(--tx-secondary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
             @php $cartCountMobile = auth()->check() ? auth()->user()->cartItems()->count() : 0; @endphp
             @if($cartCountMobile > 0)
-                <span class="absolute top-0 right-0 flex h-3 w-3 bg-[var(--tx-secondary)] border-2 border-white rounded-full"></span>
+                <span class="absolute -top-1 -right-1 flex h-4 w-4 bg-red-500 border-2 border-white rounded-full text-[8px] font-black text-white items-center justify-center">{{ $cartCountMobile }}</span>
             @endif
         </div>
-        <span class="text-[10px] font-bold">Belanja</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">{{ __('Belanja') }}</span>
     </a>
-    <a href="{{ route('user.wallet.show') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('user.wallet.*') ? 'text-[#D4AF37]' : 'text-gray-400 hover:text-[#D4AF37]' }} group">
-        <div class="p-2 rounded-xl {{ request()->routeIs('user.wallet.*') ? 'bg-[var(--tx-primary-light)] text-[var(--tx-primary)] scale-110' : 'group-hover:bg-[var(--tx-primary-light)] text-[var(--tx-primary)] group-hover:scale-110 transition-all' }}">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+
+    <a href="{{ route('user.wallet.show') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('user.wallet.*') ? 'text-[var(--tx-primary)]' : 'text-gray-400' }} transition-all duration-300">
+        <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('user.wallet.*') ? 'bg-[var(--tx-primary)] text-white shadow-lg shadow-[var(--tx-primary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
         </div>
-        <span class="text-[10px] font-bold">Dompet</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">{{ __('Dompet') }}</span>
     </a>
-    <a href="{{ route('dermatology.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('dermatology.*') ? 'text-[#D4AF37]' : 'text-gray-400 hover:text-[#D4AF37]' }} group">
-        <div class="p-2 rounded-xl {{ request()->routeIs('dermatology.*') ? 'bg-[var(--tx-primary-light)] text-[var(--tx-primary)] scale-110' : 'group-hover:bg-[var(--tx-primary-light)] text-[var(--tx-primary)] group-hover:scale-110 transition-all' }}">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+
+    <a href="{{ route('dermatology.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('dermatology.*') ? 'text-[var(--tx-quaternary)]' : 'text-gray-400' }} transition-all duration-300">
+        <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('dermatology.*') ? 'bg-[var(--tx-quaternary)] text-white shadow-lg shadow-[var(--tx-quaternary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
         </div>
-        <span class="text-[10px] font-bold">Edukasi</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">{{ __('Edukasi') }}</span>
     </a>
-    <a href="{{ route('user.loyalty.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('user.loyalty.*') ? 'text-[var(--tx-primary)]' : 'text-gray-400 hover:text-[var(--tx-primary)]' }} group">
-        <div class="p-2 rounded-xl {{ request()->routeIs('user.loyalty.*') ? 'bg-[var(--tx-primary-light)] text-[var(--tx-primary)] scale-110' : 'group-hover:bg-[var(--tx-primary-light)] text-[var(--tx-primary)] group-hover:scale-110 transition-all' }}">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+
+    <a href="{{ route('konsultasi.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('konsultasi.*') ? 'text-[var(--tx-tertiary)]' : 'text-gray-400' }} transition-all duration-300">
+        <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('konsultasi.*') ? 'bg-[var(--tx-tertiary)] text-white shadow-lg shadow-[var(--tx-tertiary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
+            <span class="text-xl leading-none">🤖</span>
         </div>
-        <span class="text-[10px] font-bold">Loyalty</span>
-    </a>
-    <a href="{{ route('konsultasi.index') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('konsultasi.*') ? 'text-[var(--tx-secondary)]' : 'text-gray-400 hover:text-[var(--tx-secondary)]' }} group">
-        <div class="p-2 rounded-xl {{ request()->routeIs('konsultasi.*') ? 'bg-[var(--tx-secondary-light)] text-[var(--tx-secondary)] scale-110' : 'group-hover:bg-[var(--tx-secondary-light)] text-[var(--tx-secondary)] group-hover:scale-110 transition-all' }}">
-            <span class="text-xl">🤖</span>
-        </div>
-        <span class="text-[10px] font-bold">Truevera AI</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">AI Chat</span>
     </a>
 </nav>

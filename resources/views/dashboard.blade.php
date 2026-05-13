@@ -4,19 +4,19 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {{-- ── WELCOME CARD ──────────────────────────────────────── --}}
-        <div class="glass-card border border-white/50 p-8 mb-8 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-xl">
+        <div class="glass-card border border-white/50 p-6 md:p-8 mb-8 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-xl">
             <div class="absolute inset-0 pointer-events-none opacity-20" style="background: radial-gradient(circle at 80% 50%, var(--tx-secondary) 0%, transparent 55%), radial-gradient(circle at 20% 50%, var(--tx-primary) 0%, transparent 55%);"></div>
-            <div class="relative z-10 flex items-center gap-5 flex-1">
-                <div class="w-16 h-16 rounded-[20px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-2xl font-black shadow-lg border-4 border-white/60">
+            <div class="relative z-10 flex items-center gap-4 md:gap-5 flex-1">
+                <div class="w-14 h-14 md:w-16 md:h-16 rounded-[20px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-xl md:text-2xl font-black shadow-lg border-4 border-white/60">
                     {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
                 </div>
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-black text-[var(--tx-text-dark)] mb-1">Halo, {{ Auth::user()->name ?? 'User' }}! ✨</h2>
-                    <p class="text-[var(--tx-text-muted)] text-sm font-bold">Selamat datang kembali di ekosistem Trinexa.</p>
+                    <h2 class="text-xl md:text-3xl font-black text-[var(--tx-text-dark)] mb-1">Halo, {{ Auth::user()->name ?? 'User' }}! ✨</h2>
+                    <p class="text-[var(--tx-text-muted)] text-[10px] md:text-sm font-bold">Selamat datang kembali di ekosistem Trinexa.</p>
                 </div>
             </div>
-            <div class="relative z-10">
-                <div class="inline-flex items-center gap-2 bg-white/40 backdrop-blur-sm text-[var(--tx-tertiary)] px-5 py-2.5 rounded-full border border-white/60 font-black text-sm shadow-sm">
+            <div class="relative z-10 w-full md:w-auto">
+                <div class="flex md:inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm text-[var(--tx-tertiary)] px-5 py-2.5 rounded-full border border-white/60 font-black text-xs md:text-sm shadow-sm">
                     ⭐ Member Setia
                 </div>
             </div>
@@ -26,14 +26,14 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
             {{-- Saldo Harvestly --}}
-            <div class="glass-card p-8 relative overflow-hidden border border-white/50 shadow-lg group hover:-translate-y-1 transition-all" style="background: linear-gradient(135deg, var(--tx-primary) 0%, var(--tx-primary-mid) 100%);">
+            <div class="glass-card p-6 md:p-8 relative overflow-hidden border border-white/50 shadow-lg group hover:-translate-y-1 transition-all" style="background: linear-gradient(135deg, var(--tx-primary) 0%, var(--tx-primary-mid) 100%);">
                 <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
                 <div class="absolute right-10 -bottom-10 w-20 h-20 bg-white/10 rounded-full group-hover:scale-125 transition-transform duration-700 delay-75"></div>
-                <div class="relative z-10 flex items-center gap-2 bg-white/20 w-max px-4 py-2 rounded-xl backdrop-blur-sm text-sm font-black mb-6 border border-white/30 text-white">
+                <div class="relative z-10 flex items-center gap-2 bg-white/20 w-max px-4 py-2 rounded-xl backdrop-blur-sm text-[10px] md:text-sm font-black mb-6 border border-white/30 text-white uppercase tracking-widest">
                     💳 Saldo Harvestly
                 </div>
-                <h3 class="relative z-10 text-3xl md:text-4xl font-black tracking-tight mb-8 text-white">Rp {{ number_format($wallet->balance ?? 0, 0, ',', '.') }}</h3>
-                <a href="{{ route('user.wallet.topup') }}" class="relative z-10 w-full block bg-white/20 hover:bg-white text-white hover:text-[var(--tx-primary)] font-black py-3.5 rounded-full text-sm backdrop-blur-md transition-all duration-300 border border-white/40 text-center shadow-sm">
+                <h3 class="relative z-10 text-2xl md:text-4xl font-black tracking-tight mb-8 text-white">Rp {{ number_format($wallet->balance ?? 0, 0, ',', '.') }}</h3>
+                <a href="{{ route('user.wallet.topup') }}" class="relative z-10 w-full block bg-white/20 hover:bg-white text-white hover:text-[var(--tx-primary)] font-black py-3 rounded-full text-[11px] md:text-sm backdrop-blur-md transition-all duration-300 border border-white/40 text-center shadow-sm uppercase tracking-widest">
                     ↑ Top Up Sekarang
                 </a>
             </div>
@@ -123,19 +123,19 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             @forelse($featuredProducts as $product)
-            <a href="{{ route('shop.show', $product->slug) }}" class="glass-card p-5 border border-white/50 hover:-translate-y-2 transition-all group shadow-sm">
-                <div class="aspect-square rounded-[16px] bg-white/40 flex items-center justify-center mb-4 overflow-hidden border border-white/60">
+            <a href="{{ route('shop.show', $product->slug) }}" class="glass-card p-3 md:p-5 border border-white/50 hover:-translate-y-2 transition-all group shadow-sm">
+                <div class="aspect-square rounded-[12px] md:rounded-[16px] bg-white/40 flex items-center justify-center mb-3 md:mb-4 overflow-hidden border border-white/60">
                     @if($product->images && count($product->images) > 0)
                         <img src="{{ Storage::url($product->images[0]) }}" alt="{{ $product->name }}" class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500">
                     @else
-                        <span class="text-5xl">🧴</span>
+                        <span class="text-3xl md:text-5xl">🧴</span>
                     @endif
                 </div>
-                <span class="text-[9px] font-black text-[var(--tx-secondary)] bg-[var(--tx-secondary-light)] border border-white px-2 py-1 rounded-full uppercase tracking-wider">Naturea</span>
-                <h4 class="text-sm font-black text-[var(--tx-text-dark)] mt-3 mb-1 truncate">{{ $product->name }}</h4>
-                <p class="text-base font-black text-[var(--tx-primary)]">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                <span class="text-[8px] md:text-[9px] font-black text-[var(--tx-secondary)] bg-[var(--tx-secondary-light)] border border-white px-2 py-0.5 md:py-1 rounded-full uppercase tracking-wider">Naturea</span>
+                <h4 class="text-xs md:text-sm font-black text-[var(--tx-text-dark)] mt-2 md:mt-3 mb-1 truncate">{{ $product->name }}</h4>
+                <p class="text-sm md:text-base font-black text-[var(--tx-primary)]">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
             </a>
             @empty
             <div class="col-span-4 glass-card text-center py-16 border border-white/50">

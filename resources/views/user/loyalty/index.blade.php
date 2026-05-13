@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="title">Trinexa - Loyalty & Badges</x-slot>
 
-    <div class="py-12 min-h-screen relative overflow-hidden">
+    <div class="py-12 min-h-screen relative overflow-x-hidden">
         <!-- Dekorasi Orb -->
-        <div class="absolute right-0 top-0 w-96 h-96 bg-gradient-to-bl from-[var(--tx-primary-light)] to-[var(--tx-secondary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-50 z-0 pointer-events-none"></div>
-        <div class="absolute left-0 bottom-0 w-96 h-96 bg-gradient-to-tr from-[var(--tx-tertiary-light)] to-[var(--tx-pink)] rounded-full translate-y-1/3 -translate-x-1/3 blur-3xl opacity-50 z-0 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 w-64 h-64 md:w-96 md:h-96 bg-gradient-to-bl from-[var(--tx-primary-light)] to-[var(--tx-secondary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-40 md:opacity-50 z-0 pointer-events-none"></div>
+        <div class="absolute left-0 bottom-0 w-64 h-64 md:w-96 md:h-96 bg-gradient-to-tr from-[var(--tx-tertiary-light)] to-[var(--tx-pink)] rounded-full translate-y-1/3 -translate-x-1/3 blur-3xl opacity-40 md:opacity-50 z-0 pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8 relative z-10">
             <!-- Alert Messages -->
@@ -20,17 +20,17 @@
             @endif
 
             <!-- Hero Section (Level & Points) -->
-            <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-lg border border-white/60 relative">
+            <div class="glass-card rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-lg border border-white/60 relative">
                 <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--tx-primary)] via-[var(--tx-secondary)] to-[var(--tx-tertiary)]"></div>
-                <div class="p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between">
+                <div class="p-6 sm:p-12 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6">
                     <div>
-                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-black mb-2">Tingkat Member</p>
-                        <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] drop-shadow-sm">{{ $level }}</h3>
-                        <p class="mt-2 text-[var(--tx-text-muted)] font-bold text-sm">Terus kumpulkan poin untuk membuka lebih banyak keuntungan eksklusif!</p>
+                        <p class="text-[9px] md:text-[10px] text-gray-500 uppercase tracking-widest font-black mb-1 md:mb-2">Tingkat Member</p>
+                        <h3 class="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] drop-shadow-sm">{{ $level }}</h3>
+                        <p class="mt-2 text-[var(--tx-text-muted)] font-bold text-[10px] md:text-sm max-w-sm">Terus kumpulkan poin untuk membuka keuntungan eksklusif!</p>
                     </div>
-                    <div class="mt-6 md:mt-0 text-center md:text-right">
-                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-black mb-2">Total Poin</p>
-                        <h3 class="text-5xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ number_format($points) }} <span class="text-2xl text-[var(--tx-primary)]">pts</span></h3>
+                    <div class="shrink-0 bg-white/40 backdrop-blur-sm p-4 md:p-0 rounded-3xl border border-white md:border-0 md:bg-transparent">
+                        <p class="text-[9px] md:text-[10px] text-gray-500 uppercase tracking-widest font-black mb-1 md:mb-2">Total Poin</p>
+                        <h3 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ number_format($points) }} <span class="text-xl md:text-2xl text-[var(--tx-primary)]">pts</span></h3>
                     </div>
                 </div>
             </div>

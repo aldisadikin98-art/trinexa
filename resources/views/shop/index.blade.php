@@ -1,16 +1,16 @@
 <x-app-layout>
     <x-slot name="title">Belanja Skincare Alami - Naturea</x-slot>
 
-    <div class="max-w-7xl mx-auto px-4 py-8 relative">
+    <div class="max-w-7xl mx-auto px-4 py-8 relative overflow-x-hidden">
         <!-- Dekorasi Orb -->
-        <div class="absolute right-0 top-0 w-96 h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-primary-light)] via-[var(--tx-secondary-light)] to-transparent rounded-full -translate-y-1/2 translate-x-1/3 opacity-40 z-[-1]"></div>
-        <div class="absolute left-0 bottom-0 w-96 h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-tertiary-light)] via-[var(--tx-pink)] to-transparent rounded-full translate-y-1/3 -translate-x-1/3 opacity-40 z-[-1]"></div>
+        <div class="absolute right-0 top-0 w-64 h-64 md:w-96 md:h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-primary-light)] via-[var(--tx-secondary-light)] to-transparent rounded-full -translate-y-1/2 translate-x-1/3 opacity-30 md:opacity-40 z-[-1]"></div>
+        <div class="absolute left-0 bottom-0 w-64 h-64 md:w-96 md:h-96 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--tx-tertiary-light)] via-[var(--tx-pink)] to-transparent rounded-full translate-y-1/3 -translate-x-1/3 opacity-30 md:opacity-40 z-[-1]"></div>
 
         <div class="flex flex-col lg:flex-row gap-8 relative z-10">
             
             {{-- SIDEBAR KIRI (260px, Sticky) --}}
             <aside class="lg:w-[260px] shrink-0">
-                <form id="filterForm" method="GET" action="{{ route('shop.index') }}" class="glass-card border border-white/60 p-6 sticky top-24 rounded-3xl">
+                <form id="filterForm" method="GET" action="{{ route('shop.index') }}" class="glass-card md:backdrop-blur-xl backdrop-blur-md border border-white/60 p-6 sticky top-24 rounded-3xl">
                     
                     {{-- Search Bar --}}
                     <div class="mb-6">
@@ -63,9 +63,9 @@
             </aside>
 
             {{-- KONTEN KANAN --}}
-            <div class="flex-1">
+            <div class="flex-1 min-w-0">
                 {{-- Header --}}
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 glass-card p-5 rounded-3xl border border-white/60">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 glass-card md:backdrop-blur-xl backdrop-blur-md p-5 rounded-3xl border border-white/60">
                     <div>
                         <h1 class="text-2xl font-black text-[var(--tx-text-dark)]">Katalog Naturea</h1>
                         <p class="text-sm font-bold text-[var(--tx-text-muted)] mt-1">Menampilkan <span class="font-black text-[var(--tx-primary)]">{{ $products->total() }}</span> produk eksklusif</p>
@@ -111,7 +111,7 @@
                 @else
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($products as $product)
-                            <div class="bg-white/60 border border-white/60 p-4 rounded-[2rem] overflow-hidden group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full">
+                            <div class="bg-white/60 border border-white/60 p-4 rounded-[2rem] overflow-hidden group hover:shadow-xl md:hover:-translate-y-2 transition-all duration-300 flex flex-col h-full">
                                 {{-- Image Area --}}
                                 <div class="relative aspect-square w-full bg-white/80 rounded-2xl overflow-hidden mb-4 border border-white/50">
                                     <img src="{{ $product->primary_image }}" alt="{{ $product->name }}" 

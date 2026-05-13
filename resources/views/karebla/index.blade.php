@@ -6,15 +6,15 @@
         
         <!-- Header & Banner -->
         <div class="mb-10 text-center md:text-left relative">
-            <h2 class="text-4xl md:text-5xl font-black text-[var(--tx-text-dark)] tracking-tight mb-3 flex flex-col md:flex-row items-center md:justify-start justify-center gap-4">
-                <img src="{{ asset('images/logo karebla.jpeg') }}" alt="Karebla" class="w-16 h-16 rounded-2xl object-cover shadow-md border-2 border-white">
+            <h2 class="text-3xl md:text-5xl font-black text-[var(--tx-text-dark)] tracking-tight mb-3 flex flex-col md:flex-row items-center md:justify-start justify-center gap-4">
+                <img src="{{ asset('images/logo karebla.jpeg') }}" alt="Karebla" class="w-12 h-12 md:w-16 md:h-16 rounded-2xl object-cover shadow-md border-2 border-white">
                 <span>Karebla Rewards</span>
             </h2>
-            <p class="text-[var(--tx-text-muted)] font-bold text-lg max-w-2xl">
+            <p class="text-[var(--tx-text-muted)] font-bold text-sm md:text-lg max-w-2xl px-4 md:px-0">
                 Tukar koin belanjamu dengan merchandise eksklusif dan produk unggulan.
             </p>
             
-            <div class="absolute right-0 top-0 w-64 h-64 bg-gradient-to-bl from-[var(--tx-quaternary-light)] to-[var(--tx-tertiary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-60 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 w-48 h-48 md:w-64 md:h-64 bg-gradient-to-bl from-[var(--tx-quaternary-light)] to-[var(--tx-tertiary-light)] rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl opacity-60 pointer-events-none overflow-hidden"></div>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8 mb-10">
@@ -23,20 +23,21 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 h-full">
                     
                     <!-- Total XP -->
-                    <div class="glass-card rounded-[2.5rem] border border-white/60 p-8 flex flex-col justify-center items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+                    <div class="glass-card rounded-[2rem] md:rounded-[2.5rem] border border-white/60 p-6 md:p-8 flex flex-col justify-center items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
                         <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-amber-200 rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                        <div class="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-amber-300 to-amber-500 text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform z-10 relative">🪙</div>
-                        <span class="text-[10px] text-[var(--tx-text-muted)] font-black uppercase tracking-widest mb-1 z-10 relative">Koin Tersedia</span>
-                        <span class="text-4xl font-black text-[var(--tx-text-dark)] z-10 relative">{{ number_format($userPoints, 0, ',', '.') }}</span>
+                        <div class="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-gradient-to-br from-amber-300 to-amber-500 text-white flex items-center justify-center text-2xl md:text-3xl mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform z-10 relative">🪙</div>
+                        <span class="text-[9px] md:text-[10px] text-[var(--tx-text-muted)] font-black uppercase tracking-widest mb-1 z-10 relative">Koin Tersedia</span>
+                        <span class="text-3xl md:text-4xl font-black text-[var(--tx-text-dark)] z-10 relative">{{ number_format($userPoints, 0, ',', '.') }}</span>
                     </div>
-
+ 
                     <!-- Ditukar -->
-                    <div class="glass-card rounded-[2.5rem] border border-white/60 p-8 flex flex-col justify-center items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+                    <div class="glass-card rounded-[2rem] md:rounded-[2.5rem] border border-white/60 p-6 md:p-8 flex flex-col justify-center items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
                         <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-[var(--tx-secondary-light)] rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                        <div class="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-[var(--tx-secondary)] to-[var(--tx-pink)] text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-[var(--tx-secondary)]/30 group-hover:scale-110 transition-transform z-10 relative">🎁</div>
-                        <span class="text-[10px] text-[var(--tx-text-muted)] font-black uppercase tracking-widest mb-1 z-10 relative">Telah Ditukar</span>
-                        <span class="text-4xl font-black text-[var(--tx-text-dark)] z-10 relative">{{ $totalRedeemed }}</span>
+                        <div class="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-gradient-to-br from-[var(--tx-secondary)] to-[var(--tx-pink)] text-white flex items-center justify-center text-2xl md:text-3xl mb-4 shadow-lg shadow-[var(--tx-secondary)]/30 group-hover:scale-110 transition-transform z-10 relative">🎁</div>
+                        <span class="text-[9px] md:text-[10px] text-[var(--tx-text-muted)] font-black uppercase tracking-widest mb-1 z-10 relative">Telah Ditukar</span>
+                        <span class="text-3xl md:text-4xl font-black text-[var(--tx-text-dark)] z-10 relative">{{ $totalRedeemed }}</span>
                     </div>
+/div>
 
                     <!-- Diproses -->
                     <div class="glass-card rounded-[2.5rem] border border-white/60 p-8 flex flex-col justify-center items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
@@ -96,14 +97,12 @@
                                 <span class="font-black text-3xl tracking-tight bg-clip-text text-transparent {{ $userLevel === 'VIP' ? 'bg-gradient-to-r from-amber-200 to-amber-500' : 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)]' }}">{{ $userLevel }}</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="relative z-10">
-                        <p class="font-black text-xl truncate mb-1">{{ $user->name }}</p>
-                        <p class="text-xs font-bold opacity-60 mb-6">Member sejak {{ $joinDate }}</p>
-
-                        <div class="bg-white/20 rounded-[1.5rem] p-5 backdrop-blur-md border border-white/30 shadow-inner">
-                            <div class="flex justify-between items-center mb-3 text-xs font-black">
+                            <div class="relative z-10">
+                        <p class="font-black text-lg md:text-xl truncate mb-1">{{ $user->name }}</p>
+                        <p class="text-[10px] md:text-xs font-bold opacity-60 mb-6">Member sejak {{ $joinDate }}</p>
+ 
+                        <div class="bg-white/20 rounded-[1.5rem] p-4 md:p-5 backdrop-blur-md border border-white/30 shadow-inner">
+                            <div class="flex justify-between items-center mb-3 text-[10px] md:text-xs font-black">
                                 <span>{{ $transactionCount }} Transaksi</span>
                                 <span>{{ $progress == 100 ? 'Level Maksimal' : $progress . '%' }}</span>
                             </div>
@@ -114,9 +113,10 @@
                                     @endif
                                 </div>
                             </div>
-                            <p class="text-[10px] font-black text-center {{ $userLevel === 'VIP' ? 'bg-amber-500/20 text-amber-300' : 'bg-white/50 text-[var(--tx-text-dark)]' }} px-3 py-1.5 rounded-xl uppercase tracking-widest">{{ $bonusText }}</p>
+                            <p class="text-[9px] md:text-[10px] font-black text-center {{ $userLevel === 'VIP' ? 'bg-amber-500/20 text-amber-300' : 'bg-white/50 text-[var(--tx-text-dark)]' }} px-3 py-1.5 rounded-xl uppercase tracking-widest">{{ $bonusText }}</p>
                         </div>
                     </div>
+             </div>
                 </div>
             </div>
         </div>

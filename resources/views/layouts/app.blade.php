@@ -44,10 +44,24 @@
 
     @auth
     {{-- ── Floating Truevera Button ─────────────────────────────── --}}
-    <div id="truevera-float-container" class="fixed bottom-6 right-6 z-50" x-data="trueveraFloat()">
+    <div id="truevera-float-container" 
+         class="fixed z-50 transition-all duration-300"
+         style="bottom: 110px; right: 24px;"
+         x-data="trueveraFloat()"
+         @mousedown="startDrag($event)"
+         @touchstart="startDrag($event)"
+         :style="`bottom: ${pos.y}px; right: ${pos.x}px; cursor: isDragging ? 'grabbing' : 'pointer'`">
 
         {{-- Popup Chat --}}
-        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 scale-95" class="mb-4 w-80 bg-white/80 backdrop-blur-xl rounded-[24px] shadow-2xl border border-white/60 overflow-hidden" style="display:none">
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-200" 
+             x-transition:enter-start="opacity-0 scale-95 translate-y-4" 
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0" 
+             x-transition:leave="transition ease-in duration-150" 
+             x-transition:leave-start="opacity-100" 
+             x-transition:leave-end="opacity-0 scale-95" 
+             class="mb-4 w-[280px] sm:w-80 bg-white/80 backdrop-blur-xl rounded-[24px] shadow-2xl border border-white/60 overflow-hidden" 
+             style="display:none">
 
             {{-- Header --}}
             <div class="bg-gradient-to-r from-[var(--tx-secondary-light)] to-[var(--tx-tertiary-light)] px-4 py-3 flex items-center justify-between border-b border-white/50">
@@ -78,7 +92,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('konsultasi.chat.index') }}" class="text-[9px] font-black text-[var(--tx-primary)] uppercase tracking-widest hover:underline">Buka Full →</a>
+                    <a href="{{ route('konsultasi.chat.index') }}" class="text-[9px] font-black text-[var(--tx-primary)] uppercase tracking-widest hover:underline">Full →</a>
                     <button @click="open = false" class="text-gray-400 hover:text-gray-600 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/50 transition-colors">✕</button>
                 </div>
             </div>
@@ -102,7 +116,7 @@
 
             {{-- Input --}}
             <div class="p-3 border-t border-white/50 flex gap-2 bg-white/20">
-                <input id="quick-input" type="text" placeholder="Tanya Truevera..." x-model="quickMsg"
+                <input id="quick-input" type="text" placeholder="Tanya..." x-model="quickMsg"
                     @keypress.enter="quickSend()"
                     class="flex-1 text-xs font-bold bg-white/60 border border-white/60 rounded-full px-4 py-2 focus:outline-none focus:border-[var(--tx-secondary)] backdrop-blur-sm placeholder:text-gray-400">
                 <button @click="quickSend()" class="w-9 h-9 bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] rounded-full flex items-center justify-center text-white shadow-md hover:-translate-y-0.5 transition-transform">
@@ -112,9 +126,10 @@
         </div>
 
         {{-- Floating Button --}}
-        <button @click="open = !open" class="group relative flex items-center gap-2.5 bg-gradient-to-r from-[var(--tx-secondary)] to-[var(--tx-tertiary)] text-white font-black px-5 py-3 rounded-full shadow-xl shadow-[var(--tx-secondary)]/30 hover:shadow-[var(--tx-secondary)]/50 transition-all duration-300 hover:-translate-y-1 border border-white/30">
-            <div class="truevera-float">
-                <svg width="28" height="32" viewBox="0 0 140 160" fill="none">
+        <button @click="if(!isDragging) open = !open" 
+                class="group relative flex items-center gap-2.5 bg-gradient-to-r from-[var(--tx-secondary)] to-[var(--tx-tertiary)] text-white font-black px-4 py-3 rounded-full shadow-xl shadow-[var(--tx-secondary)]/30 hover:shadow-[var(--tx-secondary)]/50 transition-all duration-300 border border-white/30 touch-none active:scale-95">
+            <div class="truevera-float pointer-events-none">
+                <svg width="24" height="28" viewBox="0 0 140 160" fill="none">
                     <path d="M46 38 L55 20 L70 32 L85 20 L94 38 Z" fill="rgba(255,255,255,0.8)"/>
                     <rect x="30" y="40" width="80" height="75" rx="28" fill="white" opacity="0.9"/>
                     <ellipse cx="55" cy="72" rx="8" ry="9" fill="#4A90D9"/>
@@ -129,7 +144,7 @@
                     <rect x="45" y="112" width="50" height="40" rx="18" fill="rgba(255,255,255,0.3)"/>
                 </svg>
             </div>
-            <span class="text-sm">Tanya Truevera</span>
+            <span class="text-xs sm:text-sm hidden sm:inline pointer-events-none">Tanya Truevera</span>
             <span class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></span>
         </button>
     </div>
@@ -141,8 +156,46 @@
                 quickMsg: '',
                 history: [],
                 loading: false,
+                pos: { x: 24, y: window.innerWidth < 768 ? 110 : 24 },
+                isDragging: false,
+                dragStart: { x: 0, y: 0 },
+
+                startDrag(e) {
+                    this.isDragging = false;
+                    const event = e.type.startsWith('touch') ? e.touches[0] : e;
+                    this.dragStart = { x: event.clientX, y: event.clientY };
+                    
+                    const move = (me) => {
+                        const mEvent = me.type.startsWith('touch') ? me.touches[0] : me;
+                        const dx = this.dragStart.x - mEvent.clientX;
+                        const dy = this.dragStart.y - mEvent.clientY;
+                        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                            this.isDragging = true;
+                            this.pos.x += dx;
+                            this.pos.y += dy;
+                            this.dragStart = { x: mEvent.clientX, y: mEvent.clientY };
+                            // Boundary check
+                            this.pos.x = Math.max(10, Math.min(window.innerWidth - 60, this.pos.x));
+                            this.pos.y = Math.max(80, Math.min(window.innerHeight - 100, this.pos.y));
+                        }
+                    };
+
+                    const end = () => {
+                        document.removeEventListener('mousemove', move);
+                        document.removeEventListener('mouseup', end);
+                        document.removeEventListener('touchmove', move);
+                        document.removeEventListener('touchend', end);
+                        setTimeout(() => this.isDragging = false, 50);
+                    };
+
+                    document.addEventListener('mousemove', move);
+                    document.addEventListener('mouseup', end);
+                    document.addEventListener('touchmove', move, { passive: false });
+                    document.addEventListener('touchend', end);
+                },
 
                 async quickSend(text) {
+                    if (this.isDragging) return;
                     const msg = text || this.quickMsg.trim();
                     if (!msg || this.loading) return;
                     this.quickMsg = '';
