@@ -21,7 +21,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-mesh min-h-screen text-[var(--tx-text-dark)] antialiased selection:bg-[var(--tx-secondary)]/20 selection:text-gray-900">
+<body class="bg-mesh min-h-screen text-[var(--tx-text-dark)] antialiased selection:bg-[var(--tx-secondary)]/20 selection:text-gray-900 overflow-x-hidden">
     <div class="min-h-screen">
         
         <!-- Navbar Component -->

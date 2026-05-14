@@ -12,16 +12,7 @@
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body x-data="{ sidebarOpen: false }" class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased flex h-screen overflow-hidden selection:bg-[var(--tx-secondary)]/20 relative">
-
-    {{-- Mobile Sidebar Overlay Backdrop --}}
-    <div x-show="sidebarOpen"
-         x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-         x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-         @click="sidebarOpen = false"
-         class="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
-         style="display:none"></div>
-
+<body x-data="{ mobileMenuOpen: false }" class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased flex h-screen overflow-hidden selection:bg-[var(--tx-secondary)]/20 relative">
     <!-- Dekorasi Ambient Halus -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--tx-secondary-light)] opacity-40 blur-[120px]"></div>
@@ -30,7 +21,7 @@
     </div>
 
     {{-- Sidebar (Premium Glassmorphism) --}}
-    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="fixed md:relative w-72 h-[calc(100vh-2rem)] m-0 md:m-4 md:rounded-[2rem] bg-white/90 md:bg-white/70 backdrop-blur-2xl border-r md:border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] text-[var(--tx-text-dark)] flex flex-col shrink-0 z-50 transition-transform duration-300 overflow-hidden top-0 left-0 bottom-0">
+    <aside class="hidden md:flex relative w-72 h-[calc(100vh-2rem)] m-4 rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] text-[var(--tx-text-dark)] flex-col shrink-0 z-50 overflow-hidden">
         <div class="h-24 flex items-center justify-between px-8 border-b border-white/80 shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
                 <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Logo" class="w-10 h-10 object-cover rounded-[12px] shadow-sm">
@@ -39,9 +30,6 @@
                     <span class="bg-[var(--tx-primary)] text-white text-[9px] px-2 py-0.5 rounded-full shadow-sm uppercase tracking-widest inline-block w-max mt-0.5">Admin</span>
                 </h1>
             </a>
-            <button @click="sidebarOpen = false" class="md:hidden text-gray-400 p-2">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
         </div>
         
         <nav class="flex-1 px-5 py-6 space-y-2.5 overflow-y-auto no-scrollbar">
@@ -98,11 +86,8 @@
     {{-- Main Content --}}
     <div class="flex-1 flex flex-col h-screen overflow-hidden relative z-10 p-2 md:p-4">
         {{-- Header (Premium Floating) --}}
-        <header class="h-20 bg-white/70 backdrop-blur-2xl border border-white rounded-3xl flex items-center justify-between px-8 shrink-0 z-10 shadow-[0_4px_30px_rgb(0,0,0,0.03)] mb-4">
+        <header class="h-20 bg-white/70 backdrop-blur-2xl border border-white rounded-3xl flex items-center justify-between px-6 md:px-8 shrink-0 z-10 shadow-[0_4px_30px_rgb(0,0,0,0.03)] mb-4">
             <div class="flex items-center gap-4">
-                <button @click="sidebarOpen = true" class="md:hidden p-2 bg-white/50 rounded-xl border border-white shadow-sm text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
                 <h2 class="text-xl md:text-2xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ $title ?? 'Dashboard' }}</h2>
             </div>
             <div class="flex items-center gap-4">
@@ -171,13 +156,66 @@
             <span class="text-[9px] font-black uppercase tracking-tighter">Finance</span>
         </a>
 
-        <a href="{{ route('user.dashboard') }}" class="flex flex-col items-center gap-1 p-2 text-gray-400 transition-all duration-300">
+        <button @click="mobileMenuOpen = true" class="flex flex-col items-center gap-1 p-2 text-gray-400 transition-all duration-300">
             <div class="relative p-2.5 rounded-2xl bg-transparent text-gray-400">
-                <span class="text-xl leading-none">🌐</span>
+                <span class="text-xl leading-none">☰</span>
             </div>
-            <span class="text-[9px] font-black uppercase tracking-tighter">Web</span>
-        </a>
+            <span class="text-[9px] font-black uppercase tracking-tighter">Menu</span>
+        </button>
     </nav>
+
+    {{-- 📱 MOBILE MENU BOTTOM SHEET --}}
+    <div x-show="mobileMenuOpen" class="md:hidden fixed inset-0 z-[70]" style="display:none">
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+             x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+             @click="mobileMenuOpen = false"
+             class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+        <div x-show="mobileMenuOpen"
+             x-transition:enter="transform transition ease-out duration-300" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
+             x-transition:leave="transform transition ease-in duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full"
+             class="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl rounded-t-[2rem] p-6 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-white">
+            
+            <div class="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-6"></div>
+            
+            <div class="space-y-3">
+                <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest px-2 mb-4">Menu Lainnya</h3>
+                
+                <div class="grid grid-cols-4 gap-y-6 gap-x-4">
+                    <a href="{{ route('admin.ulasan.index') }}" class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-50 text-yellow-500 flex items-center justify-center text-2xl shadow-sm border border-yellow-100">⭐</div>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Ulasan</span>
+                    </a>
+                    <a href="{{ route('admin.voucher.index') }}" class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center text-2xl shadow-sm border border-purple-100">🎟️</div>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Voucher</span>
+                    </a>
+                    <a href="{{ route('admin.notifications.index') }}" class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-2xl shadow-sm border border-blue-100">🔔</div>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Notif</span>
+                    </a>
+                    <a href="{{ route('admin.karebla.produk.index') }}" class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-2xl shadow-sm border border-emerald-100">💎</div>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Karebla</span>
+                    </a>
+                    <a href="{{ route('admin.karebla.penukaran.index') }}" class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center text-2xl shadow-sm border border-indigo-100">🔄</div>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Tukar</span>
+                    </a>
+                    <a href="{{ route('user.dashboard') }}" class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-500 flex items-center justify-center text-2xl shadow-sm border border-gray-100">🌐</div>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Web</span>
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="flex flex-col items-center gap-2">
+                        @csrf
+                        <button type="submit" class="w-14 h-14 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center text-2xl shadow-sm border border-red-100">🚪</button>
+                        <span class="text-[10px] font-bold text-center text-gray-600">Logout</span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @stack('scripts')
 </body>

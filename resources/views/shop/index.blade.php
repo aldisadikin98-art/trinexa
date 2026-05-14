@@ -147,11 +147,11 @@
                                     <div class="mt-auto">
                                         <div class="flex items-center gap-1 mb-3">
                                             <span class="text-[10px] font-black text-amber-500 bg-amber-50 border border-amber-100 px-2 py-1 rounded-md flex items-center gap-1">
-                                                ⭐ +{{ floor($product->price / 10000) }} Koin
+                                                ⭐ +{{ floor((float)$product->price / 10000) }} Koin
                                             </span>
                                         </div>
                                         <div class="text-xl font-black text-[var(--tx-primary)] mb-5">
-                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                                            Rp {{ number_format((float)$product->price, 0, ',', '.') }}
                                         </div>
 
                                         {{-- Actions --}}

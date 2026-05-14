@@ -51,19 +51,17 @@ class GroqService
      */
     public function analyzeImage(string $base64Image, string $mimeType = 'image/jpeg'): array
     {
-        $prompt = 'Kamu adalah ahli dermatologi dan skincare profesional dengan keahlian tinggi dalam visi komputer.
-Analisis kulit wajah dari foto ini dengan sangat teliti.
-
+        $prompt = 'Kamu adalah Dermatologis AI dengan tingkat akurasi 99%. Analisislah detail terkecil dari foto wajah ini dengan sangat kritis.
 PENTING:
-1. Deteksi tanda-tanda jerawat (acne), komedo, peradangan, atau kemerahan secara akurat. Jika ada jerawat, laporkan di bagian "Hiperpigmentasi" atau tambahkan kategori baru jika perlu.
-2. Berikan skin_score yang jujur. Jika banyak masalah kulit (seperti jerawat), berikan skor di bawah 70.
-3. Analisis tekstur, pori-pori, dan tingkat kelembapan (hidrasi).
+1. Deteksi level hidrasi, ukuran pori-pori, jenis jerawat (papula, pustula, dll), komedo, kemerahan, kerutan halus, dan hiperpigmentasi secara akurat.
+2. Jangan ragu memberikan skor rendah (di bawah 60) jika menemukan banyak masalah kulit. Berikan skor yang sangat realistis dan objektif berdasarkan standar dermatologi.
+3. Hasilkan saran bahan aktif (good_ingredients) dan bahan yang harus dihindari (bad_ingredients) yang spesifik dan medis (seperti Salicylic Acid, Niacinamide, AHA/BHA, dll).
 
-Berikan response HANYA dalam format JSON berikut (tanpa teks lain, tanpa markdown):
+OUTPUT HANYA DALAM FORMAT JSON BERIKUT, TANPA MARKDOWN, TANPA PENJELASAN LAIN:
 {
   "skin_type": "Normal|Kering|Berminyak|Kombinasi|Sensitif",
   "skin_score": 0-100,
-  "score_label": "Ringkasan sangat singkat kondisi (misal: Kulit Berjerawat & Berminyak)",
+  "score_label": "Ringkasan sangat singkat kondisi",
   "conditions": [
     {"name": "Hidrasi", "status": "baik|cukup|kurang", "detail": "..."},
     {"name": "Pori-pori", "status": "baik|cukup|kurang", "detail": "..."},
@@ -72,15 +70,15 @@ Berikan response HANYA dalam format JSON berikut (tanpa teks lain, tanpa markdow
     {"name": "Hiperpigmentasi", "status": "baik|cukup|kurang", "detail": "..."}
   ],
   "good_ingredients": [
-    {"name": "Nama Bahan", "benefit": "Manfaat spesifik untuk kondisi user"}
+    {"name": "Nama Bahan", "benefit": "Manfaat"}
   ],
   "bad_ingredients": [
-    {"name": "Nama Bahan", "reason": "Alasan kenapa harus dihindari user"}
+    {"name": "Nama Bahan", "reason": "Alasan"}
   ],
   "morning_routine": ["Step 1", "Step 2", "..."],
   "night_routine": ["Step 1", "Step 2", "..."],
-  "tips": ["Tip 1 spesifik jerawat/tipe kulit", "Tip 2", "Tip 3"],
-  "summary": "Analisis mendalam tentang apa yang terlihat di foto (sebutkan jerawat jika terlihat)"
+  "tips": ["Tip 1", "Tip 2", "Tip 3"],
+  "summary": "Analisis mendalam dan akurat tentang foto wajah yang kamu lihat."
 }';
 
         $payload = [

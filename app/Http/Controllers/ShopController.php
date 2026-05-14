@@ -39,8 +39,9 @@ class ShopController extends Controller
             // Cart count untuk badge navbar (null-safe untuk guest)
             $cartCount = auth()->check() ? auth()->user()->cartItems()->count() : 0;
 
-            return view('shop.index', compact('products', 'categories', 'cartCount'));
-        } catch (\Exception $e) {
+            $view = view('shop.index', compact('products', 'categories', 'cartCount'))->render();
+            return response($view);
+        } catch (\Throwable $e) {
             // Jika terjadi error di production (Railway), tampilkan pesannya sementara untuk debugging
             return response("<h1>Error pada Shop:</h1><p>" . $e->getMessage() . "</p><p>Line: " . $e->getLine() . "</p>", 500);
         }
@@ -48,40 +49,45 @@ class ShopController extends Controller
 
     public function show(Product $product)
     {
-        abort_if(!$product->is_active, 404);
+        try {
+            abort_if(!$product->is_active, 404);
 
-        $product->load(['approvedReviews.user', 'approvedReviews.images', 'approvedReviews.helpfuls']);
+            $product->load(['approvedReviews.user', 'approvedReviews.images', 'approvedReviews.helpfuls']);
 
-        // Review statistics
-        $reviewStats = [
-            'total'   => $product->approvedReviews->count(),
-            'average' => round($product->approvedReviews->avg('rating') ?? 0, 1),
-            'stars'   => [],
-        ];
-        for ($i = 5; $i >= 1; $i--) {
-            $count = $product->approvedReviews->where('rating', $i)->count();
-            $reviewStats['stars'][$i] = [
-                'count'   => $count,
-                'percent' => $reviewStats['total'] > 0
-                    ? round(($count / $reviewStats['total']) * 100)
-                    : 0,
+            // Review statistics
+            $reviewStats = [
+                'total'   => $product->approvedReviews->count(),
+                'average' => round($product->approvedReviews->avg('rating') ?? 0, 1),
+                'stars'   => [],
             ];
+            for ($i = 5; $i >= 1; $i--) {
+                $count = $product->approvedReviews->where('rating', $i)->count();
+                $reviewStats['stars'][$i] = [
+                    'count'   => $count,
+                    'percent' => $reviewStats['total'] > 0
+                        ? round(($count / $reviewStats['total']) * 100)
+                        : 0,
+                ];
+            }
+
+            // Apakah user sudah punya item di keranjang untuk produk ini
+            $inCart = false;
+            if (auth()->check()) {
+                $inCart = auth()->user()->cartItems()->where('product_id', $product->id)->exists();
+            }
+
+            // Related products
+            $related = Product::active()->naturea()
+                ->where('id', '!=', $product->id)
+                ->where('category', $product->category)
+                ->take(4)->get();
+
+            $cartCount = auth()->check() ? auth()->user()->cartItems()->count() : 0;
+
+            $view = view('shop.show', compact('product', 'reviewStats', 'inCart', 'related', 'cartCount'))->render();
+            return response($view);
+        } catch (\Throwable $e) {
+            return response("<h1>Error pada Shop Detail:</h1><p>" . $e->getMessage() . "</p><p>Line: " . $e->getLine() . "</p>", 500);
         }
-
-        // Apakah user sudah punya item di keranjang untuk produk ini
-        $inCart = false;
-        if (auth()->check()) {
-            $inCart = auth()->user()->cartItems()->where('product_id', $product->id)->exists();
-        }
-
-        // Related products
-        $related = Product::active()->naturea()
-            ->where('id', '!=', $product->id)
-            ->where('category', $product->category)
-            ->take(4)->get();
-
-        $cartCount = auth()->check() ? auth()->user()->cartItems()->count() : 0;
-
-        return view('shop.show', compact('product', 'reviewStats', 'inCart', 'related', 'cartCount'));
     }
 }

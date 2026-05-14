@@ -1,5 +1,5 @@
 <x-app-layout title="{{ $product->name }} - Karebla Rewards">
-    <div class="py-12 min-h-screen relative z-10" x-data="kareblaDetail({{ $product->coin_price }}, {{ $userPoints }}, {{ $product->stock }}, '{{ route('karebla.redeem') }}', {{ $product->id }})">
+    <div class="py-12 pb-36 min-h-screen relative z-10" x-data="kareblaDetail({{ $product->coin_price }}, {{ $userPoints }}, {{ $product->stock }}, '{{ route('karebla.redeem') }}', {{ $product->id }})">
         
         <!-- Ambient Orbs -->
         <div class="absolute right-0 top-20 w-96 h-96 bg-gradient-to-bl from-[var(--tx-quaternary-light)] to-[var(--tx-tertiary-light)] rounded-full blur-3xl opacity-60 pointer-events-none"></div>
@@ -154,7 +154,7 @@
         </div>
 
         {{-- Bottom Sheet / Modal Konfirmasi --}}
-        <div x-show="showConfirm" class="fixed inset-0 z-50 overflow-hidden" x-cloak>
+        <div x-show="showConfirm" class="fixed inset-0 z-[60] overflow-hidden" x-cloak>
             <div class="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity" @click="showConfirm = false"
                  x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                  x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
@@ -211,8 +211,7 @@
                     </div>
                 </div>
 
-                {{-- Action Buttons - Fixed at bottom with safe area --}}
-                <div class="shrink-0 px-5 md:px-8 pt-3 pb-6 md:pb-8 border-t border-white/60 bg-white/80 backdrop-blur-md" style="padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));">
+                <div class="shrink-0 px-5 md:px-8 pt-3 pb-10 md:pb-8 border-t border-white/60 bg-white/80 backdrop-blur-md" style="padding-bottom: max(3rem, env(safe-area-inset-bottom, 3rem));">
                     <div class="grid grid-cols-2 gap-3">
                         <button @click="showConfirm = false" class="py-4 rounded-2xl font-black text-[var(--tx-text-muted)] bg-white border-2 border-gray-100 hover:bg-gray-50 transition-all uppercase tracking-widest text-xs">Batal</button>
                         <button @click="processRedeem" :disabled="isProcessing || !hasAddress"

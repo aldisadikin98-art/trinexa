@@ -2,7 +2,7 @@
     <x-slot name="title">Karebla | Trinexa Exclusive Rewards</x-slot>
 
     <!-- KONTEN UTAMA -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-28 md:pb-12 relative z-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-36 md:pb-12 relative z-10">
         
         <!-- Header & Banner -->
         <div class="mb-10 text-center md:text-left relative">
