@@ -117,7 +117,7 @@
                                     <img src="{{ $product->primary_image }}" alt="{{ $product->name }}" 
                                          loading="lazy"
                                          class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-500"
-                                         onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80'">
+                                         onerror="this.src='{{ asset('images/logo trinexa.jpeg') }}'">
                                     
                                     {{-- Badges --}}
                                     <div class="absolute top-3 left-3 flex flex-col gap-2 items-start">

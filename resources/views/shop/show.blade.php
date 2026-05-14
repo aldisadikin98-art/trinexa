@@ -25,7 +25,7 @@
                 <div class="aspect-square bg-white/60 border border-white/80 rounded-3xl overflow-hidden mb-4 relative shadow-sm">
                     <img :src="mainImage" alt="{{ $product->name }}" 
                          class="w-full h-full object-cover mix-blend-multiply"
-                         onerror="this.src='https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&q=80'">
+                         onerror="this.src='{{ asset('images/logo trinexa.jpeg') }}'">
                     
                     <div class="absolute top-4 left-4 flex flex-col gap-2">
                         <span class="bg-white/90 backdrop-blur-md text-[var(--tx-primary)] border border-white/50 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
