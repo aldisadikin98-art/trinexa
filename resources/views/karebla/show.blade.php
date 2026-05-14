@@ -159,29 +159,31 @@
                  x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                  x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
             
-            <div class="fixed inset-x-0 bottom-0 max-w-lg mx-auto glass-card bg-white/90 rounded-t-[2.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.1)] transform transition-transform border border-white"
+            <div class="fixed inset-x-0 bottom-0 max-w-lg mx-auto glass-card bg-white/95 rounded-t-[2.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] transform transition-transform border border-white max-h-[85vh] flex flex-col"
                  x-transition:enter="ease-out duration-300" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
                  x-transition:leave="ease-in duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full">
                 
-                <div class="w-16 h-1.5 bg-gray-300/50 rounded-full mx-auto mt-5 mb-3"></div>
+                {{-- Handle bar --}}
+                <div class="w-16 h-1.5 bg-gray-300/50 rounded-full mx-auto mt-4 mb-2 shrink-0"></div>
                 
-                <div class="p-8 pt-4">
-                    <h3 class="text-2xl font-black text-[var(--tx-text-dark)] text-center mb-6">Konfirmasi Penukaran</h3>
+                {{-- Scrollable Content --}}
+                <div class="overflow-y-auto flex-1 px-5 md:px-8 pt-2 pb-2">
+                    <h3 class="text-xl md:text-2xl font-black text-[var(--tx-text-dark)] text-center mb-4">Konfirmasi Penukaran</h3>
 
-                    <div class="flex items-center gap-4 bg-white/60 p-4 rounded-[1.5rem] mb-6 border border-white shadow-sm backdrop-blur-md">
-                        <img src="{{ $product->primary_image }}" alt="" class="w-20 h-20 rounded-xl object-cover bg-white shadow-sm border border-gray-100">
-                        <div class="flex-1">
-                            <h4 class="font-black text-[var(--tx-text-dark)] text-sm line-clamp-2 mb-2 leading-snug">{{ $product->name }}</h4>
-                            <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)]">{{ number_format($product->coin_price, 0, ',', '.') }} <span class="text-[10px] text-[var(--tx-text-muted)] font-bold uppercase tracking-widest">Koin</span></span>
+                    <div class="flex items-center gap-3 bg-white/60 p-3 rounded-[1.25rem] mb-4 border border-white shadow-sm backdrop-blur-md">
+                        <img src="{{ $product->primary_image }}" alt="" class="w-16 h-16 rounded-xl object-cover bg-white shadow-sm border border-gray-100 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-black text-[var(--tx-text-dark)] text-sm line-clamp-2 mb-1 leading-snug">{{ $product->name }}</h4>
+                            <span class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)]">{{ number_format($product->coin_price, 0, ',', '.') }} <span class="text-[10px] text-[var(--tx-text-muted)] font-bold uppercase tracking-widest">Koin</span></span>
                         </div>
                     </div>
 
-                    <div class="space-y-4 mb-8 bg-white/40 p-6 rounded-[1.5rem] border border-white/60 shadow-inner">
+                    <div class="space-y-3 mb-4 bg-white/40 p-4 rounded-[1.25rem] border border-white/60 shadow-inner">
                         <div class="flex justify-between items-center text-xs">
                             <span class="text-[var(--tx-text-muted)] font-bold uppercase tracking-widest">Saldo Koin Saat Ini</span>
                             <span class="font-black text-[var(--tx-text-dark)] text-sm">{{ number_format($userPoints, 0, ',', '.') }}</span>
                         </div>
-                        <div class="flex justify-between items-center text-xs pb-4 border-b border-gray-200/50">
+                        <div class="flex justify-between items-center text-xs pb-3 border-b border-gray-200/50">
                             <span class="text-[var(--tx-text-muted)] font-bold uppercase tracking-widest">Koin Digunakan</span>
                             <span class="font-black text-[var(--tx-secondary)] text-sm">-{{ number_format($product->coin_price, 0, ',', '.') }}</span>
                         </div>
@@ -191,27 +193,30 @@
                         </div>
 
                         @if(($userPoints - $product->coin_price) == 0)
-                            <div class="bg-orange-50/80 border border-orange-200/50 text-orange-800 text-[10px] p-4 rounded-xl flex items-start gap-3 shadow-sm backdrop-blur-md mt-4">
-                                <span class="text-xl leading-none">⚠️</span>
+                            <div class="bg-orange-50/80 border border-orange-200/50 text-orange-800 text-[10px] p-3 rounded-xl flex items-start gap-2 shadow-sm backdrop-blur-md">
+                                <span class="text-lg leading-none shrink-0">⚠️</span>
                                 <p class="font-bold"><strong>Perhatian:</strong> Koin Anda akan habis (0) setelah penukaran ini.</p>
                             </div>
                         @endif
 
-                        <div class="bg-gradient-to-br from-[var(--tx-primary-light)]/50 to-[var(--tx-secondary-light)]/50 border border-white/60 p-5 rounded-2xl shadow-sm mt-4">
-                            <div class="flex justify-between items-center mb-3">
+                        <div class="bg-gradient-to-br from-[var(--tx-primary-light)]/50 to-[var(--tx-secondary-light)]/50 border border-white/60 p-4 rounded-2xl shadow-sm">
+                            <div class="flex justify-between items-center mb-2">
                                 <span class="text-[10px] font-black text-[var(--tx-primary)] uppercase tracking-widest">Alamat Pengiriman:</span>
-                                <a href="{{ route('profile.edit') }}" class="text-[9px] font-black text-white bg-[var(--tx-primary)] px-3 py-1.5 rounded-lg shadow-sm hover:scale-105 transition-transform uppercase tracking-widest">Ganti</a>
+                                <a href="{{ route('profile.edit') }}" class="text-[9px] font-black text-white bg-[var(--tx-primary)] px-2.5 py-1 rounded-lg shadow-sm hover:scale-105 transition-transform uppercase tracking-widest">Ganti</a>
                             </div>
                             <p class="text-xs font-bold text-[var(--tx-text-dark)] leading-relaxed">
                                 {{ empty($user->address) ? '⚠️ Alamat belum diisi. Silakan isi alamat di Profil.' : $user->address }}
                             </p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                {{-- Action Buttons - Fixed at bottom with safe area --}}
+                <div class="shrink-0 px-5 md:px-8 pt-3 pb-6 md:pb-8 border-t border-white/60 bg-white/80 backdrop-blur-md" style="padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));">
+                    <div class="grid grid-cols-2 gap-3">
                         <button @click="showConfirm = false" class="py-4 rounded-2xl font-black text-[var(--tx-text-muted)] bg-white border-2 border-gray-100 hover:bg-gray-50 transition-all uppercase tracking-widest text-xs">Batal</button>
                         <button @click="processRedeem" :disabled="isProcessing || !hasAddress"
-                                class="py-4 rounded-2xl font-black text-white bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] hover:-translate-y-1 transition-all shadow-lg shadow-[var(--tx-primary)]/30 disabled:opacity-50 disabled:hover:translate-y-0 flex justify-center items-center gap-2 uppercase tracking-widest text-xs">
+                                class="py-4 rounded-2xl font-black text-white bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] hover:-translate-y-0.5 transition-all shadow-lg shadow-[var(--tx-primary)]/30 disabled:opacity-50 disabled:hover:translate-y-0 flex justify-center items-center gap-2 uppercase tracking-widest text-xs">
                             <span x-show="!isProcessing">Konfirmasi ✨</span>
                             <span x-show="isProcessing" class="animate-pulse">Memproses...</span>
                         </button>

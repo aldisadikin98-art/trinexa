@@ -37,7 +37,7 @@
                         <span class="text-[9px] md:text-[10px] text-[var(--tx-text-muted)] font-black uppercase tracking-widest mb-1 z-10 relative">Telah Ditukar</span>
                         <span class="text-3xl md:text-4xl font-black text-[var(--tx-text-dark)] z-10 relative">{{ $totalRedeemed }}</span>
                     </div>
-/div>
+
 
                     <!-- Diproses -->
                     <div class="glass-card rounded-[2.5rem] border border-white/60 p-8 flex flex-col justify-center items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
@@ -89,7 +89,7 @@
                         <div class="absolute -right-20 -top-20 w-60 h-60 bg-white rounded-full blur-[60px] opacity-50 pointer-events-none"></div>
                     @endif
 
-                    <div class="relative z-10 flex justify-between items-start mb-8">
+                    <div class="relative z-10 flex justify-between items-start mb-6">
                         <div>
                             <h4 class="text-[10px] font-black opacity-60 mb-2 uppercase tracking-widest">Status Membership</h4>
                             <div class="flex items-center gap-3">
@@ -97,29 +97,29 @@
                                 <span class="font-black text-3xl tracking-tight bg-clip-text text-transparent {{ $userLevel === 'VIP' ? 'bg-gradient-to-r from-amber-200 to-amber-500' : 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)]' }}">{{ $userLevel }}</span>
                             </div>
                         </div>
-                            <div class="relative z-10">
-                        <p class="font-black text-lg md:text-xl truncate mb-1">{{ $user->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold opacity-60 mb-6">Member sejak {{ $joinDate }}</p>
- 
-                        <div class="bg-white/20 rounded-[1.5rem] p-4 md:p-5 backdrop-blur-md border border-white/30 shadow-inner">
-                            <div class="flex justify-between items-center mb-3 text-[10px] md:text-xs font-black">
-                                <span>{{ $transactionCount }} Transaksi</span>
-                                <span>{{ $progress == 100 ? 'Level Maksimal' : $progress . '%' }}</span>
-                            </div>
-                            <div class="w-full bg-black/10 rounded-full h-2.5 mb-4 border border-white/20 overflow-hidden shadow-inner">
-                                <div class="{{ $barColor }} h-full rounded-full transition-all duration-1000 relative" style="width: {{ $progress }}%">
-                                    @if($userLevel === 'VIP')
-                                    <div class="absolute top-0 right-0 bottom-0 w-4 bg-white/50 blur-[2px]"></div>
-                                    @endif
-                                </div>
-                            </div>
-                            <p class="text-[9px] md:text-[10px] font-black text-center {{ $userLevel === 'VIP' ? 'bg-amber-500/20 text-amber-300' : 'bg-white/50 text-[var(--tx-text-dark)]' }} px-3 py-1.5 rounded-xl uppercase tracking-widest">{{ $bonusText }}</p>
+                        <div class="text-right">
+                            <p class="font-black text-base md:text-lg truncate mb-0.5">{{ $user->name }}</p>
+                            <p class="text-[10px] md:text-xs font-bold opacity-60">Member sejak {{ $joinDate }}</p>
                         </div>
                     </div>
-             </div>
-                </div>
-            </div>
-        </div>
+
+                    <div class="bg-white/20 rounded-[1.5rem] p-4 md:p-5 backdrop-blur-md border border-white/30 shadow-inner relative z-10">
+                        <div class="flex justify-between items-center mb-3 text-[10px] md:text-xs font-black">
+                            <span>{{ $transactionCount }} Transaksi</span>
+                            <span>{{ $progress == 100 ? 'Level Maksimal' : $progress . '%' }}</span>
+                        </div>
+                        <div class="w-full bg-black/10 rounded-full h-2.5 mb-4 border border-white/20 overflow-hidden shadow-inner">
+                            <div class="{{ $barColor }} h-full rounded-full transition-all duration-1000 relative" style="width: {{ $progress }}%">
+                                @if($userLevel === 'VIP')
+                                <div class="absolute top-0 right-0 bottom-0 w-4 bg-white/50 blur-[2px]"></div>
+                                @endif
+                            </div>
+                        </div>
+                        <p class="text-[9px] md:text-[10px] font-black text-center {{ $userLevel === 'VIP' ? 'bg-amber-500/20 text-amber-300' : 'bg-white/50 text-[var(--tx-text-dark)]' }} px-3 py-1.5 rounded-xl uppercase tracking-widest">{{ $bonusText }}</p>
+                    </div>
+                </div>{{-- end glass-card --}}
+            </div>{{-- end right column --}}
+        </div>{{-- end flex row --}}
 
         <!-- Banner Info -->
         <div class="glass-card rounded-[2.5rem] p-8 md:p-10 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl relative overflow-hidden bg-gradient-to-br from-[var(--tx-quaternary)] to-[#7BB3E8] text-white border border-white/40 group hover:-translate-y-1 transition-transform duration-300">

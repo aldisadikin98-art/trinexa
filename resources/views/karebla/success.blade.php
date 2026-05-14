@@ -38,8 +38,7 @@
                     </div>
 
                     <div class="flex items-center gap-5 bg-white/50 p-5 rounded-[2rem] mb-8 border border-white/80 shadow-sm backdrop-blur-md">
-                        @php $images = $redemption->product->images ?? []; @endphp
-                        <img src="{{ $images[0] ?? '' }}" alt="" class="w-24 h-24 rounded-2xl object-cover bg-white shadow-inner border border-gray-100">
+                        <img src="{{ $redemption->product->primary_image }}" alt="{{ $redemption->product->name }}" class="w-24 h-24 rounded-2xl object-cover bg-white shadow-inner border border-gray-100 flex-shrink-0">
                         <div class="flex-1">
                             <h4 class="font-black text-[var(--tx-text-dark)] text-lg mb-2 leading-tight">{{ $redemption->product->name }}</h4>
                             <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] drop-shadow-sm">-{{ number_format($redemption->coins_used, 0, ',', '.') }} <span class="text-[10px] text-[var(--tx-text-muted)] font-bold uppercase tracking-widest">Koin</span></span>

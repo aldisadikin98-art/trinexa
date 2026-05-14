@@ -9,36 +9,41 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::active()->naturea()
-            ->withCount('approvedReviews')
-            ->withAvg('approvedReviews', 'rating');
+        try {
+            $query = Product::active()->naturea()
+                ->withCount('approvedReviews')
+                ->withAvg('approvedReviews', 'rating');
 
-        // Search
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            // Search
+            if ($request->filled('search')) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            }
+
+            // Filter kategori
+            if ($request->filled('category')) {
+                $query->where('category', $request->category);
+            }
+
+            // Sort
+            match ($request->get('sort', 'terbaru')) {
+                'terlaris'       => $query->withCount('transactionItems')->orderByDesc('transaction_items_count'),
+                'harga_terendah' => $query->orderBy('price', 'asc'),
+                'harga_tertinggi'=> $query->orderBy('price', 'desc'),
+                default          => $query->latest(),
+            };
+
+            $products = $query->paginate(9)->withQueryString();
+
+            $categories = ['Serum', 'Toner', 'Moisturizer', 'Sunscreen', 'Cleanser', 'Treatment'];
+
+            // Cart count untuk badge navbar (null-safe untuk guest)
+            $cartCount = auth()->check() ? auth()->user()->cartItems()->count() : 0;
+
+            return view('shop.index', compact('products', 'categories', 'cartCount'));
+        } catch (\Exception $e) {
+            // Jika terjadi error di production (Railway), tampilkan pesannya sementara untuk debugging
+            return response("<h1>Error pada Shop:</h1><p>" . $e->getMessage() . "</p><p>Line: " . $e->getLine() . "</p>", 500);
         }
-
-        // Filter kategori
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
-        }
-
-        // Sort
-        match ($request->get('sort', 'terbaru')) {
-            'terlaris'       => $query->withCount('transactionItems')->orderByDesc('transaction_items_count'),
-            'harga_terendah' => $query->orderBy('price', 'asc'),
-            'harga_tertinggi'=> $query->orderBy('price', 'desc'),
-            default          => $query->latest(),
-        };
-
-        $products = $query->paginate(9)->withQueryString();
-
-        $categories = ['Serum', 'Toner', 'Moisturizer', 'Sunscreen', 'Cleanser', 'Treatment'];
-
-        // Cart count untuk badge navbar
-        $cartCount = auth()->user()->cartItems()->count();
-
-        return view('shop.index', compact('products', 'categories', 'cartCount'));
     }
 
     public function show(Product $product)
@@ -75,7 +80,7 @@ class ShopController extends Controller
             ->where('category', $product->category)
             ->take(4)->get();
 
-        $cartCount = auth()->user()->cartItems()->count();
+        $cartCount = auth()->check() ? auth()->user()->cartItems()->count() : 0;
 
         return view('shop.show', compact('product', 'reviewStats', 'inCart', 'related', 'cartCount'));
     }

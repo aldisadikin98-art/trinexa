@@ -14,6 +14,14 @@
 </head>
 <body x-data="{ sidebarOpen: false }" class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased flex h-screen overflow-hidden selection:bg-[var(--tx-secondary)]/20 relative">
 
+    {{-- Mobile Sidebar Overlay Backdrop --}}
+    <div x-show="sidebarOpen"
+         x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+         @click="sidebarOpen = false"
+         class="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+         style="display:none"></div>
+
     <!-- Dekorasi Ambient Halus -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--tx-secondary-light)] opacity-40 blur-[120px]"></div>
@@ -22,7 +30,7 @@
     </div>
 
     {{-- Sidebar (Premium Glassmorphism) --}}
-    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="fixed md:relative w-72 h-[calc(100vh-2rem)] m-4 rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.04)] text-[var(--tx-text-dark)] flex flex-col shrink-0 z-50 transition-transform duration-300 overflow-hidden">
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="fixed md:relative w-72 h-[calc(100vh-2rem)] m-0 md:m-4 md:rounded-[2rem] bg-white/90 md:bg-white/70 backdrop-blur-2xl border-r md:border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] text-[var(--tx-text-dark)] flex flex-col shrink-0 z-50 transition-transform duration-300 overflow-hidden top-0 left-0 bottom-0">
         <div class="h-24 flex items-center justify-between px-8 border-b border-white/80 shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
                 <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Logo" class="w-10 h-10 object-cover rounded-[12px] shadow-sm">

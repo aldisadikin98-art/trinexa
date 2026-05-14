@@ -7,8 +7,14 @@
         <div class="glass-card border border-white/50 p-6 md:p-8 mb-8 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-xl">
             <div class="absolute inset-0 pointer-events-none opacity-20" style="background: radial-gradient(circle at 80% 50%, var(--tx-secondary) 0%, transparent 55%), radial-gradient(circle at 20% 50%, var(--tx-primary) 0%, transparent 55%);"></div>
             <div class="relative z-10 flex items-center gap-4 md:gap-5 flex-1">
-                <div class="w-14 h-14 md:w-16 md:h-16 rounded-[20px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-xl md:text-2xl font-black shadow-lg border-4 border-white/60">
-                    {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+                <div class="w-14 h-14 md:w-16 md:h-16 rounded-[20px] overflow-hidden border-4 border-white/60 shadow-lg shrink-0">
+                    @if(Auth::user()->avatar)
+                        <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-xl md:text-2xl font-black">
+                            {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+                        </div>
+                    @endif
                 </div>
                 <div>
                     <h2 class="text-xl md:text-3xl font-black text-[var(--tx-text-dark)] mb-1">Halo, {{ Auth::user()->name ?? 'User' }}! ✨</h2>
