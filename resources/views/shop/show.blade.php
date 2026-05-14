@@ -102,7 +102,7 @@
                             {!! nl2br(e($product->description)) !!}
                         </div>
                         <div x-show="activeTab === 'kandungan'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                            {!! nl2br(e($product->ingredients ?? 'Informasi kandungan belum tersedia.')) !!}
+                            {!! nl2br(e(is_array($product->ingredients) ? implode(', ', $product->ingredients) : ($product->ingredients ?? 'Informasi kandungan belum tersedia.'))) !!}
                         </div>
                         <div x-show="activeTab === 'cara_pakai'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                             {!! nl2br(e($product->how_to_use ?? 'Cara pemakaian belum tersedia.')) !!}
