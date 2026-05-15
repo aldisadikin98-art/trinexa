@@ -57,7 +57,9 @@ class AdminKareblaProductController extends Controller
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
-                $images[] = $img->store('karebla', 'public');
+                $mime = $img->getMimeType();
+                $b64  = base64_encode(file_get_contents($img->getRealPath()));
+                $images[] = 'data:' . $mime . ';base64,' . $b64;
             }
         }
         $data['images'] = $images;
@@ -103,7 +105,9 @@ class AdminKareblaProductController extends Controller
         if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $img) {
-                $images[] = $img->store('karebla', 'public');
+                $mime = $img->getMimeType();
+                $b64  = base64_encode(file_get_contents($img->getRealPath()));
+                $images[] = 'data:' . $mime . ';base64,' . $b64;
             }
             $data['images'] = $images;
         }

@@ -124,7 +124,8 @@ class Product extends Model
         }
 
         if ($image) {
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
+            // base64 data URI or external URL — return as-is
+            if (str_starts_with($image, 'data:image') || filter_var($image, FILTER_VALIDATE_URL)) {
                 return $image;
             }
             return \Illuminate\Support\Facades\Storage::url($image);

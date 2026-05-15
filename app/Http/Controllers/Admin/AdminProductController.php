@@ -56,7 +56,9 @@ class AdminProductController extends Controller
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
-                $images[] = $img->store('products', 'public');
+                $mime = $img->getMimeType();
+                $b64  = base64_encode(file_get_contents($img->getRealPath()));
+                $images[] = 'data:' . $mime . ';base64,' . $b64;
             }
         } elseif ($request->filled('image_url')) {
             $images[] = $request->image_url;
@@ -115,7 +117,9 @@ class AdminProductController extends Controller
         if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $img) {
-                $images[] = $img->store('products', 'public');
+                $mime = $img->getMimeType();
+                $b64  = base64_encode(file_get_contents($img->getRealPath()));
+                $images[] = 'data:' . $mime . ';base64,' . $b64;
             }
         }
 
