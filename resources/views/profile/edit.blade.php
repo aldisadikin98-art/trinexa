@@ -23,7 +23,7 @@
                     <div class="relative group shrink-0">
                         <div class="w-28 h-28 rounded-[24px] overflow-hidden border-4 border-white/80 shadow-xl bg-white/50 backdrop-blur-sm">
                             @if($user->avatar)
-                                <img src="{{ Storage::url($user->avatar) }}" class="w-full h-full object-cover" id="avatarPreview">
+                                <img src="{{ $user->avatar_url }}" class="w-full h-full object-cover" id="avatarPreview">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-5xl font-black text-[var(--tx-primary)]" id="avatarInitial">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}

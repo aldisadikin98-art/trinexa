@@ -154,4 +154,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(KareblaRedemption::class);
     }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (!$this->avatar) {
+            return null;
+        }
+        if (str_starts_with($this->avatar, 'data:image') || str_starts_with($this->avatar, 'http')) {
+            return $this->avatar;
+        }
+        return \Illuminate\Support\Facades\Storage::url($this->avatar);
+    }
 }

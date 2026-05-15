@@ -12,7 +12,7 @@
             <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
                 <div class="w-20 h-20 rounded-[20px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-4xl font-extrabold shadow-lg border-2 border-white/50 transition-transform shrink-0 overflow-hidden">
                     @if(Auth::user()->avatar)
-                        <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover">
+                        <img src="{{ Auth::user()->avatar_url }}" class="w-full h-full object-cover">
                     @else
                         {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
                     @endif

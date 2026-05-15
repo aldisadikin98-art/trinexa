@@ -105,8 +105,12 @@
                     <span class="text-sm font-black text-[var(--tx-text-dark)]">{{ auth()->user()->name }}</span>
                     <span class="text-[10px] font-bold text-[var(--tx-text-muted)] uppercase tracking-widest">Administrator</span>
                 </div>
-                <div class="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center font-black text-lg shadow-lg shadow-[var(--tx-primary)]/30 border border-white/50">
-                    {{ substr(auth()->user()->name, 0, 1) }}
+                <div class="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center font-black text-lg shadow-lg shadow-[var(--tx-primary)]/30 border border-white/50 overflow-hidden">
+                    @if(auth()->user()->avatar)
+                        <img src="{{ auth()->user()->avatar_url }}" class="w-full h-full object-cover">
+                    @else
+                        {{ substr(auth()->user()->name, 0, 1) }}
+                    @endif
                 </div>
             </div>
         </header>

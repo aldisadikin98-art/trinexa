@@ -9,7 +9,7 @@
             <div class="relative z-10 flex items-center gap-4 md:gap-5 flex-1">
                 <div class="w-14 h-14 md:w-16 md:h-16 rounded-[20px] overflow-hidden border-4 border-white/60 shadow-lg shrink-0">
                     @if(Auth::user()->avatar)
-                        <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
+                        <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white flex items-center justify-center text-xl md:text-2xl font-black">
                             {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}

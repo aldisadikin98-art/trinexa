@@ -31,11 +31,15 @@ class ProfileController extends Controller
 
         // Handle avatar upload
         if ($request->hasFile('avatar')) {
-            // Delete old avatar
-            if ($user->avatar) {
+            // Delete old avatar if it was a file path
+            if ($user->avatar && !str_starts_with($user->avatar, 'data:image')) {
                 Storage::disk('public')->delete($user->avatar);
             }
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            
+            $file = $request->file('avatar');
+            $mimeType = $file->getMimeType();
+            $base64 = base64_encode(file_get_contents($file->getRealPath()));
+            $data['avatar'] = 'data:' . $mimeType . ';base64,' . $base64;
         }
 
         if (isset($data['email']) && $data['email'] !== $user->email) {

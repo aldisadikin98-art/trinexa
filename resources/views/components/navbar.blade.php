@@ -13,7 +13,7 @@
         </a>
         <a href="{{ route('profile.edit') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white shadow-sm">
             @if(Auth::user()->avatar)
-                <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover">
+                <img src="{{ Auth::user()->avatar_url }}" class="w-full h-full object-cover">
             @else
                 <div class="w-full h-full bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-tertiary)] text-white flex items-center justify-center font-bold text-[10px]">
                     {{ substr(Auth::user()->name ?? 'U', 0, 1) }}
@@ -83,7 +83,7 @@
                 <button @click="open = !open" @click.away="open = false" class="hidden md:flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white shadow-sm hover:border-[var(--tx-primary)] transition-all group">
                     <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shadow-inner border border-white bg-gradient-to-br from-[var(--tx-primary)] to-[var(--tx-tertiary)]">
                         @if(Auth::user()->avatar)
-                            <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover">
+                            <img src="{{ Auth::user()->avatar_url }}" class="w-full h-full object-cover">
                         @else
                             <span class="text-white font-bold text-xs">{{ substr(Auth::user()->name ?? 'U', 0, 1) }}</span>
                         @endif
