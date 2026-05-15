@@ -37,7 +37,7 @@ class AdminProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'                  => 'required|string|max:255|unique:products,name',
+            'name'                  => 'required|string|max:255',
             'description'           => 'nullable|string',
             'price'                 => 'required|numeric|min:0',
             'stock'                 => 'required|integer|min:0',
@@ -49,7 +49,7 @@ class AdminProductController extends Controller
             'benefits'              => 'nullable|string',
             'bpom_number'           => 'nullable|string',
             'image_url'             => 'nullable|url',
-            'images.*'              => 'nullable|image|max:2048',
+            'images.*'              => 'nullable|image|max:5120',
             'reward_points'         => 'nullable|integer|min:0',
         ]);
 
@@ -66,29 +66,39 @@ class AdminProductController extends Controller
 
         $ingredientsArr = [];
         if ($request->filled('ingredients')) {
-            $ingredientsArr = array_filter(array_map('trim', explode("\n", $request->ingredients)));
+            $ingredientsArr = array_values(array_filter(array_map('trim', explode("\n", $request->ingredients))));
         }
 
-        $product = Product::create([
-            'name'                   => $validated['name'],
-            'slug'                   => Str::slug($validated['name']),
-            'description'            => $validated['description'] ?? null,
-            'price'                  => $validated['price'],
-            'stock'                  => $validated['stock'],
-            'type'                   => 'skincare',
-            'brand'                  => 'naturea',
-            'category'               => $validated['category'],
-            'image_url'              => $images[0] ?? null,
-            'images'                 => $images,
-            'ingredients'            => $ingredientsArr,
-            'skin_type'              => $validated['skin_type'] ?? [],
-            'skin_type_not_suitable' => $validated['skin_type_not_suitable'] ?? null,
-            'usage_instructions'     => $validated['usage_instructions'] ?? null,
-            'benefits'               => $validated['benefits'] ?? null,
-            'bpom_number'            => $validated['bpom_number'] ?? null,
-            'reward_points'          => $validated['reward_points'] ?? 0,
-            'is_active'              => true,
-        ]);
+        // Check for duplicate name manually to give friendly error
+        $exists = Product::where('name', $validated['name'])->exists();
+        if ($exists) {
+            return back()->withInput()->withErrors(['name' => 'Nama produk "' . $validated['name'] . '" sudah ada. Gunakan nama lain.']);
+        }
+
+        try {
+            $product = Product::create([
+                'name'                   => $validated['name'],
+                'slug'                   => Str::slug($validated['name']),
+                'description'            => $validated['description'] ?? null,
+                'price'                  => $validated['price'],
+                'stock'                  => $validated['stock'],
+                'type'                   => 'skincare',
+                'brand'                  => 'naturea',
+                'category'               => $validated['category'],
+                'image_url'              => $images[0] ?? null,
+                'images'                 => $images,
+                'ingredients'            => $ingredientsArr,
+                'skin_type'              => $validated['skin_type'] ?? [],
+                'skin_type_not_suitable' => $validated['skin_type_not_suitable'] ?? null,
+                'usage_instructions'     => $validated['usage_instructions'] ?? null,
+                'benefits'               => $validated['benefits'] ?? null,
+                'bpom_number'            => $validated['bpom_number'] ?? null,
+                'reward_points'          => $validated['reward_points'] ?? 0,
+                'is_active'              => true,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['name' => 'Gagal menyimpan produk: ' . $e->getMessage()]);
+        }
 
         return redirect()->route('admin.produk.index')
             ->with('success', 'Produk "' . $product->name . '" berhasil ditambahkan.');

@@ -11,10 +11,39 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ── Page Loading Bar ── */
+        #page-loader {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+            height: 3px;
+            background: linear-gradient(90deg, #F472B6, #a855f7, #38bdf8, #F472B6);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.15s ease;
+        }
+        #page-loader.loading {
+            transform: scaleX(0.8);
+            animation: shimmerBar 1.2s linear infinite;
+        }
+        @keyframes shimmerBar {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        #page-flash {
+            position: fixed; inset: 0; z-index: 9998;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.12s ease;
+        }
+        #page-flash.show { opacity: 1; pointer-events: all; }
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body x-data="{ mobileMenuOpen: false }" class="bg-mesh text-[var(--tx-text-dark)] antialiased relative min-h-screen pb-24 md:pb-0 overflow-x-hidden w-full max-w-[100vw]">
+    <div id="page-loader"></div>
+    <div id="page-flash"></div>
     <!-- Dekorasi Ambient Halus -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--tx-secondary-light)] opacity-40 blur-[120px]"></div>
@@ -224,6 +253,47 @@
     </div>
 
     @stack('scripts')
+
+    <script>
+    (function() {
+        const loader = document.getElementById('page-loader');
+        const flash  = document.getElementById('page-flash');
+        function startLoad() {
+            loader.classList.add('loading');
+            flash.classList.add('show');
+        }
+        function stopLoad() {
+            loader.style.transform = 'scaleX(1)';
+            loader.style.animation = 'none';
+            setTimeout(() => {
+                loader.style.transition = 'opacity 0.3s';
+                loader.style.opacity = '0';
+                flash.classList.remove('show');
+                setTimeout(() => {
+                    loader.style.transform = 'scaleX(0)';
+                    loader.style.transition = 'transform 0.15s ease';
+                    loader.style.opacity = '1';
+                    loader.classList.remove('loading');
+                }, 300);
+            }, 100);
+        }
+        document.addEventListener('click', function(e) {
+            const a = e.target.closest('a[href]');
+            if (!a) return;
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
+            if (a.target === '_blank' || a.hasAttribute('download')) return;
+            try { const u = new URL(href, location.origin); if (u.origin !== location.origin) return; } catch(_) { return; }
+            startLoad();
+        });
+        document.addEventListener('submit', function(e) {
+            if (e.target.dataset.noLoader) return;
+            startLoad();
+        });
+        window.addEventListener('pageshow', stopLoad);
+        window.addEventListener('load', stopLoad);
+    })();
+    </script>
 </body>
 </html>
 

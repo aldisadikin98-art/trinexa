@@ -16,12 +16,45 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ── Page Loading Bar ── */
+        #page-loader {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+            height: 3px;
+            background: linear-gradient(90deg, #F472B6, #a855f7, #38bdf8, #F472B6);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.15s ease;
+            animation: none;
+        }
+        #page-loader.loading {
+            transform: scaleX(0.8);
+            animation: shimmerBar 1.2s linear infinite;
+        }
+        @keyframes shimmerBar {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        /* ── Screen flash / transition ── */
+        #page-flash {
+            position: fixed; inset: 0; z-index: 9998;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.12s ease;
+        }
+        #page-flash.show { opacity: 1; pointer-events: all; }
     </style>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-mesh min-h-screen text-[var(--tx-text-dark)] antialiased selection:bg-[var(--tx-secondary)]/20 selection:text-gray-900 overflow-x-hidden w-full max-w-[100vw]">
+    <!-- Page Loading Indicator -->
+    <div id="page-loader"></div>
+    <div id="page-flash"></div>
     <div class="min-h-screen w-full max-w-[100vw] overflow-x-hidden relative">
         
         <!-- Navbar Component -->
@@ -41,6 +74,60 @@
     @include('components.bottom-sheet')
 
     @stack('scripts')
+
+    <script>
+    // ── Instant Page Transition ──────────────────────────────────────
+    (function() {
+        const loader = document.getElementById('page-loader');
+        const flash  = document.getElementById('page-flash');
+
+        function startLoad() {
+            loader.classList.add('loading');
+            flash.classList.add('show');
+        }
+        function stopLoad() {
+            loader.style.transform = 'scaleX(1)';
+            loader.style.animation = 'none';
+            setTimeout(() => {
+                loader.style.transition = 'opacity 0.3s';
+                loader.style.opacity = '0';
+                flash.classList.remove('show');
+                setTimeout(() => {
+                    loader.style.transform = 'scaleX(0)';
+                    loader.style.transition = 'transform 0.15s ease';
+                    loader.style.opacity = '1';
+                    loader.classList.remove('loading');
+                }, 300);
+            }, 100);
+        }
+
+        // Intercept all <a> clicks (except same-page anchors, external, download, target=_blank)
+        document.addEventListener('click', function(e) {
+            const a = e.target.closest('a[href]');
+            if (!a) return;
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            if (a.target === '_blank' || a.hasAttribute('download')) return;
+            try {
+                const url = new URL(href, location.origin);
+                if (url.origin !== location.origin) return;
+            } catch(_) { return; }
+            startLoad();
+        });
+
+        // Intercept all form submits
+        document.addEventListener('submit', function(e) {
+            const form = e.target;
+            // Don't trigger on AJAX forms (those usually prevent default)
+            if (form.dataset.noLoader) return;
+            startLoad();
+        });
+
+        // Stop loading when page is fully loaded (back/forward cache)
+        window.addEventListener('pageshow', stopLoad);
+        window.addEventListener('load', stopLoad);
+    })();
+    </script>
 
     @auth
     {{-- ── Floating Truevera Button ─────────────────────────────── --}}
