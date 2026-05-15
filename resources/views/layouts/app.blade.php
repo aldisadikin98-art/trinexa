@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="overflow-x-hidden w-full max-w-[100vw]">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Trinexa') }}</title>
@@ -21,8 +21,8 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-mesh min-h-screen text-[var(--tx-text-dark)] antialiased selection:bg-[var(--tx-secondary)]/20 selection:text-gray-900 overflow-x-hidden">
-    <div class="min-h-screen">
+<body class="bg-mesh min-h-screen text-[var(--tx-text-dark)] antialiased selection:bg-[var(--tx-secondary)]/20 selection:text-gray-900 overflow-x-hidden w-full max-w-[100vw]">
+    <div class="min-h-screen w-full max-w-[100vw] overflow-x-hidden relative">
         
         <!-- Navbar Component -->
         <x-navbar />

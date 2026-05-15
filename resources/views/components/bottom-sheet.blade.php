@@ -41,7 +41,7 @@
                     <span class="font-black text-[var(--tx-text-dark)] text-sm uppercase tracking-widest">Jumlah</span>
                     <div class="flex items-center gap-3 bg-white/60 border border-white rounded-xl p-1 shadow-inner">
                         <button type="button" onclick="updateBsQty(-1)" class="w-9 h-9 flex items-center justify-center bg-white rounded-lg shadow-sm text-gray-600 hover:text-[var(--tx-primary)] font-black text-lg transition-colors">−</button>
-                        <input type="number" name="quantity" id="bsQtyInput" value="1" min="1" readonly class="w-12 p-0 text-center font-black text-[var(--tx-text-dark)] bg-transparent border-none focus:ring-0">
+                        <input type="number" name="quantity" id="bsQtyInput" value="1" min="1" readonly class="w-12 p-0 text-center font-black text-base text-[var(--tx-text-dark)] bg-transparent border-none focus:ring-0">
                         <button type="button" onclick="updateBsQty(1)" class="w-9 h-9 flex items-center justify-center bg-white rounded-lg shadow-sm text-gray-600 hover:text-[var(--tx-primary)] font-black text-lg transition-colors">+</button>
                     </div>
                 </div>
