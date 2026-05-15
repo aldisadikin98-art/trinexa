@@ -19,7 +19,7 @@
 
                 {{-- Foto --}}
                 <div class="shrink-0 w-40 h-40 rounded-[24px] overflow-hidden border-4 border-white/80 shadow-xl">
-                    <img src="{{ Storage::url($result->photo_path) }}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/160'">
+                    <img src="{{ Str::startsWith($result->photo_path, 'data:image') ? $result->photo_path : Storage::url($result->photo_path) }}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/160'">
                 </div>
 
                 {{-- Score ring --}}

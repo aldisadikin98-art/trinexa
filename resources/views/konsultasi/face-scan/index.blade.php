@@ -242,7 +242,7 @@
                 @foreach($scans as $scan)
                 <div class="flex items-center gap-5 px-8 py-5 hover:bg-white/30 transition-colors group">
                     <div class="w-16 h-16 rounded-[16px] overflow-hidden border-2 border-white/80 shadow-md shrink-0">
-                        <img src="{{ Storage::url($scan->photo_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/64'">
+                        <img src="{{ Str::startsWith($scan->photo_path, 'data:image') ? $scan->photo_path : Storage::url($scan->photo_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/64'">
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 flex-wrap">

@@ -27,13 +27,13 @@ class FaceScanAIController extends Controller
             'photo' => 'required|image|mimes:jpg,jpeg,png|max:5120',
         ]);
 
-        // Store photo
-        $path     = $request->file('photo')->store('face-scans', 'public');
-        $fullPath = storage_path('app/public/' . $path);
+        // Convert to base64 directly from the uploaded file
+        $file = $request->file('photo');
+        $mimeType = $file->getMimeType();
+        $base64 = base64_encode(file_get_contents($file->getRealPath()));
+        $base64Image = 'data:' . $mimeType . ';base64,' . $base64;
 
-        // Convert to base64
-        $base64   = base64_encode(file_get_contents($fullPath));
-        $mimeType = $request->file('photo')->getMimeType();
+
 
         // Analyze with Groq Vision
         $analysis = $this->groq->analyzeImage($base64, $mimeType);
@@ -109,7 +109,7 @@ class FaceScanAIController extends Controller
         // Save result
         $result = FaceScanResult::create([
             'user_id'                 => auth()->id(),
-            'photo_path'              => $path,
+            'photo_path'              => $base64Image,
             'skin_type'               => $skinType,
             'skin_score'              => $analysis['skin_score'] ?? 70,
             'score_label'             => $analysis['score_label'] ?? 'Hasil analisis selesai!',
@@ -144,7 +144,10 @@ class FaceScanAIController extends Controller
     public function destroy(FaceScanResult $result)
     {
         abort_if($result->user_id !== auth()->id(), 403);
-        Storage::disk('public')->delete($result->photo_path);
+        // If it's a file path (old data), delete it. Base64 strings don't need file deletion.
+        if (!str_starts_with($result->photo_path, 'data:image')) {
+            Storage::disk('public')->delete($result->photo_path);
+        }
         $result->delete();
 
         return response()->json(['success' => true]);
