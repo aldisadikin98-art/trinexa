@@ -14,7 +14,7 @@
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body x-data="{ mobileMenuOpen: false }" class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased relative min-h-screen pb-24 md:pb-0 overflow-x-hidden w-full max-w-[100vw]">
+<body x-data="{ mobileMenuOpen: false }" class="bg-mesh text-[var(--tx-text-dark)] antialiased relative min-h-screen pb-24 md:pb-0 overflow-x-hidden w-full max-w-[100vw]">
     <!-- Dekorasi Ambient Halus -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--tx-secondary-light)] opacity-40 blur-[120px]"></div>
