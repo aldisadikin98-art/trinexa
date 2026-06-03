@@ -25,9 +25,9 @@ class UserController extends Controller
 
         // Ambil 4 produk Naturea secara acak untuk slider dashboard
         $featuredProducts = Product::where('is_active', true)
-            ->inRandomOrder()
-            ->take(4)
-            ->get();
+            ->get()
+            ->shuffle()
+            ->take(4);
 
         // Ambil saving goal aktif pertama milik user
         $savingGoal = SavingGoal::where('user_id', $user->id)
