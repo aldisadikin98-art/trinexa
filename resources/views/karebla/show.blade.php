@@ -1,5 +1,6 @@
 <x-app-layout title="{{ $product->name }} - Karebla Rewards">
-    <div class="py-12 pb-36 min-h-screen relative z-10" x-data="kareblaDetail({{ $product->coin_price }}, {{ $userPoints }}, {{ $product->stock }}, '{{ route('karebla.redeem') }}', {{ $product->id }})">
+    <div x-data="kareblaDetail({{ $product->coin_price }}, {{ $userPoints }}, {{ $product->stock }}, '{{ route('karebla.redeem') }}', {{ $product->id }})">
+        <div class="py-12 pb-36 min-h-screen relative z-10">
         
         <!-- Ambient Orbs -->
         <div class="absolute right-0 top-20 w-96 h-96 bg-gradient-to-bl from-[var(--tx-quaternary-light)] to-[var(--tx-tertiary-light)] rounded-full blur-3xl opacity-60 pointer-events-none"></div>
@@ -151,6 +152,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
 
         {{-- Bottom Sheet / Modal Konfirmasi --}}
@@ -235,6 +237,7 @@
             <p class="text-sm font-bold text-[var(--tx-text-muted)] uppercase tracking-widest">Mohon tunggu sebentar</p>
         </div>
 
+        </div>
     </div>
 
     @push('scripts')
