@@ -130,7 +130,7 @@
 </header>
 
 <!-- 📱 BOTTOM NAVIGATION (Hanya di HP) -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-2xl border-t border-white/40 flex justify-around items-center py-2 pb-6 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px]">
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-white/40 flex justify-around items-center py-2 pb-6 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px] will-change-transform">
     <a href="{{ route('user.dashboard') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('user.dashboard') ? 'text-[var(--tx-primary)]' : 'text-gray-400' }} transition-all duration-300">
         <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('user.dashboard') ? 'bg-[var(--tx-primary)] text-white shadow-lg shadow-[var(--tx-primary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>

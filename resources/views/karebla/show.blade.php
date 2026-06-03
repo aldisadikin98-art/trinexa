@@ -154,12 +154,12 @@
         </div>
 
         {{-- Bottom Sheet / Modal Konfirmasi --}}
-        <div x-show="showConfirm" class="fixed inset-0 z-[60] overflow-hidden" x-cloak>
+        <div x-show="showConfirm" class="fixed inset-0 z-[60] overflow-hidden" x-cloak style="isolation: isolate;">
             <div class="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity" @click="showConfirm = false"
                  x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                  x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
             
-            <div class="fixed inset-x-0 bottom-0 max-w-lg mx-auto glass-card bg-white/95 rounded-t-[2.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] transform transition-transform border border-white max-h-[85vh] flex flex-col"
+            <div class="fixed inset-x-0 bottom-0 max-w-lg mx-auto glass-card bg-white/95 rounded-t-[2.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] transform transition-transform border border-white max-h-[80vh] flex flex-col"
                  x-transition:enter="ease-out duration-300" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
                  x-transition:leave="ease-in duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full">
                 
@@ -211,7 +211,7 @@
                     </div>
                 </div>
 
-                <div class="shrink-0 px-5 md:px-8 pt-3 pb-10 md:pb-8 border-t border-white/60 bg-white/80 backdrop-blur-md" style="padding-bottom: max(3rem, env(safe-area-inset-bottom, 3rem));">
+                <div class="shrink-0 px-5 md:px-8 pt-3 pb-6 md:pb-8 border-t border-white/60 bg-white/80 backdrop-blur-md" style="padding-bottom: max(2rem, env(safe-area-inset-bottom, 2rem));">
                     <div class="grid grid-cols-2 gap-3">
                         <button @click="showConfirm = false" class="py-4 rounded-2xl font-black text-[var(--tx-text-muted)] bg-white border-2 border-gray-100 hover:bg-gray-50 transition-all uppercase tracking-widest text-xs">Batal</button>
                         <button @click="processRedeem" :disabled="isProcessing || !hasAddress"

@@ -56,9 +56,7 @@ class AdminProductController extends Controller
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
-                $mime = $img->getMimeType();
-                $b64  = base64_encode(file_get_contents($img->getRealPath()));
-                $images[] = 'data:' . $mime . ';base64,' . $b64;
+                $images[] = $this->compressImageToBase64($img);
             }
         } elseif ($request->filled('image_url')) {
             $images[] = $request->image_url;
@@ -85,7 +83,7 @@ class AdminProductController extends Controller
                 'type'                   => 'skincare',
                 'brand'                  => 'naturea',
                 'category'               => $validated['category'],
-                'image_url'              => $images[0] ?? null,
+                'image_url'              => (!$request->hasFile('images') && $request->filled('image_url')) ? $request->image_url : null,
                 'images'                 => $images,
                 'ingredients'            => $ingredientsArr,
                 'skin_type'              => $validated['skin_type'] ?? [],
@@ -127,9 +125,7 @@ class AdminProductController extends Controller
         if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $img) {
-                $mime = $img->getMimeType();
-                $b64  = base64_encode(file_get_contents($img->getRealPath()));
-                $images[] = 'data:' . $mime . ';base64,' . $b64;
+                $images[] = $this->compressImageToBase64($img);
             }
         }
 
@@ -146,7 +142,7 @@ class AdminProductController extends Controller
             'stock'                  => $request->stock,
             'category'               => $request->category,
             'images'                 => $images,
-            'image_url'              => $images[0] ?? $product->image_url,
+            'image_url'              => null,
             'ingredients'            => $ingredientsArr,
             'skin_type'              => $request->skin_type ?? [],
             'skin_type_not_suitable' => $request->skin_type_not_suitable,
@@ -172,5 +168,69 @@ class AdminProductController extends Controller
         $product->update(['is_active' => !$product->is_active]);
         $status = $product->is_active ? 'diaktifkan' : 'dinonaktifkan';
         return back()->with('success', "Produk berhasil {$status}.");
+    }
+
+    /**
+     * Compress and resize an uploaded image to base64.
+     * Max 800px dimension, 70% JPEG quality to keep base64 size manageable.
+     */
+    private function compressImageToBase64($uploadedFile): string
+    {
+        $maxDimension = 800;
+        $quality = 70;
+
+        $originalPath = $uploadedFile->getRealPath();
+        $imageInfo = getimagesize($originalPath);
+        $mime = $imageInfo['mime'] ?? $uploadedFile->getMimeType();
+
+        // Create GD image resource from uploaded file
+        $source = match ($mime) {
+            'image/jpeg', 'image/jpg' => imagecreatefromjpeg($originalPath),
+            'image/png' => imagecreatefrompng($originalPath),
+            'image/webp' => function_exists('imagecreatefromwebp') ? imagecreatefromwebp($originalPath) : null,
+            default => null,
+        };
+
+        // Fallback: if GD can't handle the format, return raw base64
+        if (!$source) {
+            $b64 = base64_encode(file_get_contents($originalPath));
+            return 'data:' . $mime . ';base64,' . $b64;
+        }
+
+        $origWidth = imagesx($source);
+        $origHeight = imagesy($source);
+
+        // Calculate new dimensions
+        if ($origWidth > $maxDimension || $origHeight > $maxDimension) {
+            if ($origWidth >= $origHeight) {
+                $newWidth = $maxDimension;
+                $newHeight = (int) round($origHeight * ($maxDimension / $origWidth));
+            } else {
+                $newHeight = $maxDimension;
+                $newWidth = (int) round($origWidth * ($maxDimension / $origHeight));
+            }
+        } else {
+            $newWidth = $origWidth;
+            $newHeight = $origHeight;
+        }
+
+        // Resize
+        $resized = imagecreatetruecolor($newWidth, $newHeight);
+        // Preserve transparency for PNG
+        if ($mime === 'image/png') {
+            imagealphablending($resized, false);
+            imagesavealpha($resized, true);
+        }
+        imagecopyresampled($resized, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+
+        // Output to buffer as JPEG for smaller size
+        ob_start();
+        imagejpeg($resized, null, $quality);
+        $compressedData = ob_get_clean();
+
+        imagedestroy($source);
+        imagedestroy($resized);
+
+        return 'data:image/jpeg;base64,' . base64_encode($compressedData);
     }
 }
