@@ -36,8 +36,7 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $validated = $request->validate([
+        $validated = $request->validate([
             'name'                  => 'required|string|max:255',
             'description'           => 'nullable|string',
             'price'                 => 'required|numeric|min:0',
@@ -57,7 +56,9 @@ class AdminProductController extends Controller
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
-                $images[] = $this->compressImageToBase64($img);
+                $mime = $img->getMimeType();
+                $b64  = base64_encode(file_get_contents($img->getRealPath()));
+                $images[] = 'data:' . $mime . ';base64,' . $b64;
             }
         } elseif ($request->filled('image_url')) {
             $images[] = $request->image_url;
@@ -99,12 +100,8 @@ class AdminProductController extends Controller
             return back()->withInput()->withErrors(['name' => 'Gagal menyimpan produk: ' . $e->getMessage()]);
         }
 
-            return redirect()->route('admin.produk.index')
-                ->with('success', 'Produk "' . $product->name . '" berhasil ditambahkan.');
-        } catch (\Throwable $th) {
-            // Debugging unhandled errors (500)
-            dd("SYSTEM CRASH DETECTED:", $th->getMessage(), "File: " . $th->getFile(), "Line: " . $th->getLine());
-        }
+        return redirect()->route('admin.produk.index')
+            ->with('success', 'Produk "' . $product->name . '" berhasil ditambahkan.');
     }
 
     public function edit(Product $produk)
@@ -130,7 +127,9 @@ class AdminProductController extends Controller
         if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $img) {
-                $images[] = $this->compressImageToBase64($img);
+                $mime = $img->getMimeType();
+                $b64  = base64_encode(file_get_contents($img->getRealPath()));
+                $images[] = 'data:' . $mime . ';base64,' . $b64;
             }
         }
 
@@ -173,99 +172,5 @@ class AdminProductController extends Controller
         $product->update(['is_active' => !$product->is_active]);
         $status = $product->is_active ? 'diaktifkan' : 'dinonaktifkan';
         return back()->with('success', "Produk berhasil {$status}.");
-    }
-
-    /**
-     * Compress and resize an uploaded image to base64.
-     * Max 800px dimension, 70% JPEG quality to keep base64 size manageable.
-     */
-    private function compressImageToBase64($uploadedFile): string
-    {
-        $maxDimension = 800;
-        $quality = 70;
-
-        $originalPath = $uploadedFile->getRealPath();
-        $mime = $uploadedFile->getMimeType();
-
-        // Fallback function to raw base64
-        $getRawBase64 = function() use ($originalPath, $mime) {
-            $b64 = base64_encode(file_get_contents($originalPath));
-            return 'data:' . $mime . ';base64,' . $b64;
-        };
-
-        // Check if GD extension is fully available
-        if (!function_exists('imagecreatefromjpeg') || !function_exists('imagecreatetruecolor') || !function_exists('imagejpeg')) {
-            return $getRawBase64();
-        }
-
-        try {
-            $imageInfo = @getimagesize($originalPath);
-            if (!$imageInfo) {
-                return $getRawBase64();
-            }
-
-            $actualMime = $imageInfo['mime'] ?? $mime;
-
-            // Create GD image resource from uploaded file
-            $source = match ($actualMime) {
-                'image/jpeg', 'image/jpg' => @imagecreatefromjpeg($originalPath),
-                'image/png' => @imagecreatefrompng($originalPath),
-                'image/webp' => function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($originalPath) : null,
-                default => null,
-            };
-
-            if (!$source) {
-                return $getRawBase64();
-            }
-
-            $origWidth = imagesx($source);
-            $origHeight = imagesy($source);
-
-            // Calculate new dimensions
-            if ($origWidth > $maxDimension || $origHeight > $maxDimension) {
-                if ($origWidth >= $origHeight) {
-                    $newWidth = $maxDimension;
-                    $newHeight = (int) round($origHeight * ($maxDimension / $origWidth));
-                } else {
-                    $newHeight = $maxDimension;
-                    $newWidth = (int) round($origWidth * ($maxDimension / $origHeight));
-                }
-            } else {
-                $newWidth = $origWidth;
-                $newHeight = $origHeight;
-            }
-
-            // Resize
-            $resized = @imagecreatetruecolor($newWidth, $newHeight);
-            if (!$resized) {
-                imagedestroy($source);
-                return $getRawBase64();
-            }
-
-            // Preserve transparency for PNG
-            if ($actualMime === 'image/png') {
-                imagealphablending($resized, false);
-                imagesavealpha($resized, true);
-            }
-            
-            @imagecopyresampled($resized, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
-
-            // Output to buffer as JPEG for smaller size
-            ob_start();
-            @imagejpeg($resized, null, $quality);
-            $compressedData = ob_get_clean();
-
-            imagedestroy($source);
-            imagedestroy($resized);
-
-            if (empty($compressedData)) {
-                return $getRawBase64();
-            }
-
-            return 'data:image/jpeg;base64,' . base64_encode($compressedData);
-        } catch (\Throwable $e) {
-            // If any error occurs (e.g. memory exhaustion), fallback to raw base64
-            return $getRawBase64();
-        }
     }
 }
