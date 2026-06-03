@@ -36,7 +36,8 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        try {
+            $validated = $request->validate([
             'name'                  => 'required|string|max:255',
             'description'           => 'nullable|string',
             'price'                 => 'required|numeric|min:0',
@@ -98,8 +99,12 @@ class AdminProductController extends Controller
             return back()->withInput()->withErrors(['name' => 'Gagal menyimpan produk: ' . $e->getMessage()]);
         }
 
-        return redirect()->route('admin.produk.index')
-            ->with('success', 'Produk "' . $product->name . '" berhasil ditambahkan.');
+            return redirect()->route('admin.produk.index')
+                ->with('success', 'Produk "' . $product->name . '" berhasil ditambahkan.');
+        } catch (\Throwable $th) {
+            // Debugging unhandled errors (500)
+            dd("SYSTEM CRASH DETECTED:", $th->getMessage(), "File: " . $th->getFile(), "Line: " . $th->getLine());
+        }
     }
 
     public function edit(Product $produk)
