@@ -180,57 +180,87 @@ class AdminProductController extends Controller
         $quality = 70;
 
         $originalPath = $uploadedFile->getRealPath();
-        $imageInfo = getimagesize($originalPath);
-        $mime = $imageInfo['mime'] ?? $uploadedFile->getMimeType();
+        $mime = $uploadedFile->getMimeType();
 
-        // Create GD image resource from uploaded file
-        $source = match ($mime) {
-            'image/jpeg', 'image/jpg' => imagecreatefromjpeg($originalPath),
-            'image/png' => imagecreatefrompng($originalPath),
-            'image/webp' => function_exists('imagecreatefromwebp') ? imagecreatefromwebp($originalPath) : null,
-            default => null,
-        };
-
-        // Fallback: if GD can't handle the format, return raw base64
-        if (!$source) {
+        // Fallback function to raw base64
+        $getRawBase64 = function() use ($originalPath, $mime) {
             $b64 = base64_encode(file_get_contents($originalPath));
             return 'data:' . $mime . ';base64,' . $b64;
+        };
+
+        // Check if GD extension is fully available
+        if (!function_exists('imagecreatefromjpeg') || !function_exists('imagecreatetruecolor') || !function_exists('imagejpeg')) {
+            return $getRawBase64();
         }
 
-        $origWidth = imagesx($source);
-        $origHeight = imagesy($source);
-
-        // Calculate new dimensions
-        if ($origWidth > $maxDimension || $origHeight > $maxDimension) {
-            if ($origWidth >= $origHeight) {
-                $newWidth = $maxDimension;
-                $newHeight = (int) round($origHeight * ($maxDimension / $origWidth));
-            } else {
-                $newHeight = $maxDimension;
-                $newWidth = (int) round($origWidth * ($maxDimension / $origHeight));
+        try {
+            $imageInfo = @getimagesize($originalPath);
+            if (!$imageInfo) {
+                return $getRawBase64();
             }
-        } else {
-            $newWidth = $origWidth;
-            $newHeight = $origHeight;
+
+            $actualMime = $imageInfo['mime'] ?? $mime;
+
+            // Create GD image resource from uploaded file
+            $source = match ($actualMime) {
+                'image/jpeg', 'image/jpg' => @imagecreatefromjpeg($originalPath),
+                'image/png' => @imagecreatefrompng($originalPath),
+                'image/webp' => function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($originalPath) : null,
+                default => null,
+            };
+
+            if (!$source) {
+                return $getRawBase64();
+            }
+
+            $origWidth = imagesx($source);
+            $origHeight = imagesy($source);
+
+            // Calculate new dimensions
+            if ($origWidth > $maxDimension || $origHeight > $maxDimension) {
+                if ($origWidth >= $origHeight) {
+                    $newWidth = $maxDimension;
+                    $newHeight = (int) round($origHeight * ($maxDimension / $origWidth));
+                } else {
+                    $newHeight = $maxDimension;
+                    $newWidth = (int) round($origWidth * ($maxDimension / $origHeight));
+                }
+            } else {
+                $newWidth = $origWidth;
+                $newHeight = $origHeight;
+            }
+
+            // Resize
+            $resized = @imagecreatetruecolor($newWidth, $newHeight);
+            if (!$resized) {
+                imagedestroy($source);
+                return $getRawBase64();
+            }
+
+            // Preserve transparency for PNG
+            if ($actualMime === 'image/png') {
+                imagealphablending($resized, false);
+                imagesavealpha($resized, true);
+            }
+            
+            @imagecopyresampled($resized, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+
+            // Output to buffer as JPEG for smaller size
+            ob_start();
+            @imagejpeg($resized, null, $quality);
+            $compressedData = ob_get_clean();
+
+            imagedestroy($source);
+            imagedestroy($resized);
+
+            if (empty($compressedData)) {
+                return $getRawBase64();
+            }
+
+            return 'data:image/jpeg;base64,' . base64_encode($compressedData);
+        } catch (\Throwable $e) {
+            // If any error occurs (e.g. memory exhaustion), fallback to raw base64
+            return $getRawBase64();
         }
-
-        // Resize
-        $resized = imagecreatetruecolor($newWidth, $newHeight);
-        // Preserve transparency for PNG
-        if ($mime === 'image/png') {
-            imagealphablending($resized, false);
-            imagesavealpha($resized, true);
-        }
-        imagecopyresampled($resized, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
-
-        // Output to buffer as JPEG for smaller size
-        ob_start();
-        imagejpeg($resized, null, $quality);
-        $compressedData = ob_get_clean();
-
-        imagedestroy($source);
-        imagedestroy($resized);
-
-        return 'data:image/jpeg;base64,' . base64_encode($compressedData);
     }
 }
