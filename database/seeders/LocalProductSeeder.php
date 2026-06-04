@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\KareblaProduct;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -345,6 +346,104 @@ class LocalProductSeeder extends Seeder
                     'images' => [$p['image_url']],
                     'is_active' => true,
                     'reward_points' => 0,
+                ])
+            );
+        }
+
+        // ─── KAREBLA PRODUCTS ─────────────────────────────────────────
+        $kareblaProducts = [
+            [
+                'name'       => 'Karebla Tumbler Glow 500ml',
+                'collection' => 'Karebla Premium Collection',
+                'coin_price' => 50,
+                'stock'      => 45,
+                'badge'      => 'eksklusif',
+                'description'=> 'Tumbler minimalis super estetik dengan material stainless steel 304 food-grade. Menjaga suhu minuman tetap hangat atau dingin hingga 12 jam. Cocok untuk menemani harimu agar tetap terhidrasi dengan gaya.',
+                'specs'      => [
+                    'Material'  => 'Stainless Steel 304',
+                    'Kapasitas' => '500ml',
+                    'Warna'     => 'Pastel Blue / Glow',
+                    'Fitur'     => 'Anti bocor, insulasi ganda'
+                ],
+                'images'     => [
+                    'images/karebla/karebla1.jpeg'
+                ]
+            ],
+            [
+                'name'       => 'Karebla Eco Tote Bag',
+                'collection' => 'Karebla Lifestyle Collection',
+                'coin_price' => 30,
+                'stock'      => 100,
+                'badge'      => 'terlaris',
+                'description'=> 'Tote bag berbahan kanvas organik yang ramah lingkungan. Didesain lapang, kuat, dan tebal untuk kebutuhan belanja skincare atau barang sehari-hari. Say no to plastic bags!',
+                'specs'      => [
+                    'Material' => 'Kanvas Organik Premium',
+                    'Ukuran'   => '35 x 40 cm',
+                    'Desain'   => 'Minimalist Karebla Logo',
+                    'Perawatan'=> 'Dapat dicuci berulang kali'
+                ],
+                'images'     => [
+                    'images/karebla/karebla2.jpeg'
+                ]
+            ],
+            [
+                'name'       => 'Karebla Bamboo Straw Set',
+                'collection' => 'Karebla Eco Collection',
+                'coin_price' => 20,
+                'stock'      => 150,
+                'badge'      => 'ramah lingkungan',
+                'description'=> 'Satu set sedotan bambu alami berkualitas tinggi. Dilengkapi dengan sikat pembersih panjang dan kantong katun cantik. Alternatif terbaik pengganti sedotan plastik.',
+                'specs'      => [
+                    'Material' => '100% Bambu Alami',
+                    'Isi'      => '3 sedotan + 1 sikat + 1 pouch',
+                    'Ukuran'   => 'Panjang 20cm',
+                    'Fitur'    => 'Food safe, eco-friendly'
+                ],
+                'images'     => [
+                    'images/karebla/karebla3.jpeg'
+                ]
+            ],
+            [
+                'name'       => 'Karebla Tumbler Sport Edition',
+                'collection' => 'Karebla Active Collection',
+                'coin_price' => 55,
+                'stock'      => 30,
+                'badge'      => 'baru',
+                'description'=> 'Tumbler edisi sporty yang tahan banting dengan lapisan matte anti-slip. Dilengkapi handle membulat untuk kemudahan dibawa saat berolahraga, gym, atau hiking.',
+                'specs'      => [
+                    'Material' => 'Stainless Steel 316',
+                    'Kapasitas'=> '750ml',
+                    'Warna'    => 'Matte Black',
+                    'Fitur'    => 'Anti-slip base, grip handle'
+                ],
+                'images'     => [
+                    'images/karebla/karebla4.jpeg'
+                ]
+            ],
+            [
+                'name'       => 'Karebla Reusable Makeup Pad',
+                'collection' => 'Karebla Beauty Collection',
+                'coin_price' => 25,
+                'stock'      => 80,
+                'badge'      => 'wajib punya',
+                'description'=> 'Kapas makeup reusable (bisa dicuci ulang) berbahan bambu dan katun ultra-lembut. Sangat efektif membersihkan makeup dan residu cleanser tanpa mengiritasi kulit.',
+                'specs'      => [
+                    'Material' => 'Bamboo Cotton / Microfiber',
+                    'Isi'      => '5 pads + kantong jaring pencuci',
+                    'Diameter' => '8cm',
+                    'Perawatan'=> 'Bisa dicuci dengan mesin'
+                ],
+                'images'     => [
+                    'images/karebla/karebla5.jpeg'
+                ]
+            ],
+        ];
+
+        foreach ($kareblaProducts as $kp) {
+            KareblaProduct::firstOrCreate(
+                ['slug' => Str::slug($kp['name'])],
+                array_merge($kp, [
+                    'is_active' => true,
                 ])
             );
         }
