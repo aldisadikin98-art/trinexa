@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             SkinSchoolSeeder::class,
             LoyaltySeeder::class,
             LocalProductSeeder::class,
+            LocalKareblaSeeder::class,
         ]);
     }
 }
