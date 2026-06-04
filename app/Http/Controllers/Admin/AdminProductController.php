@@ -9,11 +9,20 @@ use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
+    /**
+     * Kolom ringan untuk listing — exclude LONGTEXT agar MySQL tidak OOM saat ORDER BY.
+     * Gambar diambil terpisah setelah paginate (hanya untuk N baris di halaman ini).
+     */
+    private const LIST_COLUMNS = [
+        'id', 'name', 'slug', 'price', 'stock', 'category',
+        'is_bundle', 'bundle_discount', 'brand', 'is_active',
+        'reward_points', 'coin_price', 'bpom_number', 'created_at', 'updated_at',
+    ];
+
     public function index(Request $request)
     {
         $query = Product::naturea()
-            ->withCount('approvedReviews')
-            ->withAvg('approvedReviews', 'rating');
+            ->select(self::LIST_COLUMNS);
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -22,11 +31,34 @@ class AdminProductController extends Controller
             $query->where('category', $request->category);
         }
 
-        $products   = $query->latest()->paginate(15);
+        // Paginate dulu (dengan kolom ringan), lalu load data berat setelahnya
+        $products = $query->latest()->paginate(15)->withQueryString();
+
+        // Load gambar hanya untuk baris di halaman ini
+        $ids = $products->pluck('id')->all();
+        if (!empty($ids)) {
+            $images = Product::whereIn('id', $ids)
+                ->select(['id', 'image_url', 'images'])
+                ->get()
+                ->keyBy('id');
+
+            $products->each(function ($product) use ($images) {
+                if (isset($images[$product->id])) {
+                    $product->image_url = $images[$product->id]->image_url;
+                    $product->images    = $images[$product->id]->images;
+                }
+            });
+        }
+
+        // Load review aggregate hanya untuk N produk di halaman ini
+        $products->loadCount('approvedReviews');
+        $products->loadAvg('approvedReviews', 'rating');
+
         $categories = ['Serum', 'Toner', 'Moisturizer', 'Sunscreen', 'Cleanser', 'Treatment'];
 
         return view('admin.products.index', compact('products', 'categories'));
     }
+
 
     public function create()
     {
