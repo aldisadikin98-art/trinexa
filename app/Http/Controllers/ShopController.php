@@ -10,9 +10,7 @@ class ShopController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Product::active()->naturea()
-                ->withCount('approvedReviews')
-                ->withAvg('approvedReviews', 'rating');
+            $query = Product::active()->naturea();
 
             // Search
             if ($request->filled('search')) {
@@ -24,15 +22,26 @@ class ShopController extends Controller
                 $query->where('category', $request->category);
             }
 
-            // Sort
-            match ($request->get('sort', 'terbaru')) {
-                'terlaris'       => $query->withCount('transactionItems')->orderByDesc('transaction_items_count'),
-                'harga_terendah' => $query->orderBy('price', 'asc'),
-                'harga_tertinggi'=> $query->orderBy('price', 'desc'),
-                default          => $query->latest(),
-            };
+            // Sort — pisahkan 'terlaris' karena butuh withCount('transactionItems')
+            $sort = $request->get('sort', 'terbaru');
+            if ($sort === 'terlaris') {
+                $query->withCount('transactionItems')->orderByDesc('transaction_items_count');
+            } elseif ($sort === 'harga_terendah') {
+                $query->orderBy('price', 'asc');
+            } elseif ($sort === 'harga_tertinggi') {
+                $query->orderBy('price', 'desc');
+            } else {
+                $query->latest();
+            }
 
+            // Paginate dulu TANPA subquery review, lalu load aggregate setelah itu
+            // Ini menghindari "Out of sort memory" karena dua correlated subquery berjalan
+            // sebelum LIMIT/OFFSET diterapkan oleh MySQL.
             $products = $query->paginate(9)->withQueryString();
+
+            // Load count & avg hanya untuk 9 produk hasil halaman saat ini (bukan seluruh tabel)
+            $products->loadCount('approvedReviews');
+            $products->loadAvg('approvedReviews', 'rating');
 
             $categories = ['Serum', 'Toner', 'Moisturizer', 'Sunscreen', 'Cleanser', 'Treatment'];
 
