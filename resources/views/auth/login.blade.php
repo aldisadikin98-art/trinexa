@@ -14,9 +14,9 @@
         
         <!-- Left Column: Branding / Illustration -->
         <div class="hidden md:flex flex-col justify-between w-1/2 p-12 relative overflow-hidden bg-white/30 backdrop-blur-sm">
-            <!-- Decorative Gradients inside card -->
-            <div class="absolute top-[-20%] left-[-20%] w-[350px] h-[350px] bg-[var(--tx-primary)] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] bg-[var(--tx-secondary)] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+            <!-- Decorative Gradients inside card with Parallax/Floating animation -->
+            <div class="absolute top-[-20%] left-[-20%] w-[350px] h-[350px] bg-[var(--tx-primary)] rounded-full blur-[100px] opacity-20 pointer-events-none animate-float-slow"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] bg-[var(--tx-secondary)] rounded-full blur-[100px] opacity-20 pointer-events-none animate-float-medium"></div>
             
             <div class="relative z-10">
                 <a href="{{ url('/') }}" class="flex items-center gap-3 mb-16 inline-flex group">
@@ -149,18 +149,7 @@
                     Masuk
                 </button>
 
-                <!-- OR Separator -->
-                <div class="flex items-center gap-4 my-2">
-                    <div class="flex-1 h-[2px] bg-white"></div>
-                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Atau</span>
-                    <div class="flex-1 h-[2px] bg-white"></div>
-                </div>
 
-                <!-- Google Login Button -->
-                <a href="{{ route('auth.google') }}" class="w-full py-4 bg-white border-2 border-white rounded-2xl flex items-center justify-center gap-3 font-extrabold text-[var(--tx-text-dark)] hover:bg-gray-50 transition-all duration-300 shadow-sm">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5">
-                    Masuk dengan Google
-                </a>
 
                 <!-- Register Link -->
                 <p class="text-center text-sm text-[var(--tx-text-muted)] mt-6 font-medium">

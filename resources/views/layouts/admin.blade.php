@@ -47,9 +47,7 @@
             <a href="{{ route('admin.financial.index') }}" class="flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all {{ request()->routeIs('admin.financial.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white shadow-lg shadow-[var(--tx-primary)]/20 font-black' : 'text-gray-500 hover:text-[var(--tx-primary)] hover:bg-white/80 font-bold' }}">
                 <span class="text-xl">💰</span> Keuangan
             </a>
-            <a href="{{ route('admin.notifications.index') }}" class="flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all {{ request()->routeIs('admin.notifications.*') ? 'bg-gradient-to-r from-[var(--tx-primary)] to-[var(--tx-secondary)] text-white shadow-lg shadow-[var(--tx-primary)]/20 font-black' : 'text-gray-500 hover:text-[var(--tx-primary)] hover:bg-white/80 font-bold' }}">
-                <span class="text-xl">🔔</span> Notifikasi
-            </a>
+
 
             <!-- Menu Karebla -->
             <div class="pt-4 mt-2 border-t border-gray-200/50">
@@ -187,10 +185,7 @@
                         <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center text-2xl shadow-sm border border-purple-100">🎟️</div>
                         <span class="text-[10px] font-bold text-center text-gray-600">Voucher</span>
                     </a>
-                    <a href="{{ route('admin.notifications.index') }}" class="flex flex-col items-center gap-2">
-                        <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-2xl shadow-sm border border-blue-100">🔔</div>
-                        <span class="text-[10px] font-bold text-center text-gray-600">Notif</span>
-                    </a>
+
                     <a href="{{ route('admin.karebla.produk.index') }}" class="flex flex-col items-center gap-2">
                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-2xl shadow-sm border border-emerald-100">💎</div>
                         <span class="text-[10px] font-bold text-center text-gray-600">Karebla</span>
