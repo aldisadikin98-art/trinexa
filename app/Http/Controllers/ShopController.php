@@ -7,10 +7,26 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+    /**
+     * Kolom yang diambil untuk listing produk.
+     * Sengaja EXCLUDE kolom LONGTEXT (images, image_url, description, ingredients,
+     * usage_instructions, benefits, skin_type, skin_type_not_suitable)
+     * agar MySQL tidak OOM saat ORDER BY pada server Railway yang sort_buffer_size-nya kecil.
+     * Kolom image dimuat ulang via fresh() setelah paginate — hanya untuk 9 baris.
+     */
+    private const LIST_COLUMNS = [
+        'id', 'name', 'slug', 'price', 'stock', 'category',
+        'is_bundle', 'bundle_discount', 'brand', 'is_active',
+        'reward_points', 'coin_price', 'bpom_number', 'created_at', 'updated_at',
+    ];
+
     public function index(Request $request)
     {
         try {
-            $query = Product::active()->naturea();
+            // Hanya pilih kolom ringan — TIDAK termasuk LONGTEXT (images, image_url, dll)
+            // Ini mencegah MySQL OOM saat sorting karena baris terlalu besar.
+            $query = Product::active()->naturea()
+                ->select(self::LIST_COLUMNS);
 
             // Search
             if ($request->filled('search')) {
@@ -22,7 +38,7 @@ class ShopController extends Controller
                 $query->where('category', $request->category);
             }
 
-            // Sort — pisahkan 'terlaris' karena butuh withCount('transactionItems')
+            // Sort
             $sort = $request->get('sort', 'terbaru');
             if ($sort === 'terlaris') {
                 $query->withCount('transactionItems')->orderByDesc('transaction_items_count');
@@ -34,12 +50,29 @@ class ShopController extends Controller
                 $query->latest();
             }
 
-            // Paginate dulu TANPA subquery review, lalu load aggregate setelah itu
-            // Ini menghindari "Out of sort memory" karena dua correlated subquery berjalan
-            // sebelum LIMIT/OFFSET diterapkan oleh MySQL.
+            // Paginate — LIMIT/OFFSET sudah diterapkan, baru muat data berat
             $products = $query->paginate(9)->withQueryString();
 
-            // Load count & avg hanya untuk 9 produk hasil halaman saat ini (bukan seluruh tabel)
+            // Setelah paginate (hanya 9 baris), muat kolom gambar & aggregate review
+            // Ini jauh lebih efisien daripada muat semua sebelum LIMIT
+            $ids = $products->pluck('id')->all();
+            if (!empty($ids)) {
+                // Ambil kolom gambar untuk 9 produk saja
+                $images = Product::whereIn('id', $ids)
+                    ->select(['id', 'image_url', 'images'])
+                    ->get()
+                    ->keyBy('id');
+
+                // Inject data gambar ke setiap produk di koleksi paginator
+                $products->each(function ($product) use ($images) {
+                    if (isset($images[$product->id])) {
+                        $product->image_url = $images[$product->id]->image_url;
+                        $product->images    = $images[$product->id]->images;
+                    }
+                });
+            }
+
+            // Load review aggregate hanya untuk 9 produk di halaman ini
             $products->loadCount('approvedReviews');
             $products->loadAvg('approvedReviews', 'rating');
 
@@ -51,7 +84,6 @@ class ShopController extends Controller
             $view = view('shop.index', compact('products', 'categories', 'cartCount'))->render();
             return response($view);
         } catch (\Throwable $e) {
-            // Jika terjadi error di production (Railway), tampilkan pesannya sementara untuk debugging
             return response("<h1>Error pada Shop:</h1><p>" . $e->getMessage() . "</p><p>Line: " . $e->getLine() . "</p>", 500);
         }
     }
