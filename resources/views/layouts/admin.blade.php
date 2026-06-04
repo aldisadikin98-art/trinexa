@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Admin Panel' }} | Trinexa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -12,16 +13,11 @@
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body x-data="{ mobileMenuOpen: false }" class="bg-gradient-to-br from-[#FAFAFA] via-[#FDF8F0] to-[#FEF5F7] text-[var(--tx-text-dark)] antialiased relative min-h-screen pb-24 md:pb-0">
-    <!-- Dekorasi Ambient Halus -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--tx-secondary-light)] opacity-40 blur-[120px]"></div>
-        <div class="absolute top-[30%] -right-[20%] w-[60vw] h-[60vw] rounded-full bg-[var(--tx-primary-light)] opacity-30 blur-[140px]"></div>
-        <div class="absolute -bottom-[20%] left-[20%] w-[70vw] h-[70vw] rounded-full bg-[var(--tx-tertiary-light)] opacity-30 blur-[150px]"></div>
-    </div>
+<body x-data="{ mobileMenuOpen: false }" class="text-[var(--tx-text-dark)] antialiased relative min-h-screen pb-24 md:pb-0"
+      style="background: linear-gradient(135deg, #FAFAFA 0%, #FDF8F0 50%, #FEF5F7 100%);">
 
     {{-- Sidebar (Premium Glassmorphism) --}}
-    <aside class="hidden md:flex fixed top-0 left-0 w-72 h-[calc(100vh-2rem)] m-4 rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] text-[var(--tx-text-dark)] flex-col shrink-0 z-50 overflow-hidden">
+    <aside class="hidden md:flex fixed top-0 left-0 w-72 h-[calc(100vh-2rem)] m-4 rounded-[2rem] bg-white/85 backdrop-blur-lg border border-white/80 shadow-[0_10px_40px_rgba(0,0,0,0.08)] text-[var(--tx-text-dark)] flex-col shrink-0 z-50 overflow-hidden">
         <div class="h-24 flex items-center justify-between px-8 border-b border-white/80 shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
                 <img src="{{ asset('images/logo trinexa.jpeg') }}" alt="Logo" class="w-10 h-10 object-cover rounded-[12px] shadow-sm">
@@ -86,7 +82,7 @@
     {{-- Main Content --}}
     <div class="md:ml-[320px] flex-1 flex flex-col min-h-screen relative z-10 p-2 md:p-4">
         {{-- Header (Premium Floating) --}}
-        <header class="h-20 bg-white/70 backdrop-blur-2xl border border-white rounded-3xl flex items-center justify-between px-6 md:px-8 shrink-0 z-10 shadow-[0_4px_30px_rgb(0,0,0,0.03)] mb-4">
+        <header class="h-20 bg-white/85 backdrop-blur-lg border border-white/80 rounded-3xl flex items-center justify-between px-6 md:px-8 shrink-0 z-10 shadow-[0_4px_20px_rgb(0,0,0,0.04)] mb-4">
             <div class="flex items-center gap-4">
                 <h2 class="text-xl md:text-2xl font-black text-[var(--tx-text-dark)] drop-shadow-sm">{{ $title ?? 'Dashboard' }}</h2>
             </div>
@@ -127,7 +123,7 @@
     </div>
 
     {{-- 📱 ADMIN BOTTOM NAVIGATION (Hanya di HP) --}}
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-2xl border-t border-white/40 flex justify-around items-center py-2 pb-6 z-[60] shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px]">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 border-t border-gray-100 flex justify-around items-center py-2 pb-6 z-[60] shadow-[0_-4px_20px_rgba(0,0,0,0.06)] rounded-t-[32px] will-change-transform">
         <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center gap-1 p-2 {{ request()->routeIs('admin.dashboard') ? 'text-[var(--tx-primary)]' : 'text-gray-400' }} transition-all duration-300">
             <div class="relative p-2.5 rounded-2xl {{ request()->routeIs('admin.dashboard') ? 'bg-[var(--tx-primary)] text-white shadow-lg shadow-[var(--tx-primary)]/30 scale-110' : 'bg-transparent text-gray-400' }}">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
@@ -175,7 +171,7 @@
         <div x-show="mobileMenuOpen"
              x-transition:enter="transform transition ease-out duration-300" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
              x-transition:leave="transform transition ease-in duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full"
-             class="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl rounded-t-[2rem] p-6 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-white">
+             class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2rem] p-6 pb-12 shadow-[0_-8px_30px_rgba(0,0,0,0.1)] border-t border-gray-100">
             
             <div class="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-6"></div>
             

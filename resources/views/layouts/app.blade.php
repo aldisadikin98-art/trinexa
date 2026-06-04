@@ -2,18 +2,23 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="overflow-x-hidden w-full max-w-[100vw]">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    @isset($title)
+    <title>{{ $title }} | Trinexa</title>
+    @else
     <title>{{ config('app.name', 'Trinexa') }}</title>
+    @endisset
 
-    <!-- Font Premium untuk kesan "Wah" -->
+    {{-- Font: preconnect + display=swap agar tidak blocking render --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* Font fallback sambil Plus Jakarta Sans loading */
+        body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -26,7 +31,7 @@
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.15s ease;
-            animation: none;
+            will-change: transform;
         }
         #page-loader.loading {
             transform: scaleX(0.8);
@@ -36,19 +41,19 @@
             0%   { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
-        /* ── Screen flash / transition ── */
+        /* ── Screen flash — NO backdrop-filter (sangat berat di mobile GPU) ── */
         #page-flash {
             position: fixed; inset: 0; z-index: 9998;
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.5);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.12s ease;
+            transition: opacity 0.1s ease;
+            will-change: opacity;
         }
         #page-flash.show { opacity: 1; pointer-events: all; }
     </style>
 
-    <!-- Scripts -->
+    <!-- Scripts (Vite bundles CSS + JS termasuk Alpine) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-mesh min-h-screen text-[var(--tx-text-dark)] antialiased selection:bg-[var(--tx-secondary)]/20 selection:text-gray-900 overflow-x-hidden w-full max-w-[100vw]">
@@ -67,8 +72,7 @@
         
     </div>
 
-    <!-- AlpineJS needed for Dropdown if x-data is used -->
-    <script src="//unpkg.com/alpinejs" defer></script>
+    {{-- Alpine sudah di-bundle via Vite (resources/js/app.js) - tidak perlu CDN --}}
     
     <!-- Bottom Sheet Global Component -->
     @include('components.bottom-sheet')

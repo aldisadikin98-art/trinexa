@@ -32,5 +32,25 @@ class AppServiceProvider extends ServiceProvider
             \Illuminate\Auth\Events\Login::class,
             \App\Listeners\UpdateLoginStreak::class,
         );
+
+        // Bagikan variabel global ke komponen navigasi untuk menghindari N+1 queries di view
+        \Illuminate\Support\Facades\View::composer(
+            ['components.navbar', 'layouts.navigation'], 
+            function ($view) {
+                $cartCount = 0;
+                $unreadNotifCount = 0;
+                
+                if (auth()->check()) {
+                    $user = auth()->user();
+                    $cartCount = \App\Models\CartItem::where('user_id', $user->id)->count();
+                    $unreadNotifCount = \App\Models\SiteNotification::where('user_id', $user->id)
+                                        ->whereNull('read_at')
+                                        ->count();
+                }
+
+                $view->with('globalCartCount', $cartCount)
+                     ->with('globalUnreadNotifCount', $unreadNotifCount);
+            }
+        );
     }
 }

@@ -63,20 +63,33 @@ class AdminDashboardController extends Controller
             ->toArray();
 
         // ─── Produk Terlaris ────────────────────────────────────────
-        $topProducts = DB::table('transaction_items')
+        // Hindari GROUP BY pada kolom LONGTEXT (images) yang menyebabkan OOM 500 di MySQL
+        $topProductsRaw = DB::table('transaction_items')
             ->join('products', 'transaction_items.product_id', '=', 'products.id')
             ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id')
             ->whereNotNull('transactions.receipt_number')
-            ->select('products.id', 'products.name', 'products.images', 'products.price',
+            ->select('products.id', 'products.name', 'products.price',
                 DB::raw('SUM(transaction_items.quantity) as total_sold'),
                 DB::raw('SUM(transaction_items.quantity * transaction_items.price) as total_revenue'))
-            ->groupBy('products.id', 'products.name', 'products.images', 'products.price')
+            ->groupBy('products.id', 'products.name', 'products.price')
             ->orderByDesc('total_sold')
             ->take(5)
             ->get();
 
+        // Ambil data gambar (longtext) secara terpisah menggunakan IN() agar tidak masuk sort buffer
+        $topProductIds = $topProductsRaw->pluck('id')->toArray();
+        $imagesData = Product::whereIn('id', $topProductIds)->select('id', 'images')->pluck('images', 'id');
+
+        $topProducts = $topProductsRaw->map(function ($item) use ($imagesData) {
+            $item->images = $imagesData[$item->id] ?? null;
+            return $item;
+        });
+
         // ─── Pesanan Terbaru ────────────────────────────────────────
-        $recentOrders = Transaction::with(['user', 'items.product'])
+        $recentOrders = Transaction::with(['user', 'items.product' => function($query) {
+                // Pilih kolom seperlunya pada relasi produk, hindari LONGTEXT jika tidak dibutuhkan di tabel order terbaru
+                $query->select('id', 'name', 'price'); 
+            }])
             ->whereNotNull('receipt_number')
             ->latest()
             ->take(5)
