@@ -46,6 +46,9 @@ class KareblaProduct extends Model
             if (str_starts_with($image, 'data:image') || filter_var($image, FILTER_VALIDATE_URL)) {
                 return $image;
             }
+            if (str_starts_with($image, 'images/')) {
+                return asset($image);
+            }
             return \Illuminate\Support\Facades\Storage::url($image);
         }
         

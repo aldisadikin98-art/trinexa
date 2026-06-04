@@ -128,6 +128,10 @@ class Product extends Model
             if (str_starts_with($image, 'data:image') || filter_var($image, FILTER_VALIDATE_URL)) {
                 return $image;
             }
+            // If the image path is inside the public folder (e.g. images/products/...)
+            if (str_starts_with($image, 'images/')) {
+                return asset($image);
+            }
             return \Illuminate\Support\Facades\Storage::url($image);
         }
 
